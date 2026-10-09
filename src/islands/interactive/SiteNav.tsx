@@ -36,7 +36,7 @@ export default function SiteNav({ items, cta, current }: Props) {
               onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget as Node)) setOpen((o) => (o === item.label ? null : o)); }}>
               <div className="flex items-center">
                 <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}
-                  className={`whitespace-nowrap font-display text-[15px] uppercase tracking-[.05em] py-3 pl-3 ${hasMenu ? 'pr-0.5' : 'pr-3'} transition-colors hover:text-brand ${isCurrent(item.href) ? 'text-brand' : 'text-ink'}`}>
+                  className={`whitespace-nowrap font-display text-[17px] uppercase tracking-[.05em] py-3 pl-3 ${hasMenu ? 'pr-0.5' : 'pr-3'} transition-colors hover:text-brand ${isCurrent(item.href) ? 'text-brand' : 'text-ink'}`}>
                   {item.label}
                 </a>
                 {hasMenu && (
