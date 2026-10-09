@@ -1,50 +1,90 @@
 ---
-import { footerGroups } from '../../data/navigation';
 import { site } from '../../lib/site';
 const year = new Date().getFullYear();
+const groups = [
+  { title: 'Longevity', links: [
+    { label: 'Evaluation', href: '/longevity/evaluation' },
+    { label: 'Metabolic Health', href: '/longevity/metabolic-health' },
+    { label: 'Hormone Care', href: '/longevity/hormone-care' },
+    { label: 'Functional Medicine', href: '/longevity/functional-medicine' },
+  ]},
+  { title: 'Care', links: [
+    { label: 'Hair Restoration', href: '/hair-restoration' },
+    { label: 'Aesthetics', href: '/aesthetics' },
+    { label: 'Our Providers', href: '/providers' },
+    { label: 'Store', href: '/store' },
+    { label: 'About', href: '/about' },
+  ]},
+  { title: 'Resources', links: [
+    { label: 'New Patients', href: '/resources/new-patients' },
+    { label: 'Virtual Visits', href: '/resources/virtual-visits' },
+    { label: 'FAQs', href: '/resources/faqs' },
+    { label: 'Financing', href: '/resources/financing' },
+    { label: 'Reviews', href: '/reviews' },
+    { label: 'All resources →', href: '/resources' },
+  ]},
+];
+const directions = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${site.address.street}, ${site.address.city}, ${site.address.region} ${site.address.zip}`)}`;
 ---
-<footer class="depth-dark bg-ink text-white on-dark">
-  <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-    <div class="grid gap-12 lg:grid-cols-[1.3fr_2fr_1.2fr]">
-      <div>
-        <a href="/" class="inline-block rounded-lg bg-white p-2" aria-label="AgeWell Medicine & Aesthetics, home">
-          <img src="/images/logo.png" alt="AgeWell Medicine & Aesthetics" width="189" height="100" class="h-14 w-auto" loading="lazy" />
-        </a>
-        <p class="mt-5 max-w-sm text-[15px] text-white/80">Physician-led longevity and healthspan medicine in Bedminster, New Jersey, with non-surgical hair restoration and advanced aesthetics.</p>
-        <ul class="mt-6 flex flex-wrap gap-x-5 text-sm">
-          {site.social.map((s) => <li><a class="inline-block py-2 underline-offset-4 hover:underline" href={s.href} rel="noopener" target="_blank">{s.label}</a></li>)}
-        </ul>
+<footer class="ft depth-dark on-dark">
+  <div class="ft-in">
+    <div class="ft-grid">
+      <div class="ft-brand">
+        <a href="/" class="ft-logo" aria-label="AgeWell Medicine & Aesthetics, home"><img src="/images/logo.png" alt="AgeWell Medicine & Aesthetics" width="189" height="100" loading="lazy" /></a>
+        <p>Physician-led longevity medicine in Bedminster, NJ, with non-surgical hair restoration and aesthetics.</p>
+        <ul class="ft-social">{site.social.map((s) => <li><a href={s.href} rel="noopener" target="_blank">{s.label}</a></li>)}</ul>
       </div>
-
-      <div class="grid gap-8 sm:grid-cols-3">
-        {footerGroups.map((g) => (
-          <nav aria-label={g.title}>
-            <h2 class="eyebrow mb-4 text-sm">{g.title}</h2>
-            <ul class="space-y-1 text-[15px] text-white/85">
-              {g.links.map((l) => <li><a class="inline-block py-1.5 underline-offset-4 hover:text-white hover:underline" href={l.href}>{l.label}</a></li>)}
-            </ul>
-          </nav>
-        ))}
-      </div>
-
-      <div>
-        <h2 class="eyebrow mb-4 text-sm">Get In Touch</h2>
-        <address class="space-y-3 text-[15px] not-italic text-white/85">
-          <p><a class="inline-block py-1 font-semibold text-white hover:underline underline-offset-4" href={site.phoneHref}>{site.phone}</a></p>
-          <p><a class="inline-block py-1 hover:underline underline-offset-4" href={`mailto:${site.email}`}>{site.email}</a></p>
-          <p>{site.address.street}<br />{site.address.city}, {site.address.region} {site.address.zip}</p>
-          <p><a class="inline-block py-1 underline underline-offset-4" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${site.address.street}, ${site.address.city}, ${site.address.region} ${site.address.zip}`)}`} target="_blank" rel="noopener">Get directions</a></p>
-          <p class="text-white/60">{site.hours}</p>
+      {groups.map((g) => (
+        <nav aria-label={g.title} class="ft-col">
+          <h2>{g.title}</h2>
+          <ul>{g.links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+        </nav>
+      ))}
+      <div class="ft-col ft-contact">
+        <h2>Get in touch</h2>
+        <address>
+          <a class="ft-phone" href={site.phoneHref}>{site.phone}</a>
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+          <span>{site.address.street}, {site.address.city}, {site.address.region} {site.address.zip}</span>
+          <a class="ft-dir" href={directions} target="_blank" rel="noopener">Get directions →</a>
         </address>
       </div>
     </div>
-
-    <div class="mt-14 flex flex-col gap-3 border-t border-white/15 pt-6 text-sm text-white/70 sm:flex-row sm:items-center sm:justify-between">
-      <p>© {year} {site.name}. All rights reserved.</p>
-      <ul class="flex gap-6">
-        <li><a class="inline-block py-1 hover:text-white hover:underline underline-offset-4" href="/privacy-policy">Privacy Policy</a></li>
-        <li><a class="inline-block py-1 hover:text-white hover:underline underline-offset-4" href="/terms">Terms &amp; Conditions</a></li>
+    <div class="ft-bar">
+      <p>© {year} {site.name}</p>
+      <p class="ft-hours">{site.hours}</p>
+      <ul>
+        <li><a href="/privacy-policy">Privacy</a></li>
+        <li><a href="/terms">Terms</a></li>
       </ul>
     </div>
   </div>
 </footer>
+<style>
+  .ft { position: relative; isolation: isolate; background: #1b1514; color: #fff; }
+  .ft-in { max-width: 80rem; margin: 0 auto; padding: 3rem 1rem 1.25rem; }
+  @media (min-width: 640px) { .ft-in { padding-inline: 1.5rem; } }
+  @media (min-width: 1024px) { .ft-in { padding-inline: 2rem; } }
+  .ft-grid { display: grid; gap: 2rem 1.5rem; grid-template-columns: repeat(2, 1fr); }
+  .ft-brand { grid-column: 1 / -1; }
+  @media (min-width: 1024px) { .ft-grid { grid-template-columns: 1.4fr .9fr .8fr .9fr 1.4fr; gap: 2rem; } .ft-brand { grid-column: auto; } }
+  .ft-logo { display: inline-block; padding: .4rem; border-radius: .6rem; background: #fff; }
+  .ft-logo img { display: block; height: 2.5rem; width: auto; }
+  .ft-brand p { margin-top: 1rem; max-width: 20rem; font-size: .875rem; line-height: 1.6; color: rgb(255 255 255 / .7); }
+  .ft-social { display: flex; flex-wrap: wrap; gap: .25rem 1rem; margin-top: .75rem; padding: 0; list-style: none; font-size: .8125rem; }
+  .ft-social a { display: inline-block; padding: .35rem 0; color: rgb(255 255 255 / .85); }
+  .ft h2 { font-family: 'Aboreto', serif; font-size: .8125rem; letter-spacing: .2em; text-transform: uppercase; color: #9fcdac; }
+  .ft-col ul { margin: .75rem 0 0; padding: 0; list-style: none; }
+  .ft-col li a { display: inline-block; padding: .22rem 0; font-size: .875rem; color: rgb(255 255 255 / .75); }
+  .ft a { text-underline-offset: 4px; transition: color .2s; }
+  .ft a:hover { color: #fff; text-decoration: underline; }
+  .ft-contact { grid-column: 1 / -1; }
+  @media (min-width: 1024px) { .ft-contact { grid-column: auto; } }
+  .ft-contact address { margin-top: .75rem; display: flex; flex-direction: column; gap: .35rem; font-style: normal; font-size: .875rem; line-height: 1.5; color: rgb(255 255 255 / .75); }
+  .ft-phone { font-weight: 600; color: #fff; font-size: .9375rem; }
+  .ft-dir { color: #9fcdac; font-weight: 600; }
+  .ft-bar { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid rgb(255 255 255 / .12); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem 1.5rem; font-size: .75rem; color: rgb(255 255 255 / .55); }
+  .ft-hours { flex: 1 1 18rem; }
+  .ft-bar ul { display: flex; gap: 1rem; margin: 0; padding: 0; list-style: none; }
+  .ft-bar ul a { display: inline-block; padding: .25rem 0; }
+</style>
