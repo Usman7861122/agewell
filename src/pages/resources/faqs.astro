@@ -1,0 +1,20 @@
+---
+import InfoPage from '../../components/sections/InfoPage.astro';
+import type { Img, Block } from '../../lib/info-types';
+import { site } from '../../lib/site';
+
+// Fresh Unsplash photos (free licence), used only on this page. Saved in /public/images/pages.
+const hero = (n: string, alt: string, w: number, h: number): Img => ({ src: `/images/pages/${n}.jpg`, srcset: `/images/pages/${n}-640.jpg 640w, /images/pages/${n}.jpg 1400w`, alt, w, h });
+const body = (n: string, alt: string, w: number, h: number): Img => ({ src: `/images/pages/${n}.jpg`, alt, w, h });
+const faqs = [{"q": "What is longevity medicine?", "a": "Longevity medicine focuses on the factors that influence how well you age, including metabolic health, physical function, sleep, nutrition and appropriate preventive care."}, {"q": "Do I need to be ill to request a consultation?", "a": "No. You can request a consultation to discuss healthy-aging goals or specific concerns. We will help determine whether our services fit your needs."}, {"q": "Does everyone need hormone therapy or medication?", "a": "No. Recommendations depend on your history, symptoms, test results and preferences. We discuss potential benefits, risks and alternatives before treatment."}, {"q": "Will this replace my regular doctor?", "a": "No. Our care is designed to work alongside your regular medical care."}, {"q": "Do you offer hair transplants?", "a": "Our GetHairMD partnership focuses on non-surgical hair restoration."}, {"q": "What aesthetic treatments do you offer?", "a": "Botox, Dysport, dermal fillers, Sculptra, microneedling and medical-grade skincare."}, {"q": "Do you offer virtual visits?", "a": "Eligible consultations and follow-up care may be available virtually. Please contact us."}, {"q": "What financing is available?", "a": "Financing options are available, including Cherry and CareCredit. Approval and terms depend on the financing provider."}, {"q": "Where are you located?", "a": "2436 Lamington Rd Suite 1, Bedminster, NJ 07921."}, {"q": "How do I request a consultation?", "a": "Use the Request Consultation button on any page or call (908) 458-6874."}];
+const blocks: Block[] = [
+  { type: 'faq', eyebrow: 'Frequently asked questions', heading: 'Quick answers', items: faqs },
+  { type: 'band', heading: 'Still have a question?', text: 'Our team is happy to help. Call or send us a message.', primary: { label: 'Contact Us', href: '/contact' }, secondary: { label: 'Call ' + site.phone, href: site.phoneHref } },
+];
+---
+<InfoPage slug="resources/faqs" name="FAQs" group="Resources" groupHref="/resources" title="Frequently Asked Questions" eyebrow="Resources · Bedminster, NJ" interest="not-sure"
+  seoTitle="FAQs | AgeWell Medicine & Aesthetics, Bedminster NJ"
+  seoDescription="Answers to common questions about longevity medicine, hair restoration, aesthetics, virtual visits and financing at AgeWell in Bedminster, NJ."
+  intro="Clear answers to the questions we hear most often."
+  heroImage={hero('faqs-hero', 'An open notebook and pen on a desk beside a laptop', 1400, 1400)} heroChip="Clear answers"
+  blocks={blocks} />

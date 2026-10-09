@@ -1,0 +1,96 @@
+---
+import Container from '../ui/Container.astro';
+import Button from '../ui/Button.astro';
+import { site, book, type Interest } from '../../lib/site';
+interface Img { src: string; alt: string; w: number; h: number; srcset?: string }
+interface Props {
+  title?: string; simple?: boolean; name: string; group?: string; groupHref?: string; eyebrow?: string; intro: string; interest: Interest;
+  heroImage?: Img; heroChip?: string; heroNote?: { title: string; text: string };
+}
+const { title, simple, name, group, groupHref, eyebrow, intro, interest, heroImage, heroChip, heroNote } = Astro.props;
+const city = `${site.address.city}, ${site.address.region}`;
+const nearby = ['Bedminster', 'Bridgewater', 'Bernardsville', 'Basking Ridge', 'Warren', 'Somerville'];
+---
+  <section class:list={["svc-hero depth-dark on-dark", { "svc-simple": simple }]} aria-labelledby="service-title">
+    <div aria-hidden="true" class="svc-glow"></div>
+    <Container>
+      <div class="svc-hero-grid">
+      <div class="svc-hero-col">
+          <nav aria-label="Breadcrumb" class="svc-crumbs">
+            <a href="/">Home</a><span aria-hidden="true">/</span>{group && groupHref && <Fragment><a href={groupHref}>{group}</a><span aria-hidden="true">/</span></Fragment>}<span aria-current="page">{name}</span>
+          </nav>
+          <p class="eyebrow svc-eyebrow">{eyebrow ?? `${group} · ${city}`}</p>
+          <h1 id="service-title" class="h-display svc-h1">{title ?? `${name} in ${city}`}</h1>
+          <p class="svc-intro">{intro}</p>
+          {!simple && <div class="svc-actions">
+            <Button href={book(interest)}>Request Consultation</Button>
+            <a href={site.phoneHref} class="btn btn-outline">Call {site.phone}</a>
+          </div>}
+          {!simple && <div class="svc-areas">
+            <p>Patients are welcome from across {nearby.slice(0, -1).join(', ')} and {nearby[nearby.length - 1]}, and the greater Somerset County area.</p>
+          </div>}
+        </div>
+  
+        {!simple && heroImage && <div class="svc-visual" aria-hidden="false">
+          <div class="svc-ring" aria-hidden="true"></div>
+          <div class="svc-frame">
+            <img src={heroImage.src} srcset={heroImage.srcset} sizes="(min-width:1024px) 480px, 0px" width={heroImage.w} height={heroImage.h} alt={heroImage.alt} loading="lazy" decoding="async" />
+            <div class="svc-shade" aria-hidden="true"></div>
+          </div>
+          <div class="svc-chip">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>
+            {heroChip ?? 'Physician-led care'}
+          </div>
+          <div class="svc-card">
+            {heroNote ? (
+              <span class="svc-card-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3z"/></svg></span>
+              <p><strong>{heroNote.title}</strong><span>{heroNote.text}</span></p>
+            ) : (
+              <Fragment>
+                <img src="/images/frank-dos-santos.jpg" width="667" height="833" alt="" loading="lazy" decoding="async" />
+                <p><strong>Dr. Frank Dos Santos, DO</strong><span>Fellowship trained in longevity medicine</span></p>
+              </Fragment>
+            )}
+          </div>
+        </div>}
+      </div>
+    </Container>
+  </section>
+
+
+<style>
+  .svc-hero { position: relative; isolation: isolate; overflow: hidden; background: #16321f; color: #fff; padding-block: clamp(5rem, 10vw, 8.5rem); }
+  .svc-glow { position: absolute; right: -6rem; top: -6rem; width: 24rem; height: 24rem; border-radius: 9999px; background: rgb(159 205 172 / .1); filter: blur(64px); pointer-events: none; }
+  .svc-hero-grid { display: grid; gap: 3rem; align-items: center; }
+  @media (min-width: 1024px) { .svc-hero-grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 4.5rem; } }
+  .svc-visual { display: none; position: relative; }
+  @media (min-width: 1024px) { .svc-visual { display: block; max-width: 28rem; justify-self: center; align-self: center; width: 100%; } }
+  .svc-ring { position: absolute; inset: -.875rem; border: 1px solid rgb(159 205 172 / .45); border-radius: 15.875rem 15.875rem 2.625rem 2.625rem; }
+  .svc-frame { position: relative; border-radius: 15rem 15rem 1.75rem 1.75rem; overflow: hidden; aspect-ratio: 4 / 5; box-shadow: 0 40px 70px -30px rgb(0 0 0 / .65); }
+  .svc-frame img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.2s ease; }
+  .svc-visual:hover .svc-frame img { transform: scale(1.04); }
+  .svc-shade { position: absolute; inset: 0; background: linear-gradient(to top, rgb(22 50 31 / .75), transparent 45%), linear-gradient(to bottom right, rgb(159 205 172 / .12), transparent 50%); }
+  .svc-chip { position: absolute; top: 3.5rem; left: -2.25rem; display: inline-flex; align-items: center; gap: .5rem; padding: .625rem 1rem; border-radius: 9999px; background: rgb(255 255 255 / .92); color: #265734; font-size: .875rem; font-weight: 600; box-shadow: 0 14px 30px -12px rgb(0 0 0 / .5); animation: svc-float 6s ease-in-out infinite; }
+  .svc-card { position: absolute; left: -1.25rem; right: -1.25rem; bottom: 1.75rem; display: flex; align-items: center; gap: .875rem; padding: .875rem 1.125rem .875rem .875rem; border-radius: 1.125rem; background: rgb(255 255 255 / .94); color: #221a19; box-shadow: 0 20px 40px -16px rgb(0 0 0 / .55); backdrop-filter: blur(8px); animation: svc-float 7s ease-in-out -2s infinite; }
+  .svc-card img { flex: none; width: 3.25rem; height: 3.25rem; border-radius: 9999px; object-fit: cover; object-position: top; }
+  .svc-card-icon { flex: none; display: grid; place-items: center; width: 3.25rem; height: 3.25rem; border-radius: 9999px; background: #265734; color: #fff; }
+  .svc-card p { line-height: 1.3; }
+  .svc-card strong { display: block; font-size: .9375rem; }
+  .svc-card span { display: block; margin-top: .125rem; font-size: .8125rem; color: rgb(34 26 25 / .7); }
+  @keyframes svc-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  @media (prefers-reduced-motion: reduce) { .svc-chip, .svc-card { animation: none; } .svc-frame img { transition: none; } .svc-visual:hover .svc-frame img { transform: none; } }
+  .svc-hero-col { max-width: 46rem; }
+  .svc-crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; font-size: .8125rem; letter-spacing: .03em; color: rgb(255 255 255 / .6); }
+  .svc-crumbs a:hover { color: #fff; }
+  .svc-crumbs [aria-current] { color: rgb(255 255 255 / .9); }
+  .svc-eyebrow { margin-top: 2.5rem; color: #9fcdac; }
+  .svc-h1 { margin-top: 1.25rem; font-size: clamp(2.25rem, 5vw, 3.75rem); line-height: 1.08; }
+  .svc-intro { margin-top: 1.75rem; max-width: 38rem; font-size: 1.125rem; line-height: 1.75; color: rgb(255 255 255 / .85); }
+  .svc-actions { margin-top: 2.5rem; display: flex; flex-wrap: wrap; gap: .75rem; }
+  .svc-areas { margin-top: 3.5rem; padding-top: 1.5rem; border-top: 1px solid rgb(255 255 255 / .15); }
+  .svc-areas p { max-width: 38rem; font-size: .875rem; line-height: 1.7; letter-spacing: .02em; color: rgb(255 255 255 / .6); }
+  .svc-simple { padding-block: clamp(3.5rem, 7vw, 5.5rem); }
+  .svc-simple .svc-hero-grid { display: block; }
+  .svc-simple .svc-h1 { font-size: clamp(2rem, 4.5vw, 3.25rem); }
+  .svc-simple .svc-intro { margin-top: 1.25rem; }
+</style>

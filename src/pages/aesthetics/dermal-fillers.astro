@@ -1,0 +1,37 @@
+---
+import ServicePage from '../../components/sections/ServicePage.astro';
+import type { ServiceImage } from '../../components/sections/ServicePage.astro';
+
+// Fresh Unsplash photos (free licence), used only on this page. Saved in /public/images/aesthetics.
+const heroImage: ServiceImage = { src: '/images/aesthetics/dermal-fillers-hero.jpg', srcset: '/images/aesthetics/dermal-fillers-hero-640.jpg 640w, /images/aesthetics/dermal-fillers-hero.jpg 1400w', alt: "A woman in a white off-shoulder top touching her face and smiling softly", w: 1400, h: 933 };
+const images: [ServiceImage, ServiceImage, ServiceImage] = [
+  { src: '/images/aesthetics/dermal-fillers-a.jpg', alt: "A patient receiving a precise injection near the cheek from a clinician in blue gloves", w: 1400, h: 933 },
+  { src: '/images/aesthetics/dermal-fillers-b.jpg', alt: "A woman in a white robe applying facial mist in front of a round mirror", w: 1400, h: 1867 },
+  { src: '/images/aesthetics/dermal-fillers-c.jpg', alt: "A smiling woman with a white headband and cream on her cheeks", w: 1400, h: 1400 },
+];
+// TODO: provider to review all clinical wording on this page before publication.
+---
+<ServicePage
+  slug="aesthetics/dermal-fillers"
+  name="Dermal Fillers"
+  group="Aesthetics"
+  groupHref="/aesthetics"
+  eyebrow="Aesthetics · Bedminster, NJ"
+  interest="aesthetics"
+  seoTitle="Dermal Fillers in Bedminster, NJ | AgeWell Medicine & Aesthetics"
+  seoDescription="Dermal fillers in Bedminster, NJ. Personalized care for facial volume, lips and contours with a natural-looking approach. Request a consultation at AgeWell."
+  intro="Dermal fillers can help restore facial volume and refine contours. Your provider listens to your goals and explains what may be right for you."
+  quickFacts={[]}
+  heroChip="Volume and contour"
+  whatIs={{ heading: "Support for volume, contours and lips", paragraphs: ["Dermal fillers are injectable gels used to add volume or smooth lines in selected areas of the face. Some people also use them to refine the lips.", "Face shape changes over time. We look at your whole face, not just one spot, and plan treatment in a way that keeps you looking like you."] }}
+  looks={{ heading: "Areas we can discuss", intro: "Treatment is planned around your face and your preferences.", items: [{ title: "Cheeks", body: "Support for mid-face volume and contour." }, { title: "Lips", body: "Definition or fullness, if that is your goal." }, { title: "Smile lines", body: "Softening lines around the nose and mouth." }, { title: "Chin and jawline", body: "Balance and contour in the lower face." }, { title: "Under-eye area", body: "A conversation about whether treatment may suit you." }, { title: "Your goals", body: "What to change, and what to keep." }] }}
+  who={{ heading: "Who may be a good fit", intro: "A consultation helps you decide if fillers are right for you.", bullets: ["You notice volume loss in your face", "You want to refine your lips", "You like a natural look", "You want a full-face plan", "You want to understand the risks", "You want gradual change"] }}
+  steps={[{ title: "Talk", body: "Tell us about your goals and any past treatments." }, { title: "Review", body: "Your provider reviews your history and your face." }, { title: "Plan", body: "We explain your options, benefits and risks." }, { title: "Follow up", body: "We check in and adjust your plan over time." }]}
+  why={[{ title: "Medical team", body: "Aesthetic care in a physician-led practice." }, { title: "Whole-face view", body: "We plan around balance, not one spot." }, { title: "Personal", body: "Your goals lead the plan." }, { title: "Local", body: "A friendly office in Bedminster." }]}
+  faqs={[{ q: "What are dermal fillers?", a: "They are injectable gels used to add volume or soften lines in selected areas. Your provider explains the options." }, { q: "Will I look natural?", a: "We aim for a balanced, natural look and talk through your goals first." }, { q: "How long do they last?", a: "This varies by product, area and person. We discuss what to expect for you." }, { q: "Is there downtime?", a: "Some swelling or bruising may happen. We give clear aftercare guidance." }, { q: "What are the risks?", a: "All treatments carry some risk. We review potential side effects at your consultation." }, { q: "What does it cost?", a: "Pricing depends on your plan. Please contact our team. Financing may be available, including Cherry and CareCredit." }]}
+  related={[{ title: "Sculptra", body: "Gradual support for facial volume.", href: "/aesthetics/sculptra" }, { title: "Botox", body: "Soften expression lines.", href: "/aesthetics/botox" }, { title: "Microneedling", body: "Support skin texture and tone.", href: "/aesthetics/microneedling" }]}
+  relatedHeading="Explore more care"
+  closing={{ heading: "Plan a balanced, natural look.", text: "Request a consultation and we will help you plan your next step." }}
+  images={images}
+  heroImage={heroImage}
+/>

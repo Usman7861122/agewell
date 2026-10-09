@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import Heading from '../../components/ui/Heading.astro';
+import Button from '../../components/ui/Button.astro';
+import { book } from '../../lib/site';
+const brands = [
+  { name: 'Skinbetter', href: '/store/skinbetter', text: 'Science-backed skincare solutions designed to rejuvenate and protect your skin.' },
+  { name: 'Biote Nutraceuticals', href: '/store/biote-nutraceuticals', text: 'Nutraceuticals that support hormone balance and overall well-being.' },
+];
+---
+<BaseLayout title="Store | AgeWell Medicine & Aesthetics, Bedminster NJ" description="Shop Skinbetter skincare and Biote Nutraceuticals through AgeWell Medicine & Aesthetics in Bedminster, NJ.">
+  <Section>
+    <Container>
+      <Heading as="h1" size="xl" eyebrow="AgeWell" center id="store-title">Store</Heading>
+      <ul class="mx-auto mt-14 grid max-w-4xl gap-6 sm:grid-cols-2">
+        {brands.map((b) => (
+          <li>
+            <a href={b.href} class="spot card-line group flex h-full flex-col rounded-2xl bg-deep p-9 text-white on-dark transition duration-300 hover:-translate-y-1 hover:shadow-[0_28px_40px_-24px_rgba(22,50,31,.7)] motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+              <span class="block h-px w-10 bg-leaf transition-all duration-500 group-hover:w-20 motion-reduce:transition-none" aria-hidden="true"></span>
+              <h2 class="mt-5 font-display text-2xl uppercase tracking-wide">{b.name}</h2>
+              <p class="mt-3 flex-1 text-white/85">{b.text}</p>
+              <span class="mt-6 inline-flex items-center gap-2 font-semibold text-leaf">View <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span></span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <div class="mt-14 text-center"><Button href={book()}>Request Consultation</Button></div>
+    </Container>
+  </Section>
+</BaseLayout>

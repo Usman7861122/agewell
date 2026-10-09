@@ -1,0 +1,37 @@
+---
+import ServicePage from '../../components/sections/ServicePage.astro';
+import type { ServiceImage } from '../../components/sections/ServicePage.astro';
+
+// Fresh Unsplash photos (free licence), used only on this page. Saved in /public/images/aesthetics.
+const heroImage: ServiceImage = { src: '/images/aesthetics/botox-hero.jpg', srcset: '/images/aesthetics/botox-hero-640.jpg 640w, /images/aesthetics/botox-hero.jpg 1400w', alt: "A smiling older woman with short dark hair and a warm expression", w: 1400, h: 886 };
+const images: [ServiceImage, ServiceImage, ServiceImage] = [
+  { src: '/images/aesthetics/botox-a.jpg', alt: "A close-up of an older woman's face showing natural fine lines", w: 1400, h: 2489 },
+  { src: '/images/aesthetics/botox-b.jpg', alt: "A patient resting with closed eyes during a facial treatment while a clinician works with fine instruments", w: 1400, h: 931 },
+  { src: '/images/aesthetics/botox-c.jpg', alt: "A woman relaxing with closed eyes during a facial treatment", w: 1400, h: 2099 },
+];
+// TODO: provider to review all clinical wording on this page before publication.
+---
+<ServicePage
+  slug="aesthetics/botox"
+  name="Botox"
+  group="Aesthetics"
+  groupHref="/aesthetics"
+  eyebrow="Aesthetics · Bedminster, NJ"
+  interest="aesthetics"
+  seoTitle="Botox in Bedminster, NJ | AgeWell Medicine & Aesthetics"
+  seoDescription="Botox in Bedminster, NJ. Physician-led aesthetic care for expression lines, with a personalized plan and a thoughtful, natural-looking approach. Request a consultation."
+  intro="Botox is a neuromodulator used to soften expression lines. At AgeWell, your provider reviews your face, your goals and your history, then explains whether it may be right for you."
+  quickFacts={[]}
+  heroChip="Expression lines"
+  whatIs={{ heading: "Softening expression lines, with a plan made for you", paragraphs: ["Botox is an injectable treatment that temporarily relaxes the small muscles behind certain expression lines, such as frown lines, forehead lines and crow's feet.", "We focus on a balanced, natural-looking approach. Your provider talks with you about your goals, where you move your face most and what to expect before any treatment."] }}
+  looks={{ heading: "Areas we can discuss", intro: "Your provider helps you decide which areas matter most to you.", items: [{ title: "Frown lines", body: "The lines between the brows that can make you look tired or upset." }, { title: "Forehead lines", body: "Horizontal lines that show when you raise your brows." }, { title: "Crow's feet", body: "Fine lines at the outer corners of the eyes." }, { title: "Brow shape", body: "Support for a more relaxed, open look around the eyes, when appropriate." }, { title: "Other concerns", body: "Other areas or concerns you want to talk about." }, { title: "Your goals", body: "What you want to change, and what you want to keep." }] }}
+  who={{ heading: "Who may be a good fit", intro: "A consultation is the best way to find out if Botox suits you.", bullets: ["You notice lines when you frown or squint", "You want a natural, rested look", "You prefer a plan from a medical team", "You want to talk through options first", "You want clear answers about what to expect", "You like regular check-ins"] }}
+  steps={[{ title: "Talk", body: "Share your goals and any past treatments." }, { title: "Review", body: "Your provider reviews your history and examines your face." }, { title: "Plan", body: "We explain options, what to expect and any risks, and agree on a plan." }, { title: "Follow up", body: "We check in and adjust your plan over time." }]}
+  why={[{ title: "Medical team", body: "Aesthetic care in a physician-led practice." }, { title: "Natural approach", body: "A thoughtful look that keeps your expression." }, { title: "Personal", body: "A plan made for your face and your goals." }, { title: "Local", body: "A friendly office in Bedminster, close to home." }]}
+  faqs={[{ q: "What is Botox?", a: "Botox is a prescription injectable used to temporarily soften expression lines. Your provider explains how it works and who it may suit." }, { q: "Does it look natural?", a: "Our approach aims for a natural, balanced look. Your provider talks with you about your goals before treatment." }, { q: "How long does it last?", a: "This varies from person to person. We talk about what to expect for you at your consultation." }, { q: "Is there downtime?", a: "Many people return to their day soon after. Your provider gives you clear aftercare guidance." }, { q: "What are the risks?", a: "All treatments carry some risk. We review potential side effects and who should not have treatment at your consultation." }, { q: "How much does it cost?", a: "Pricing depends on your plan. Please contact our team. Financing options may be available, including Cherry and CareCredit, subject to approval." }]}
+  related={[{ title: "Dysport", body: "Another neuromodulator option for expression lines.", href: "/aesthetics/dysport" }, { title: "Dermal Fillers", body: "Support for facial volume and contours.", href: "/aesthetics/dermal-fillers" }, { title: "Medical-Grade Skincare", body: "Skincare chosen to support your skin at home.", href: "/aesthetics/skincare" }]}
+  relatedHeading="Explore more care"
+  closing={{ heading: "Start with a conversation about your goals.", text: "Request a consultation and we will help you plan your next step." }}
+  images={images}
+  heroImage={heroImage}
+/>

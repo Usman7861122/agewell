@@ -1,0 +1,85 @@
+---
+import ServicePage from '../../components/sections/ServicePage.astro';
+import { src, srcset } from '../../lib/images';
+import type { ServiceImage } from '../../components/sections/ServicePage.astro';
+
+// TODO: swap these three for the licensed Shutterstock photos (public/images/services/evaluation-*.jpg) once downloaded.
+const images = [
+  { src: src('svcEval', 1080), srcset: srcset('svcEval', [480, 768, 1080]), alt: 'Two people sitting at a table writing on a clipboard', w: 1080, h: 1350 },
+  { src: src('consult', 1080), srcset: srcset('consult', [480, 768, 1080]), alt: 'A doctor with a stethoscope in a clinic', w: 1080, h: 1350 },
+  { src: src('longevity', 1080), srcset: srcset('longevity', [480, 768, 1080]), alt: 'An older woman in a bright gym getting ready to exercise', w: 1080, h: 810 },
+] as [ServiceImage, ServiceImage, ServiceImage];
+// Free-licence Unsplash photo by Hoseung Han, saved locally.
+const heroImage: ServiceImage = { src: '/images/services/evaluation-hero.jpg', srcset: '/images/services/evaluation-hero-640.jpg 640w, /images/services/evaluation-hero.jpg 1080w', alt: 'Two adults walking together along a path in an autumn forest', w: 1080, h: 1350 };
+// TODO: provider to review all clinical wording on this page before publication.
+---
+<ServicePage
+  slug="evaluation"
+  name="Longevity Evaluation"
+  group="Longevity Medicine"
+  groupHref="/longevity"
+  interest="longevity"
+  seoTitle="Longevity Evaluation in Bedminster, NJ | AgeWell Medicine & Aesthetics"
+  seoDescription="Start with a physician-led longevity evaluation in Bedminster, NJ. We review your health history and goals, recommend appropriate testing and build a personalized healthy-aging plan."
+  intro="Dr. Frank Dos Santos, DO, and our team start every longevity plan with a careful look at your health history, concerns and goals, at our Bedminster office."
+  quickFacts={['Physician-led care', 'Personalized plan', 'Works alongside your regular doctor']}
+  whatIs={{
+    heading: 'What is a longevity evaluation?',
+    paragraphs: [
+      'Healthspan is the time you spend living in good health. A longevity evaluation is the first step toward protecting it. We listen to your story, review your history and look at the factors that shape how well you age.',
+      'Then we recommend an examination and testing where appropriate. You leave with a clear, personalized plan that works alongside your regular medical care.',
+    ],
+  }}
+  looks={{
+    heading: 'What your evaluation may cover',
+    intro: 'Every evaluation is different. Your clinician decides what is useful for you, based on your history, symptoms and goals.',
+    items: [
+      { title: 'Health history and goals', body: 'Your medical history, family background, current concerns and what you want more of in the years ahead.' },
+      { title: 'Metabolic health', body: 'Weight, body composition, blood pressure and glucose regulation, which affect energy and long-term health.' },
+      { title: 'Cardiovascular risk', body: 'A look at the factors that influence heart and vessel health, with testing when it is appropriate.' },
+      { title: 'Hormone health', body: 'Symptoms and history that may point to hormonal changes, with testing to learn whether treatment makes sense.' },
+      { title: 'Sleep, stress and habits', body: 'Daily routines, recovery and the practical support you need to make changes that last.' },
+      { title: 'Nutrition and gut health', body: 'How you eat and digest, and whether further evaluation is useful for your symptoms.' },
+    ],
+  }}
+  who={{
+    heading: 'Who a longevity evaluation can help',
+    intro: 'You do not need to be ill to ask for an evaluation. Many patients come to us to plan ahead. Others come with a specific concern.',
+    bullets: [
+      'You want a clear plan for healthy aging',
+      'You feel less energetic than you used to',
+      'You are concerned about weight or metabolic health',
+      'You notice possible signs of hormonal change',
+      'You have a family history you want to understand',
+      'You want one team to look at the whole picture',
+    ],
+  }}
+  steps={[
+    { title: 'Consult', body: 'Tell us what matters to you. We review your goals, symptoms and health history.' },
+    { title: 'Evaluate', body: 'Your clinician recommends an examination and testing where appropriate, then reviews the findings with you.' },
+    { title: 'Personalize', body: 'Together, we build a plan that may include nutrition, exercise, sleep strategies and medical treatments when indicated.' },
+    { title: 'Follow up', body: 'We check your progress, talk about how you feel and adjust your plan as your needs change.' },
+  ]}
+  why={[
+    { title: 'Physician-led', body: 'Your care is guided by a fellowship-trained longevity physician.' },
+    { title: 'Personal', body: 'We take time to listen, explain your options and plan with you.' },
+    { title: 'Whole picture', body: 'Metabolic, hormone and lifestyle care are looked at together.' },
+    { title: 'Local', body: 'A friendly office in Bedminster, close to home for patients across Somerset County.' },
+  ]}
+  faqs={[
+    { q: 'What is a longevity evaluation?', a: 'It is a first visit focused on your health history, concerns and goals. Your clinician may recommend an examination and testing, then builds a personalized plan for healthy aging.' },
+    { q: 'Do I need to be sick to book one?', a: 'No. You can request a consultation to plan ahead or to talk about a specific concern. We will help you decide whether our services fit your needs.' },
+    { q: 'What tests might I have?', a: 'It depends on your history, symptoms and goals. Your clinician explains why each test is recommended before you decide.' },
+    { q: 'Will this replace my primary care doctor?', a: 'No. Our care is designed to work alongside your regular medical care.' },
+    { q: 'Can I have a virtual visit?', a: 'Virtual visits may be available for eligible consultations and follow-up care. Contact us to find out whether a virtual appointment fits your needs.' },
+    { q: 'What about cost and payment options?', a: 'Please contact our team about pricing. Financing options are available, including Cherry and CareCredit. Approval and terms depend on the financing provider.' },
+  ]}
+  related={[
+    { title: 'Metabolic Health and Medical Weight Management', body: 'Nutrition, lifestyle support and medication when appropriate, with ongoing monitoring.', href: '/longevity/metabolic-health' },
+    { title: 'Hormone Care', body: 'Individualized evaluation for men and women with symptoms that may relate to hormonal changes.', href: '/longevity/hormone-care' },
+    { title: 'Functional Medicine', body: 'How nutrition, sleep, stress and digestion may contribute to your symptoms.', href: '/longevity/functional-medicine' },
+  ]}
+  closing={{ heading: 'More healthy years start with one visit.', text: 'Request a consultation and we will help you plan your next step.' }}
+  images={images}
+  heroImage={heroImage}
+/>

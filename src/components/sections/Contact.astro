@@ -1,0 +1,19 @@
+---
+import Img from '../ui/Img.astro';
+import ContactForm from '../../islands/interactive/ContactForm';
+import { site } from '../../lib/site';
+---
+<!-- Final invitation + short inquiry form (brief sections 12 and "Booking and inquiry paths") -->
+<section id="consultation" class="depth-dark relative isolate overflow-hidden bg-ink py-16 text-white on-dark md:py-24" aria-labelledby="cta-title">
+  <Img name="cta" decorative class="absolute inset-0 -z-20 h-full w-full object-cover" sizes="100vw" w={1600} h={1067} />
+  <div class="absolute inset-0 -z-10 bg-gradient-to-r from-ink/90 via-ink/75 to-ink/60" aria-hidden="true"></div>
+  <div class="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[1.1fr_1fr] lg:gap-20 lg:px-8">
+    <div>
+      <p class="eyebrow mb-4">Request a consultation</p>
+      <h2 id="cta-title" class="h-display text-4xl sm:text-5xl lg:text-6xl">Make a plan for the way you want to age</h2>
+      <p class="mt-6 max-w-xl text-lg text-white/95">Whether your priorities are long-term health, hair restoration or aesthetic care, we can help you explore your next step.</p>
+      <p class="mt-8">Prefer to talk? <a class="font-semibold underline underline-offset-4" href={site.phoneHref}>Call {site.phone}</a></p>
+    </div>
+    <ContactForm client:visible />
+  </div>
+</section>

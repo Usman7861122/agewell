@@ -1,0 +1,40 @@
+---
+import Section from '../ui/Section.astro';
+import Container from '../ui/Container.astro';
+import Heading from '../ui/Heading.astro';
+import Button from '../ui/Button.astro';
+import Img from '../ui/Img.astro';
+import FadeIn from '../../islands/animations/FadeIn';
+import { book } from '../../lib/site';
+---
+<Section id="hair" labelledby="hair-title">
+  <Container>
+    <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+      <FadeIn client:visible className="lg:order-2">
+        <div class="relative">
+          <img
+            src="/images/hair.jpg"
+            srcset="/images/hair-640.jpg 640w, /images/hair.jpg 1200w"
+            sizes="(min-width:1024px) 560px, 100vw"
+            width="1200"
+            height="1799"
+            loading="lazy"
+            decoding="async"
+            alt="A clinician examining a patient's scalp with a scalp-imaging device during a hair restoration consultation"
+            class="aspect-[4/5] w-full rounded-3xl object-cover object-[50%_35%]"
+          />
+          <span class="absolute bottom-5 left-5 rounded-full bg-white px-4 py-2 font-display text-sm uppercase tracking-[.12em] text-brand shadow">Hair Restoration</span>
+        </div>
+      </FadeIn>
+      <FadeIn client:visible delay={0.1} className="lg:order-1">
+        <p class="eyebrow mb-4 text-brand">Non-Surgical Hair Restoration in Partnership with GetHairMD</p>
+        <Heading id="hair-title">A personalized approach to fuller-looking hair</Heading>
+        <p class="mt-6 text-lg">AgeWell Medicine &amp; Aesthetics partners with GetHairMD to offer non-surgical hair restoration for men and women. We begin by understanding your hair-loss concerns and reviewing potential contributing factors. Your consultation helps determine which available treatment options may be appropriate for you.</p>
+        <div class="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-6">
+          <Button href={book('hair')}>Request Consultation</Button>
+          <a href="/hair-restoration" class="link-arrow" aria-label="Explore non-surgical hair restoration">Learn More <span aria-hidden="true">→</span></a>
+        </div>
+      </FadeIn>
+    </div>
+  </Container>
+</Section>

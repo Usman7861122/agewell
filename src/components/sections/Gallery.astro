@@ -1,0 +1,27 @@
+---
+import Section from '../ui/Section.astro';
+import Container from '../ui/Container.astro';
+import Heading from '../ui/Heading.astro';
+import Button from '../ui/Button.astro';
+import ElasticGallery from '../../islands/interactive/ElasticGallery';
+// The practice's own office photos (same set as the Virtual Visits page).
+const items = [
+  { id: '01', title: 'Welcome', category: 'Our office', src: '/images/virtual-tour/tour-1.jpg', alt: 'The front porch and entrance of the AgeWell office in Bedminster' },
+  { id: '02', title: 'Treatment room', category: 'Calm and private', src: '/images/virtual-tour/tour-3.jpg', alt: 'A bright treatment room with a reclining chair and wooden cabinet' },
+  { id: '03', title: 'Meet Tara', category: 'Your provider', src: '/images/virtual-tour/tour-4.jpg', alt: 'Tara Hibbett seated in a treatment chair, smiling' },
+  { id: '04', title: 'Our team', category: 'Here for you', src: '/images/virtual-tour/tour-8.jpg', alt: 'The AgeWell team posing around a treatment chair' },
+  { id: '05', title: 'Care together', category: 'Personal care', src: '/images/virtual-tour/tour-10.jpg', alt: 'A team member reaching into a supply cabinet' },
+];
+---
+<Section labelledby="gallery-title">
+  <Container>
+    <div class="mx-auto max-w-3xl text-center">
+      <Heading id="gallery-title" eyebrow="Gallery" center>A look inside our Bedminster office</Heading>
+      <p class="mt-6 text-lg">Take a peek at where we welcome you. Hover over a photo to see more.</p>
+    </div>
+    <div class="mt-12">
+      <ElasticGallery client:visible items={items} defaultId="02" />
+    </div>
+    <div class="mt-10 text-center"><Button href="/resources/virtual-visits">View More</Button></div>
+  </Container>
+</Section>

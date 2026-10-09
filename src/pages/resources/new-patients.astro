@@ -1,0 +1,39 @@
+---
+import InfoPage from '../../components/sections/InfoPage.astro';
+import type { Img, Block } from '../../lib/info-types';
+import { site } from '../../lib/site';
+
+// Fresh Unsplash photos (free licence), used only on this page. Saved in /public/images/pages.
+const hero = (n: string, alt: string, w: number, h: number): Img => ({ src: `/images/pages/${n}.jpg`, srcset: `/images/pages/${n}-640.jpg 640w, /images/pages/${n}.jpg 1400w`, alt, w, h });
+const body = (n: string, alt: string, w: number, h: number): Img => ({ src: `/images/pages/${n}.jpg`, alt, w, h });
+const blocks: Block[] = [
+  { type: 'split', eyebrow: 'Your first visit', heading: 'A friendly start, with time to talk', paragraphs: ['Your first visit is a conversation. We want to hear your story, your concerns and your goals.', 'Your provider explains what we can offer, answers your questions and agrees on a next step with you.'], image: body('new-patients-body', 'Hands filling in a patient form on a clipboard', 1400, 933), bullets: ['Time to talk and ask questions', 'A clear explanation of your options', 'A next step that feels right to you'] },
+  { type: 'steps', eyebrow: 'How it works', heading: 'Four simple steps', items: [
+    { title: 'Request', body: 'Send a consultation request or call our office.' },
+    { title: 'Confirm', body: 'Our team confirms your visit type and time.' },
+    { title: 'Prepare', body: 'Bring your questions and any health information you have.' },
+    { title: 'Visit', body: 'Meet your provider and plan your next step.' },
+  ] },
+  { type: 'cards', eyebrow: 'Getting ready', heading: 'What to bring', tone: 'white', items: [
+    { title: 'Medicines list', body: 'Prescriptions, vitamins and supplements you take.' },
+    { title: 'Health history', body: 'Past conditions, surgeries and allergies.' },
+    { title: 'Recent test results', body: 'Any lab results or records from other doctors, if you have them.' },
+    { title: 'Your questions', body: 'Write down what matters most to you.' },
+    { title: 'Photo ID', body: 'Please bring a photo ID and your insurance card if you have one.' },
+    { title: 'Your goals', body: 'What you hope to feel, look like or change.' },
+  ] },
+  { type: 'faq', eyebrow: 'Good to know', heading: 'New patient questions', items: [
+    { q: 'How do I book?', a: 'Request a consultation online or call our office. Our team helps you choose the right visit type.' },
+    { q: 'Do I need a referral?', a: 'Please contact our team. We will tell you if one is needed for your visit.' },
+    { q: 'Where are you located?', a: site.address.street + ', ' + site.address.city + ', ' + site.address.region + ' ' + site.address.zip + '.' },
+    { q: 'Can I have a virtual visit?', a: 'Some consultations and follow-up visits may be available virtually. Ask our team.' },
+  ] },
+];
+// TODO: practice to confirm what new patients should bring and any forms required.
+---
+<InfoPage slug="resources/new-patients" name="New Patients" group="Resources" groupHref="/resources" title="New Patients" eyebrow="Resources · Bedminster, NJ" interest="not-sure"
+  seoTitle="New Patients | AgeWell Medicine & Aesthetics, Bedminster NJ"
+  seoDescription="New to AgeWell? Learn what to expect at your first visit in Bedminster, NJ, what to bring and how to request a consultation."
+  intro="New to AgeWell? Here is what to expect at your first visit, and how to get ready."
+  heroImage={hero('new-patients-hero', 'A patient intake form on a clipboard with reading glasses', 1400, 2102)} heroChip="Welcome"
+  blocks={blocks} />

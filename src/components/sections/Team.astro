@@ -1,0 +1,61 @@
+---
+import Section from '../ui/Section.astro';
+import Container from '../ui/Container.astro';
+import Heading from '../ui/Heading.astro';
+import Button from '../ui/Button.astro';
+import FadeIn from '../../islands/animations/FadeIn';
+const people = [
+  {
+    name: 'Dr. Frank Dos Santos', first: 'Dr. Dos Santos', credential: 'DO', photo: '/images/frank-dos-santos.jpg', w: 667, h: 833,
+    role: 'Medical Director and Co-Founder',
+    note: 'Fellowship trained in longevity medicine, guiding care that focuses on healthspan and long-term health.',
+    tags: ['Longevity Medicine', 'Medical Director'],
+  },
+  {
+    name: 'Tara Hibbett', first: 'Tara', credential: 'PA-C', photo: '/images/tara-hibbett.jpg', w: 600, h: 750, // TODO: confirm professional title and credentials before publication
+    role: 'Co-Founder',
+    note: 'Helps bring longevity medicine and aesthetic care together in a personal, healthy-aging plan.',
+    tags: ['Aesthetics', 'Co-Founder'],
+  },
+];
+---
+<Section tone="mist" id="providers" labelledby="providers-title">
+  <Container>
+    <div class="mx-auto max-w-3xl text-center">
+      <Heading id="providers-title" eyebrow="Meet our providers" center>Personalized care with medical leadership</Heading>
+      <p class="mt-6 text-lg">AgeWell Medicine &amp; Aesthetics was co-founded by Dr. Frank Dos Santos and Tara Hibbett. Dr. Dos Santos is fellowship trained in longevity medicine. Together, our providers bring longevity medicine and aesthetic care into a personalized approach to healthy aging. We take time to understand your goals, explain your options and develop a plan with you.</p>
+    </div>
+    <div class="mx-auto mt-16 grid max-w-5xl gap-12 sm:grid-cols-2 sm:gap-14">
+      {people.map((p, i) => (
+        <FadeIn client:visible delay={i * 0.08} className="h-full">
+          <a href="/providers" class="spot card-line group relative block overflow-hidden rounded-2xl bg-deep outline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand" aria-label={`Meet ${p.name}`}>
+            <img
+              src={p.photo}
+              width={p.w}
+              height={p.h}
+              loading="lazy"
+              decoding="async"
+              alt={`Portrait of ${p.name}`}
+              class="aspect-[4/5] w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04] group-focus-visible:scale-[1.04] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+            />
+            <ul class="absolute left-5 top-5 flex flex-wrap gap-2" aria-label={`${p.first} focus`}>
+              {p.tags.map((t) => <li class="rounded-full bg-white/80 px-3 py-1 text-xs font-semibold text-brand backdrop-blur">{t}</li>)}
+            </ul>
+            <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-deep via-deep/80 to-transparent px-6 pb-6 pt-28 text-left">
+              <span class="block h-px w-10 bg-leaf transition-all duration-500 group-hover:w-20 group-focus-visible:w-20 motion-reduce:transition-none" aria-hidden="true"></span>
+              <p class="mt-3 text-xs font-semibold uppercase tracking-[0.18em] text-leaf">{p.role}</p>
+              <h3 class="mt-1 font-display text-2xl uppercase tracking-wide text-white sm:text-[1.7rem]">{p.name}{p.credential && <span class="text-leaf">, {p.credential}</span>}</h3>
+              <div class="grid grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-out motion-reduce:transition-none [@media(hover:hover)]:grid-rows-[0fr] [@media(hover:hover)]:group-hover:grid-rows-[1fr] [@media(hover:hover)]:group-focus-visible:grid-rows-[1fr]">
+                <div class="overflow-hidden">
+                  <p class="pt-3 text-sm leading-relaxed text-white/90">{p.note}</p>
+                  <span class="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-leaf">Learn More <span aria-hidden="true">→</span></span>
+                </div>
+              </div>
+            </div>
+          </a>
+        </FadeIn>
+      ))}
+    </div>
+    <div class="mt-12 text-center"><Button href="/providers">Meet Providers</Button></div>
+  </Container>
+</Section>

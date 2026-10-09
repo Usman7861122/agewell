@@ -1,0 +1,31 @@
+---
+import { navItems, secondaryNav } from '../../data/navigation';
+import { site, book } from '../../lib/site';
+import SiteNav from '../../islands/interactive/SiteNav';
+import MobileMenu from '../../islands/interactive/MobileMenu';
+const current = Astro.url.pathname;
+const cta = { label: 'Consultation', href: book() };
+---
+<header class="sticky top-0 z-50 bg-white shadow-[0_1px_0_var(--color-line)]">
+  <!-- Utility bar: secondary navigation, phone, location -->
+  <div class="hidden bg-ink text-white md:block on-dark">
+    <div class="mx-auto flex max-w-[1440px] items-center justify-between px-6 py-2 text-[13px]">
+      <p class="opacity-90">Physician-led longevity medicine · <span class="whitespace-nowrap">{site.address.city}, {site.address.region}</span></p>
+      <div class="flex items-center gap-6">
+        <ul class="flex items-center gap-5">
+          {secondaryNav.map((l) => <li><a class="inline-block py-1 hover:underline underline-offset-4" href={l.href}>{l.label}</a></li>)}
+        </ul>
+        <a class="inline-block py-1 font-semibold tracking-wide hover:underline underline-offset-4" href={site.phoneHref}>{site.phone}</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-4 py-3 sm:px-6">
+    <a href="/" class="block shrink-0" aria-label="AgeWell Medicine & Aesthetics, home">
+      <img src="/images/logo.png" alt="AgeWell Medicine & Aesthetics" width="189" height="100" class="h-[52px] w-auto sm:h-[56px]" />
+    </a>
+
+    <SiteNav client:load items={navItems} cta={cta} current={current} />
+    <MobileMenu client:load items={navItems} cta={cta} secondary={secondaryNav} phone={site.phone} phoneHref={site.phoneHref} />
+  </div>
+</header>

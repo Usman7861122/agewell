@@ -1,0 +1,15 @@
+---
+import { site } from '../../lib/site';
+interface Props { title: string; description?: string; schema?: object }
+const { title, description = '', schema } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
+---
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<meta property="og:type" content="website" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:site_name" content={site.name} />
+<meta name="twitter:card" content="summary_large_image" />
+{schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}

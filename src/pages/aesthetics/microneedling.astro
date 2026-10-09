@@ -1,0 +1,37 @@
+---
+import ServicePage from '../../components/sections/ServicePage.astro';
+import type { ServiceImage } from '../../components/sections/ServicePage.astro';
+
+// Fresh Unsplash photos (free licence), used only on this page. Saved in /public/images/aesthetics.
+const heroImage: ServiceImage = { src: '/images/aesthetics/microneedling-hero.jpg', srcset: '/images/aesthetics/microneedling-hero-640.jpg 640w, /images/aesthetics/microneedling-hero.jpg 1400w', alt: "A patient resting with a surgical cap while a clinician uses a fine pen device on the forehead", w: 1400, h: 933 };
+const images: [ServiceImage, ServiceImage, ServiceImage] = [
+  { src: '/images/aesthetics/microneedling-a.jpg', alt: "A clinician holding a microneedling device next to a treatment machine", w: 1400, h: 2100 },
+  { src: '/images/aesthetics/microneedling-b.jpg', alt: "A gloved hand operating an aesthetic treatment machine with a screen", w: 1400, h: 2100 },
+  { src: '/images/aesthetics/microneedling-c.jpg', alt: "A patient receiving a facial treatment with a handheld device", w: 1400, h: 2100 },
+];
+// TODO: provider to review all clinical wording on this page before publication.
+---
+<ServicePage
+  slug="aesthetics/microneedling"
+  name="Microneedling"
+  group="Aesthetics"
+  groupHref="/aesthetics"
+  eyebrow="Aesthetics · Bedminster, NJ"
+  interest="aesthetics"
+  seoTitle="Microneedling in Bedminster, NJ | AgeWell Medicine & Aesthetics"
+  seoDescription="Microneedling in Bedminster, NJ. Physician-led care to support skin texture and tone, with a plan made for you. Request a consultation at AgeWell."
+  intro="Microneedling is a skin treatment that uses very fine needles to support skin texture and tone. Your provider explains who it may suit and what to expect."
+  quickFacts={[]}
+  heroChip="Skin renewal"
+  whatIs={{ heading: "Care to support skin texture and tone", paragraphs: ["Microneedling uses fine needles to create tiny, controlled channels in the skin. This is designed to prompt the skin's natural renewal process.", "It is often used to address concerns such as uneven texture, fine lines or the look of some scars. Your provider will tell you if it may be right for you."] }}
+  looks={{ heading: "What we can talk about", intro: "Your plan depends on your skin and your goals.", items: [{ title: "Skin texture", body: "Roughness or uneven surface." }, { title: "Fine lines", body: "Early lines you would like to soften." }, { title: "Scars", body: "The look of some acne or other scars, when appropriate." }, { title: "Tone", body: "Uneven tone you want to discuss." }, { title: "Series of visits", body: "How many sessions may be planned." }, { title: "Skincare plan", body: "Products that support your skin between visits." }] }}
+  who={{ heading: "Who may be a good fit", intro: "A consultation helps decide if microneedling suits you.", bullets: ["You want smoother-looking skin", "You notice uneven texture", "You want a non-surgical option", "You can plan a series of visits", "You want clear aftercare steps", "You want a plan from a medical team"] }}
+  steps={[{ title: "Talk", body: "Tell us about your skin and your goals." }, { title: "Review", body: "Your provider reviews your skin and history." }, { title: "Plan", body: "We explain the treatment, benefits, risks and aftercare." }, { title: "Follow up", body: "We check progress and adjust your plan." }]}
+  why={[{ title: "Medical team", body: "Aesthetic care in a physician-led practice." }, { title: "Clear aftercare", body: "Simple steps to protect your skin." }, { title: "Personal", body: "A plan made for your skin." }, { title: "Local", body: "A friendly office in Bedminster." }]}
+  faqs={[{ q: "What is microneedling?", a: "It is a treatment that uses fine needles to support skin texture and tone. Your provider explains how it works." }, { q: "Does it hurt?", a: "Comfort measures may be used. Your provider explains what you may feel." }, { q: "How many sessions will I need?", a: "This depends on your goals. We explain the plan at your consultation." }, { q: "Is there downtime?", a: "Some redness is common for a short time. We give clear aftercare guidance." }, { q: "What are the risks?", a: "All treatments carry some risk. We review potential side effects and who should avoid treatment." }, { q: "What does it cost?", a: "Please contact our team about pricing. Financing may be available, including Cherry and CareCredit." }]}
+  related={[{ title: "Medical-Grade Skincare", body: "Products chosen to support your skin at home.", href: "/aesthetics/skincare" }, { title: "Sculptra", body: "Gradual support for facial volume.", href: "/aesthetics/sculptra" }, { title: "Botox", body: "Soften expression lines.", href: "/aesthetics/botox" }]}
+  relatedHeading="Explore more care"
+  closing={{ heading: "Plan care for your skin.", text: "Request a consultation and we will help you plan your next step." }}
+  images={images}
+  heroImage={heroImage}
+/>

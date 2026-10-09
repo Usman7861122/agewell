@@ -1,0 +1,327 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../ui/Section.astro';
+import Container from '../ui/Container.astro';
+import Heading from '../ui/Heading.astro';
+import Button from '../ui/Button.astro';
+import FadeIn from '../../islands/animations/FadeIn';
+import ServiceHero from './ServiceHero.astro';
+import FaqAccordion from '../../islands/interactive/FaqAccordion';
+import { site, book, type Interest } from '../../lib/site';
+
+export interface ServiceImage { src: string; alt: string; w: number; h: number; srcset?: string }
+interface Props {
+  slug: string; name: string; group?: string; groupHref?: string; eyebrow?: string; interest: Interest;
+  seoTitle: string; seoDescription: string; intro: string; quickFacts: string[];
+  whatIs: { heading: string; paragraphs: string[] };
+  looks: { heading: string; intro: string; items: { title: string; body: string }[] };
+  who: { heading: string; intro: string; bullets: string[] };
+  steps: { title: string; body: string }[];
+  why: { title: string; body: string }[];
+  faqs: { q: string; a: string }[];
+  related: { title: string; body: string; href: string }[];
+  closing: { heading: string; text: string };
+  images: [ServiceImage, ServiceImage, ServiceImage];
+  heroImage: ServiceImage;
+  heroChip?: string;
+  heroNote?: { title: string; text: string };
+  relatedHeading?: string;
+}
+const p = Astro.props;
+const city = `${site.address.city}, ${site.address.region}`;
+const nearby = ['Bedminster', 'Bridgewater', 'Bernardsville', 'Basking Ridge', 'Warren', 'Somerville'];
+const mapsHref = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(`${site.name} ${site.address.street} ${city} ${site.address.zip}`);
+const [img1, img2, img3] = p.images;
+const hero = p.heroImage;
+const whoIcons = [
+  'M12 3l2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3z',
+  'M13 2 4 14h7l-1 8 9-12h-7l1-8z',
+  'M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z',
+  'M12 2.7s6 6.3 6 11a6 6 0 0 1-12 0c0-4.7 6-11 6-11z',
+  'M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2M10 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M21 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8',
+  'M12 2 2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5',
+];
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'MedicalWebPage', name: p.seoTitle, description: p.seoDescription,
+      about: { '@type': 'MedicalProcedure', name: p.name },
+    },
+    {
+      '@type': 'MedicalBusiness', name: site.name, telephone: site.phone, email: site.email,
+      address: { '@type': 'PostalAddress', streetAddress: site.address.street, addressLocality: site.address.city, addressRegion: site.address.region, postalCode: site.address.zip, addressCountry: 'US' },
+      areaServed: nearby.map((n) => ({ '@type': 'City', name: `${n}, NJ` })),
+    },
+    { '@type': 'FAQPage', mainEntity: p.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+    { '@type': 'BreadcrumbList', itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: new URL('/', Astro.site ?? site.url).href },
+      ...(p.group && p.groupHref ? [{ '@type': 'ListItem', position: 2, name: p.group, item: new URL(p.groupHref, Astro.site ?? site.url).href }] : []),
+      { '@type': 'ListItem', position: p.group && p.groupHref ? 3 : 2, name: p.name },
+    ] },
+  ],
+};
+---
+<BaseLayout title={p.seoTitle} description={p.seoDescription} schema={schema}>
+  <!-- 1. Main section: text only, city + nearby areas for local SEO -->
+  <ServiceHero name={p.name} group={p.group} groupHref={p.groupHref} eyebrow={p.eyebrow} intro={p.intro} interest={p.interest} heroImage={hero} heroChip={p.heroChip} heroNote={p.heroNote} />
+
+  <!-- 2. What is it -->
+  <Section labelledby="what-title">
+    <Container>
+      <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+        <FadeIn client:visible>
+          <Heading id="what-title" eyebrow="Overview">{p.whatIs.heading}</Heading>
+          <div class="mt-6 space-y-5 text-lg">{p.whatIs.paragraphs.map((t) => <p>{t}</p>)}</div>
+        </FadeIn>
+        <FadeIn client:visible delay={0.1}>
+          <img src={img1.src} srcset={img1.srcset} sizes="(min-width:1024px) 560px, 100vw" width={img1.w} height={img1.h} alt={img1.alt} loading="lazy" decoding="async" class="aspect-[4/5] w-full rounded-3xl object-cover" />
+        </FadeIn>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- 3. What we look at -->
+  <Section tone="mist" labelledby="looks-title">
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <Heading id="looks-title" eyebrow="What we look at" center>{p.looks.heading}</Heading>
+        <p class="mt-6 text-lg">{p.looks.intro}</p>
+      </div>
+      <ul class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {p.looks.items.map((it, i) => (
+          <li>
+            <FadeIn client:visible delay={(i % 3) * 0.08} className="h-full">
+              <div class="group h-full rounded-2xl bg-white p-8 shadow-[0_1px_2px_rgba(34,26,25,.06),0_14px_30px_-20px_rgba(34,26,25,.25)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_40px_-22px_rgba(38,87,52,.45)] motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+                <span class="flex h-10 w-10 items-center justify-center rounded-full bg-brand-50 font-display text-sm text-brand transition-colors group-hover:bg-brand group-hover:text-white" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                <h3 class="mt-5 font-display text-xl uppercase tracking-wide">{it.title}</h3>
+                <p class="mt-3 text-ink/80">{it.body}</p>
+              </div>
+            </FadeIn>
+          </li>
+        ))}
+      </ul>
+    </Container>
+  </Section>
+
+  <!-- 4. Who it is for -->
+  <Section labelledby="who-title">
+    <Container>
+      <div class="who-grid">
+        <FadeIn client:visible>
+          <div class="who-intro">
+            <p class="eyebrow">Is it right for you?</p>
+            <h2 id="who-title" class="h-display who-h2">{p.who.heading}</h2>
+            <p class="who-lead">{p.who.intro}</p>
+            <div class="who-cta"><Button href={book(p.interest)}>Request Consultation</Button></div>
+          </div>
+        </FadeIn>
+        <ul class="who-tiles">
+          {p.who.bullets.map((b, i) => (
+            <li>
+              <FadeIn client:visible delay={(i % 2) * 0.08} className="h-full">
+                <div class="who-tile">
+                  <span class="who-icon" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d={whoIcons[i % whoIcons.length]} /></svg>
+                  </span>
+                  <p>{b}</p>
+                </div>
+              </FadeIn>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- 5. What to expect -->
+  <Section tone="mist" labelledby="expect-title">
+    <Container>
+      <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+        <FadeIn client:visible className="order-2 lg:order-1">
+          <img src={img2.src} srcset={img2.srcset} sizes="(min-width:1024px) 560px, 100vw" width={img2.w} height={img2.h} alt={img2.alt} loading="lazy" decoding="async" class="aspect-[4/5] w-full rounded-3xl object-cover" />
+        </FadeIn>
+        <FadeIn client:visible delay={0.1} className="order-1 lg:order-2">
+          <Heading id="expect-title" eyebrow="What to expect">Your first steps with us</Heading>
+          <ol class="mt-10">
+            {p.steps.map((s, i) => (
+              <li class="relative" style={`padding-left:4.25rem;padding-bottom:${i === p.steps.length - 1 ? '0' : '2.25rem'}`}>
+                <span aria-hidden="true" style="position:absolute;left:0;top:0;width:3rem;height:3rem;" class="flex items-center justify-center rounded-full bg-brand font-display text-lg text-white">{i + 1}</span>
+                {i < p.steps.length - 1 && <span aria-hidden="true" style="position:absolute;left:1.4375rem;top:3.25rem;bottom:0.25rem;width:1px;" class="bg-brand/30"></span>}
+                <h3 class="font-display text-xl uppercase leading-[3rem] tracking-wide"><span class="sr-only">Step {i + 1}: </span>{s.title}</h3>
+                <p class="mt-1 max-w-md text-ink/80">{s.body}</p>
+              </li>
+            ))}
+          </ol>
+        </FadeIn>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- 6. Mid-page CTA -->
+  <section class="depth-dark relative isolate overflow-hidden bg-brand py-16 text-white on-dark md:py-20" aria-labelledby="talk-title">
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <h2 id="talk-title" class="h-display text-3xl sm:text-4xl">Talk to our team</h2>
+        <p class="mt-5 text-lg text-white/90">Not sure where to start? Tell us what matters to you and we will help you decide whether our approach to {p.name.toLowerCase()} is right for you.</p>
+        <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <Button href={book(p.interest)} variant="light">Request Consultation</Button>
+          <a href={site.phoneHref} class="btn btn-outline">Call {site.phone}</a>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- 7. Local SEO block -->
+  <Section labelledby="local-title">
+    <Container>
+      <div class="local-grid">
+        <FadeIn client:visible>
+          <p class="eyebrow">Close to home</p>
+          <h2 id="local-title" class="h-display local-h2">{p.name} in {city}</h2>
+          <p class="local-lead">{site.name} is based in {site.address.city}. Our physician-led team offers {p.name} to patients who live and work across the Somerset County area.</p>
+          <ul class="local-contact">
+            <li>
+              <span class="local-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.1 7-11.5A7 7 0 0 0 5 9.5C5 14.9 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
+              <span><span class="local-label">Visit us</span>{site.address.street}, {city} {site.address.zip}</span>
+            </li>
+            <li>
+              <span class="local-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg></span>
+              <span><span class="local-label">Call us</span><a href={site.phoneHref}>{site.phone}</a></span>
+            </li>
+          </ul>
+          <div class="local-actions">
+            <a href={mapsHref} target="_blank" rel="noopener noreferrer" class="btn btn-primary">Directions<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href={book(p.interest)} class="btn btn-outline">Consultation</a>
+          </div>
+        </FadeIn>
+        <FadeIn client:visible delay={0.1}>
+          <div class="local-photo">
+            <img src={img3.src} srcset={img3.srcset} sizes="(min-width:1024px) 520px, 100vw" width={img3.w} height={img3.h} alt={img3.alt} loading="lazy" decoding="async" />
+            <div class="local-badge">
+              <span class="local-badge-dot" aria-hidden="true"></span>
+              <span><strong>Serving Somerset County</strong><span>Physician-led {p.group === 'Aesthetics' ? 'aesthetic' : p.interest === 'hair' ? 'hair restoration' : 'longevity'} care in {city}</span></span>
+            </div>
+          </div>
+        </FadeIn>
+      </div>
+
+      <div class="areas">
+        <p class="areas-title">Areas we serve</p>
+        <ul class="areas-list" aria-label="Areas we serve">
+          {nearby.map((n) => (
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.1 7-11.5A7 7 0 0 0 5 9.5C5 14.9 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+              {n}, NJ
+            </li>
+          ))}
+        </ul>
+        <p class="areas-note">Coming from somewhere else in New Jersey? Call us and we will help you plan your visit.</p>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- 8. Why AgeWell -->
+  <Section tone="dark" class="depth-dark" labelledby="why-title">
+    <Container>
+      <Heading id="why-title" eyebrow="Why AgeWell" center>Why patients choose our care</Heading>
+      <ul class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {p.why.map((w, i) => (
+          <li>
+            <div class="spot card-line h-full rounded-2xl bg-white/[.04] p-7 transition-colors duration-300 hover:bg-white/[.07]">
+              <span class="font-display text-3xl text-leaf" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="mt-4 font-display text-xl uppercase tracking-wide">{w.title}</h3>
+              <p class="mt-3 text-white/80">{w.body}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </Container>
+  </Section>
+
+  <!-- 9. FAQ -->
+  <Section labelledby="faq-title">
+    <Container narrow>
+      <Heading id="faq-title" eyebrow="Frequently asked questions" center>Questions we hear a lot</Heading>
+      <div class="mt-12"><FaqAccordion client:visible items={p.faqs} /></div>
+    </Container>
+  </Section>
+
+  <!-- 10. Related services -->
+  <Section tone="mist" labelledby="related-title">
+    <Container>
+      <Heading id="related-title" eyebrow="Other services" center>{p.relatedHeading ?? 'Explore more longevity care'}</Heading>
+      <ul class="mt-12 grid gap-5 md:grid-cols-3">
+        {p.related.map((r) => (
+          <li>
+            <a href={r.href} class="group flex h-full flex-col rounded-2xl bg-white p-8 shadow-[0_1px_2px_rgba(34,26,25,.06),0_14px_30px_-20px_rgba(34,26,25,.25)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_40px_-22px_rgba(38,87,52,.45)] motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+              <h3 class="font-display text-xl uppercase tracking-wide">{r.title}</h3>
+              <p class="mt-3 flex-1 text-ink/80">{r.body}</p>
+              <span class="mt-5 inline-flex items-center gap-2 font-semibold text-brand">Learn More <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span></span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </Container>
+  </Section>
+
+  <!-- 11. Closing CTA + disclaimer -->
+  <section class="depth-dark relative isolate overflow-hidden bg-ink py-20 text-white on-dark md:py-24" aria-labelledby="close-title">
+    <Container>
+      <div class="mx-auto max-w-3xl text-center">
+        <h2 id="close-title" class="h-display text-3xl sm:text-5xl">{p.closing.heading}</h2>
+        <p class="mt-5 text-lg text-white/85">{p.closing.text}</p>
+        <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <Button href={book(p.interest)}>Request Consultation</Button>
+          <a href={site.phoneHref} class="btn btn-outline">Call {site.phone}</a>
+        </div>
+        <p class="mx-auto mt-10 max-w-2xl text-sm text-white/60">This page offers general information and is not medical advice. Recommendations depend on your history, symptoms, examination and test results. If you think you are having a medical emergency, call 911.</p>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>
+
+<style>
+  .who-grid { display: grid; gap: 3rem; align-items: center; }
+  @media (min-width: 1024px) { .who-grid { grid-template-columns: .8fr 1.2fr; gap: 5rem; } }
+  .who-h2 { margin-top: 1rem; font-size: clamp(1.9rem, 3.2vw, 2.6rem); line-height: 1.1; }
+  .who-lead { margin-top: 1.25rem; max-width: 30rem; font-size: 1.0625rem; line-height: 1.7; color: rgb(34 26 25 / .8); }
+  .who-cta { margin-top: 2rem; }
+  .who-tiles { display: grid; gap: 1rem; list-style: none; padding: 0; margin: 0; }
+  @media (min-width: 640px) { .who-tiles { grid-template-columns: 1fr 1fr; } }
+  .who-tiles li { height: 100%; }
+  .who-tile { height: 100%; display: flex; flex-direction: column; gap: 1.25rem; padding: 1.5rem; border-radius: 1.25rem; background: #f6f6f6; transition: transform .3s, background-color .3s, box-shadow .3s; }
+  .who-tile p { font-size: 1.0625rem; line-height: 1.5; font-weight: 500; }
+  .who-tile:hover { transform: translateY(-4px); background: #fff; box-shadow: 0 24px 40px -24px rgb(38 87 52 / .5), 0 0 0 1px rgb(38 87 52 / .12); }
+  .who-icon { display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 9999px; background: #e3ede6; color: #265734; transition: background-color .3s, color .3s; }
+  .who-tile:hover .who-icon { background: #265734; color: #fff; }
+  @media (prefers-reduced-motion: reduce) { .who-tile, .who-icon { transition: none; } .who-tile:hover { transform: none; } }
+</style>
+
+<style>
+  .local-grid { display: grid; gap: 3rem; align-items: center; }
+  @media (min-width: 1024px) { .local-grid { grid-template-columns: 1.05fr 1fr; gap: 5rem; } }
+  .local-h2 { margin-top: 1rem; font-size: clamp(1.9rem, 3.2vw, 2.6rem); line-height: 1.1; }
+  .local-lead { margin-top: 1.25rem; font-size: 1.0625rem; line-height: 1.7; max-width: 34rem; color: rgb(34 26 25 / .8); }
+  .local-contact { margin-top: 2rem; display: grid; gap: 1rem; max-width: 34rem; list-style: none; padding: 0; }
+  .local-contact li { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; border-radius: 1rem; background: #f6f6f6; line-height: 1.4; }
+  .local-icon { display: grid; place-items: center; flex: none; width: 2.75rem; height: 2.75rem; border-radius: 9999px; background: #265734; color: #fff; }
+  .local-label { display: block; font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; color: #265734; font-weight: 600; margin-bottom: .125rem; }
+  .local-contact a { font-weight: 600; }
+  .local-actions { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: .75rem; }
+  .local-photo { position: relative; border-radius: 1.5rem; overflow: hidden; box-shadow: 0 30px 50px -30px rgb(22 50 31 / .55); }
+  .local-photo img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform .8s ease; }
+  .local-photo:hover img { transform: scale(1.03); }
+  .local-badge { position: absolute; left: 1rem; bottom: 1rem; right: 1rem; max-width: 22rem; display: flex; align-items: center; gap: .75rem; padding: .875rem 1.125rem; border-radius: 1rem; background: rgb(255 255 255 / .92); backdrop-filter: blur(8px); box-shadow: 0 12px 30px -12px rgb(0 0 0 / .35); }
+  .local-badge strong { display: block; font-size: .9375rem; }
+  .local-badge span span { display: block; font-size: .8125rem; color: rgb(34 26 25 / .7); }
+  .local-badge-dot { flex: none; width: .625rem; height: .625rem; border-radius: 9999px; background: #265734; box-shadow: 0 0 0 5px rgb(38 87 52 / .18); }
+  .areas { margin-top: 4rem; padding: 2.25rem 1.5rem; border-radius: 1.5rem; background: #f6f6f6; text-align: center; }
+  @media (min-width: 768px) { .areas { padding: 2.75rem; } }
+  .areas-title { font-family: 'Aboreto', serif; letter-spacing: .2em; text-transform: uppercase; font-size: .8125rem; color: #265734; }
+  .areas-list { margin: 1.5rem auto 0; display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem; list-style: none; padding: 0; max-width: 52rem; }
+  .areas-list li { display: inline-flex; align-items: center; gap: .5rem; padding: .625rem 1.125rem; border-radius: 9999px; background: #fff; color: #265734; font-weight: 600; font-size: .9375rem; box-shadow: 0 1px 2px rgb(34 26 25 / .08), 0 8px 18px -12px rgb(34 26 25 / .3); transition: transform .25s, background-color .25s, color .25s; }
+  .areas-list li:hover { transform: translateY(-2px); background: #265734; color: #fff; }
+  .areas-note { margin-top: 1.5rem; font-size: .9375rem; color: rgb(34 26 25 / .7); }
+  @media (prefers-reduced-motion: reduce) { .local-photo img, .areas-list li { transition: none; } .local-photo:hover img, .areas-list li:hover { transform: none; } }
+</style>

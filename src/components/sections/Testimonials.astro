@@ -1,0 +1,56 @@
+---
+import Section from '../ui/Section.astro';
+import Container from '../ui/Container.astro';
+import Heading from '../ui/Heading.astro';
+import FadeIn from '../../islands/animations/FadeIn';
+// Public Google reviews copied word for word from the practice's Google Business listing (checked Oct 2026).
+// Names are as shown publicly on Google. Confirm the practice is happy to display them before launch.
+const googleUrl = 'https://www.google.com/maps/search/AgeWell+Medicine+%26+Aesthetics+Bedminster+NJ';
+const rating = { score: '5.0', count: 35 };
+const reviews = [
+  { quote: 'I had a fantastic experience at the Agewell medicine spa! Tara is gentle, knowledgeable, and truly cares about achieving natural results. She enhanced my features perfectly without overdoing it. Highly recommend!', name: 'Diana Ramirez', when: '3 months ago' },
+  { quote: 'Tara is very knowledge and thorough! After her first treatment, I noticed a substantial improvement in my energy levels and overall well-being. She even made me overcome my fear of needles and took the time to fill up each one! I cannot recommend her and her services enough.', name: 'Robert Nencheck', when: '11 months ago' },
+  { quote: 'Tara is AMAZING! She takes time to listen and then devises a plan that’s just right for you. I am feeling so much better than I did only one month ago! I am overwhelmed by how good I now feel. I highly recommend visiting Tara at AgeWell Medicine & Aesthetics. You won’t be disappointed.', name: 'Stacy Guzman', when: 'a year ago' },
+];
+const initials = (n: string) => n.split(' ').map((p) => p[0]).slice(0, 2).join('');
+---
+<Section id="reviews" labelledby="reviews-title">
+  <Container>
+    <Heading id="reviews-title" eyebrow="Patient reviews" center>What our patients say</Heading>
+
+    <div class="mt-6 flex flex-col items-center gap-2">
+      <div class="flex items-center gap-3">
+        <span class="font-display text-4xl text-brand">{rating.score}</span>
+        <span class="flex gap-0.5 text-[#d4a73a]" role="img" aria-label="5 out of 5 stars">
+          {[0, 1, 2, 3, 4].map(() => <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.5 2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.2 6.1 20.6l1.3-6.6L2.5 9.4l6.6-.8z"/></svg>)}
+        </span>
+      </div>
+      <p class="text-sm text-ink/70">Based on {rating.count} Google reviews</p>
+    </div>
+
+    <ul class="mt-12 grid gap-6 md:grid-cols-3">
+      {reviews.map((r, i) => (
+        <li class="h-full">
+          <FadeIn client:visible delay={i * 0.08} className="h-full">
+            <figure class="group relative flex h-full flex-col rounded-2xl bg-mist p-8 transition duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-[0_24px_40px_-24px_rgba(38,87,52,.45)] motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+              <span aria-hidden="true" class="absolute right-6 top-2 font-display text-8xl leading-none text-brand/10 transition-colors duration-300 group-hover:text-brand/20">”</span>
+              <span class="flex gap-0.5 text-[#d4a73a]" role="img" aria-label="5 out of 5 stars">
+                {[0, 1, 2, 3, 4].map(() => <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.5 2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.2 6.1 20.6l1.3-6.6L2.5 9.4l6.6-.8z"/></svg>)}
+              </span>
+              <blockquote class="relative mt-5 flex-1 text-[17px] leading-relaxed text-ink/90">“{r.quote}”</blockquote>
+              <figcaption class="mt-7 flex items-center gap-3">
+                <span class="flex h-11 w-11 items-center justify-center rounded-full bg-brand font-display text-sm text-white" aria-hidden="true">{initials(r.name)}</span>
+                <span>
+                  <span class="block font-semibold">{r.name}</span>
+                  <span class="block text-sm text-ink/60">Google review · {r.when}</span>
+                </span>
+              </figcaption>
+            </figure>
+          </FadeIn>
+        </li>
+      ))}
+    </ul>
+
+    <p class="mt-10 text-center"><a href={googleUrl} target="_blank" rel="noopener noreferrer" class="link-arrow" aria-label="Read more reviews on Google (opens in a new tab)">More Reviews <span aria-hidden="true">→</span></a></p>
+  </Container>
+</Section>

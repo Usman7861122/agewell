@@ -1,0 +1,40 @@
+---
+import '../styles/global.css';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import SEO from '../components/layout/SEO.astro';
+import MobileActionBar from '../components/layout/MobileActionBar.astro';
+
+interface Props { title: string; description?: string; schema?: object }
+const { title, description, schema } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#265734" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Aboreto&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700&family=Open+Sans:wght@600;700&display=swap" rel="stylesheet" />
+    <SEO title={title} description={description} schema={schema} />
+  </head>
+  <body class="pb-20 min-[1400px]:pb-0">
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-3 focus:text-brand focus:shadow-lg">Skip to main content</a>
+    <Header />
+    <main id="main"><slot /></main>
+    <script>
+      // Cursor-following glow for .spot cards (dark sections)
+      document.addEventListener('pointermove', (e) => {
+        const t = (e.target as Element | null)?.closest?.('.spot') as HTMLElement | null;
+        if (!t) return;
+        const r = t.getBoundingClientRect();
+        t.style.setProperty('--mx', `${e.clientX - r.left}px`);
+        t.style.setProperty('--my', `${e.clientY - r.top}px`);
+      }, { passive: true });
+    </script>
+    <Footer />
+    <MobileActionBar />
+  </body>
+</html>

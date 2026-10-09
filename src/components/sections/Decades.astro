@@ -1,0 +1,14 @@
+---
+import Container from '../ui/Container.astro';
+import Heading from '../ui/Heading.astro';
+import DecadeTabs from '../../islands/interactive/DecadeTabs';
+---
+<section class="bg-white pt-16 md:pt-24" aria-labelledby="decades-title">
+  <Container>
+    <div class="mx-auto max-w-3xl pb-12 text-center">
+      <Heading id="decades-title" eyebrow="Healthy aging through the decades" center>Your priorities evolve. Your care should too.</Heading>
+      <p class="mt-6 text-lg">Age can provide context, but your health history and goals guide your plan. These are examples of topics we may discuss.</p>
+    </div>
+  </Container>
+  <DecadeTabs client:visible />
+</section>

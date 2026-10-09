@@ -1,0 +1,41 @@
+---
+import InfoPage from '../../components/sections/InfoPage.astro';
+import type { Img, Block } from '../../lib/info-types';
+import { site } from '../../lib/site';
+
+// Fresh Unsplash photos (free licence), used only on this page. Saved in /public/images/pages.
+const hero = (n: string, alt: string, w: number, h: number): Img => ({ src: `/images/pages/${n}.jpg`, srcset: `/images/pages/${n}-640.jpg 640w, /images/pages/${n}.jpg 1400w`, alt, w, h });
+const body = (n: string, alt: string, w: number, h: number): Img => ({ src: `/images/pages/${n}.jpg`, alt, w, h });
+import { existsSync } from 'node:fs';
+// The practice's own office photos, saved in public/images/virtual-tour (from the live site, used with the owner's permission).
+const tour = Array.from({ length: 12 }, (_, i) => i + 1)
+  .filter((n) => existsSync(new URL(`../../../public/images/virtual-tour/tour-${n}.jpg`, import.meta.url)))
+  .map((n) => ({ src: `/images/virtual-tour/tour-${n}.jpg`, alt: `Inside the AgeWell Medicine & Aesthetics office in Bedminster, photo ${n}` }));
+const blocks: Block[] = [
+  { type: 'split', eyebrow: 'Care that fits your schedule', heading: 'Virtual visits for eligible care', paragraphs: ['Connect with AgeWell through virtual visits for eligible consultations and follow-up care.', 'Contact us to find out whether a virtual appointment fits your needs. Some care, such as treatments, needs an in-person visit.'], image: body('virtual-body', 'A doctor on a video call with a patient on a laptop screen', 1400, 788), bullets: ['No travel for eligible visits', 'Talk with your provider face to face', 'Easy follow-up between office visits'] },
+  ...(tour.length ? [{ type: 'gallery' as const, eyebrow: 'Take a look inside', heading: 'Our Bedminster office', intro: 'Prefer to meet in person? Here is a look at where we welcome you.', items: tour }] : []),
+  { type: 'steps', eyebrow: 'How it works', heading: 'Your virtual visit, step by step', items: [
+    { title: 'Ask', body: 'Contact us to see if a virtual visit fits your care.' },
+    { title: 'Schedule', body: 'Our team books a time and sends you simple instructions.' },
+    { title: 'Prepare', body: 'Find a quiet, private place with a good connection.' },
+    { title: 'Connect', body: 'Meet your provider by video and plan next steps.' },
+  ] },
+  { type: 'cards', eyebrow: 'Tips', heading: 'Get the most from your visit', tone: 'white', items: [
+    { title: 'Test your device', body: 'Check your camera, sound and internet before your visit.' },
+    { title: 'Have your list ready', body: 'Keep your medicines and questions close by.' },
+    { title: 'Find good light', body: 'A bright, quiet space makes it easier to talk.' },
+  ] },
+  { type: 'faq', eyebrow: 'Questions', heading: 'Virtual visit FAQs', items: [
+    { q: 'Which visits can be virtual?', a: 'Eligible consultations and follow-up visits. Please contact us to find out whether a virtual visit fits your needs.' },
+    { q: 'Do I need special software?', a: 'Our team will send simple instructions with your appointment.' },
+    { q: 'Are all treatments available virtually?', a: 'No. Treatments such as injectables need an in-person visit.' },
+  ] },
+];
+// TODO: practice to confirm the telehealth platform, eligibility rules and any state restrictions.
+---
+<InfoPage slug="resources/virtual-visits" name="Virtual Visits" group="Resources" groupHref="/resources" title="Virtual Visits" eyebrow="Resources · Bedminster, NJ" interest="not-sure"
+  seoTitle="Virtual Visits | AgeWell Medicine & Aesthetics, Bedminster NJ"
+  seoDescription="Virtual visits for eligible consultations and follow-up care with AgeWell Medicine & Aesthetics. Contact our Bedminster, NJ office to see if it fits you."
+  intro="Meet your provider by video for eligible consultations and follow-up care."
+  heroImage={hero('virtual-hero', 'A clinician talking with a patient on a laptop video call', 1400, 788)} heroChip="From anywhere"
+  blocks={blocks} />

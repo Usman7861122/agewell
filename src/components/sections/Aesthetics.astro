@@ -1,0 +1,39 @@
+---
+import Section from '../ui/Section.astro';
+import Container from '../ui/Container.astro';
+import Heading from '../ui/Heading.astro';
+import Button from '../ui/Button.astro';
+import Img from '../ui/Img.astro';
+import FadeIn from '../../islands/animations/FadeIn';
+import { navItems } from '../../data/navigation';
+const treatments = navItems.find((n) => n.label === 'Aesthetics')?.children ?? [];
+import { book } from '../../lib/site';
+---
+<Section tone="mist" id="aesthetics" labelledby="aesthetics-title">
+  <Container>
+    <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+      <FadeIn client:visible>
+        <Img name="aesthetics" class="aspect-[4/3] w-full rounded-3xl object-cover" sizes="(min-width:1024px) 600px, 100vw" w={1200} h={900} />
+      </FadeIn>
+      <FadeIn client:visible delay={0.1}>
+        <Heading id="aesthetics-title" eyebrow="Advanced aesthetics">Look as good as you feel</Heading>
+        <p class="mt-6 text-lg">Complement your healthy-aging goals with personalized aesthetic care. Our team offers options for expression lines, facial volume and skin quality, with treatment plans tailored to your preferences and clinical needs.</p>
+        <ul class="mt-8 grid gap-3 sm:grid-cols-2" aria-label="Aesthetic services">
+          {treatments.map((t, i) => (
+            <li>
+              <a href={t.href} class="group flex items-center gap-3 rounded-2xl bg-white px-4 py-3.5 shadow-[0_1px_2px_rgba(34,26,25,.06),0_8px_20px_-12px_rgba(34,26,25,.18)] transition duration-300 hover:-translate-y-0.5 hover:bg-brand hover:shadow-[0_18px_30px_-14px_rgba(38,87,52,.55)] focus-visible:-translate-y-0.5 focus-visible:bg-brand motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+                <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-50 font-display text-sm text-brand transition-colors duration-300 group-hover:bg-white/15 group-hover:text-white group-focus-visible:bg-white/15 group-focus-visible:text-white" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                <span class="flex-1 text-[15px] font-semibold leading-snug text-ink transition-colors duration-300 group-hover:text-white group-focus-visible:text-white">{t.label}</span>
+                <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 -translate-x-1 text-leaf opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <div class="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-6">
+          <Button href="/aesthetics">Explore Aesthetics</Button>
+          <a href={book('aesthetics')} class="link-arrow" aria-label="Book an aesthetic visit">Book Visit <span aria-hidden="true">→</span></a>
+        </div>
+      </FadeIn>
+    </div>
+  </Container>
+</Section>

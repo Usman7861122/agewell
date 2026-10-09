@@ -1,0 +1,13 @@
+---
+import Section from '../ui/Section.astro';
+import Container from '../ui/Container.astro';
+import Heading from '../ui/Heading.astro';
+import ServiceFlipCards from '../../islands/interactive/ServiceFlipCards';
+---
+<Section id="services" labelledby="services-title">
+  <Container>
+    <Heading id="services-title" eyebrow="Longevity services" center>Care built around your goals</Heading>
+    <p class="mt-4 text-center text-[15px] text-ink/60"><span class="hidden [@media(hover:hover)]:inline">Hover over a card for details.</span><span class="[@media(hover:hover)]:hidden">Tap a card for details.</span></p>
+    <ServiceFlipCards client:visible />
+  </Container>
+</Section>

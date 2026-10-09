@@ -1,0 +1,236 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServiceHero from '../../components/sections/ServiceHero.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import Heading from '../../components/ui/Heading.astro';
+import Button from '../../components/ui/Button.astro';
+import FadeIn from '../../islands/animations/FadeIn';
+import FaqAccordion from '../../islands/interactive/FaqAccordion';
+import { site, book } from '../../lib/site';
+import { longevityServices, pillars, steps } from '../../data/services';
+
+// Fresh Unsplash photos (free licence), used only on this page. Saved in /public/images/longevity.
+const city = `${site.address.city}, ${site.address.region}`;
+const nearby = ['Bedminster', 'Bridgewater', 'Bernardsville', 'Basking Ridge', 'Warren', 'Somerville'];
+const heroImage = { src: '/images/longevity/hero.jpg', srcset: '/images/longevity/hero-640.jpg 640w, /images/longevity/hero.jpg 1200w', alt: 'An older couple holding hands and hiking along a forest path', w: 1200, h: 1705 };
+const cardImages = [
+  { name: 'evaluation', alt: 'A doctor and an older patient talking at a desk in a clinic', w: 1200, h: 675 },
+  { name: 'metabolic', alt: 'Fresh vegetables, eggs and mushrooms on a wooden cutting board', w: 1200, h: 1200 },
+  { name: 'hormone', alt: 'A woman stretching in bed in the morning light', w: 1200, h: 948 },
+  { name: 'functional', alt: 'A glass jar of fermenting fruit on a kitchen counter', w: 800, h: 1200 },
+];
+const faqs = [
+  { q: 'What is longevity medicine?', a: 'Longevity medicine focuses on the factors that influence how well you age, including metabolic health, physical function, sleep, nutrition and appropriate preventive care.' },
+  { q: 'What is healthspan?', a: 'Healthspan refers to the years you spend living in good health. Our care focuses on health and function as you age.' },
+  { q: 'Do I need to be ill to request a consultation?', a: 'No. You can request a consultation to discuss healthy-aging goals or specific concerns. We will help determine whether our services fit your needs.' },
+  { q: 'Does everyone need hormone therapy or medication?', a: 'No. Recommendations depend on your history, symptoms, test results and preferences. We discuss potential benefits, risks and alternatives before treatment.' },
+  { q: 'Will this replace my regular doctor?', a: 'No. Our care is designed to work alongside your regular medical care.' },
+  { q: 'Where do I start?', a: 'Most patients begin with a Longevity Evaluation. Request a consultation and we will help you choose the right first step.' },
+];
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'MedicalWebPage', name: 'Longevity Medicine in Bedminster, NJ', about: { '@type': 'MedicalSpecialty', name: 'Longevity medicine' } },
+    { '@type': 'MedicalBusiness', name: site.name, telephone: site.phone, email: site.email,
+      address: { '@type': 'PostalAddress', streetAddress: site.address.street, addressLocality: site.address.city, addressRegion: site.address.region, postalCode: site.address.zip, addressCountry: 'US' },
+      areaServed: nearby.map((n) => ({ '@type': 'City', name: `${n}, NJ` })) },
+    { '@type': 'ItemList', itemListElement: longevityServices.map((s, i) => ({ '@type': 'ListItem', position: i + 1, name: s.title, url: new URL(s.href, Astro.site ?? site.url).href })) },
+    { '@type': 'FAQPage', mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+  ],
+};
+const mapsHref = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(`${site.name} ${site.address.street} ${city} ${site.address.zip}`);
+---
+<BaseLayout title="Longevity Medicine in Bedminster, NJ | AgeWell Medicine & Aesthetics" description="Physician-led longevity medicine in Bedminster, NJ. Longevity evaluation, metabolic health and medical weight management, hormone care and functional medicine, built around your health and goals." schema={schema}>
+  <ServiceHero
+    name="Longevity Medicine"
+    eyebrow="Physician-led · Bedminster, NJ"
+    intro="Dr. Frank Dos Santos, DO, and our team focus on the factors that shape how well you age, so you can have more healthy years doing what matters to you."
+    interest="longevity"
+    heroImage={heroImage}
+    heroChip="Healthspan focused"
+  />
+
+  <!-- What it means -->
+  <Section labelledby="meaning-title">
+    <Container>
+      <div class="lm-intro">
+        <FadeIn client:visible>
+          <Heading id="meaning-title" eyebrow="What longevity medicine means">More healthy years doing what matters to you</Heading>
+          <p class="lm-lead">Healthspan is the time you spend living in good health. Longevity medicine focuses on the factors that influence how well you age, including metabolic health, physical function, sleep, nutrition and appropriate preventive care.</p>
+          <p class="lm-lead">We look at your history, goals and relevant health markers to create a personalized plan that works alongside your regular medical care.</p>
+        </FadeIn>
+        <FadeIn client:visible delay={0.1}>
+          <div class="lm-pillars">
+            <p class="lm-pillars-title">Five areas we look at</p>
+            <ul>
+              {pillars.map((p, i) => (
+                <li>
+                  <span aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                  <div><strong>{p.title}</strong><p>{p.body}</p></div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </FadeIn>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- Sub categories -->
+  <Section tone="mist" labelledby="services-title">
+    <Container>
+      <div class="lm-head">
+        <Heading id="services-title" eyebrow="Our longevity services" center>Choose where to begin</Heading>
+        <p>Four ways we can help. Not sure which fits? Start with a Longevity Evaluation and we will guide you.</p>
+      </div>
+      <ul class="lm-cards">
+        {longevityServices.map((s, i) => {
+          const im = cardImages[i]!;
+          return (
+            <li>
+              <FadeIn client:visible delay={(i % 2) * 0.08} className="h-full">
+                <a href={s.href} class="lm-card">
+                  <span class="lm-card-img">
+                    <img src={`/images/longevity/${im.name}.jpg`} srcset={`/images/longevity/${im.name}-640.jpg 640w, /images/longevity/${im.name}.jpg 1200w`} sizes="(min-width:1024px) 560px, 100vw" width={im.w} height={im.h} alt={im.alt} loading="lazy" decoding="async" />
+                    <span class="lm-card-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                  </span>
+                  <span class="lm-card-body">
+                    <h3>{s.title}</h3>
+                    <p>{s.body}</p>
+                    <span class="lm-card-link">Learn More <span aria-hidden="true">→</span></span>
+                  </span>
+                </a>
+              </FadeIn>
+            </li>
+          );
+        })}
+      </ul>
+    </Container>
+  </Section>
+
+  <!-- How care works -->
+  <Section labelledby="steps-title">
+    <Container>
+      <Heading id="steps-title" eyebrow="How care works" center>A clear path, one step at a time</Heading>
+      <ol class="lm-steps">
+        {steps.map((s) => (
+          <li>
+            <span class="lm-step-n" aria-hidden="true">{s.n}</span>
+            <h3><span class="sr-only">Step {s.n}: </span>{s.title}</h3>
+            <p>{s.body}</p>
+          </li>
+        ))}
+      </ol>
+      <div class="lm-center"><Button href={book('longevity')}>Request Consultation</Button></div>
+    </Container>
+  </Section>
+
+  <!-- Local -->
+  <section class="lm-local depth-dark on-dark" aria-labelledby="local-title">
+    <Container>
+      <div class="lm-local-in">
+        <div>
+          <p class="eyebrow lm-local-eyebrow">Close to home</p>
+          <h2 id="local-title" class="h-display lm-local-h2">Longevity medicine in {city}</h2>
+          <p class="lm-local-lead">{site.name} is based at {site.address.street}, {city} {site.address.zip}. Our physician-led team offers longevity care to patients who live and work across the Somerset County area.</p>
+          <div class="lm-local-actions">
+            <a href={mapsHref} target="_blank" rel="noopener noreferrer" class="btn btn-primary">Directions<span class="sr-only"> (opens in a new tab)</span></a>
+            <a href={site.phoneHref} class="btn btn-outline">Call {site.phone}</a>
+          </div>
+        </div>
+        <ul class="lm-towns" aria-label="Areas we serve">
+          {nearby.map((n) => (
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.1 7-11.5A7 7 0 0 0 5 9.5C5 14.9 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg>{n}, NJ
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Container>
+  </section>
+
+  <!-- FAQ -->
+  <Section labelledby="faq-title">
+    <Container narrow>
+      <Heading id="faq-title" eyebrow="Frequently asked questions" center>Good questions to ask</Heading>
+      <div class="lm-faq"><FaqAccordion client:visible items={faqs} /></div>
+    </Container>
+  </Section>
+
+  <!-- Closing CTA -->
+  <section class="lm-close depth-dark on-dark" aria-labelledby="close-title">
+    <Container>
+      <div class="lm-close-in">
+        <h2 id="close-title" class="h-display">More healthy years start with one visit.</h2>
+        <p>Request a consultation and we will help you plan your next step.</p>
+        <div class="lm-close-actions">
+          <Button href={book('longevity')}>Request Consultation</Button>
+          <a href={site.phoneHref} class="btn btn-outline">Call {site.phone}</a>
+        </div>
+        <small>This page offers general information and is not medical advice. If you think you are having a medical emergency, call 911.</small>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>
+
+<style>
+  .lm-intro { display: grid; gap: 3rem; align-items: start; }
+  @media (min-width: 1024px) { .lm-intro { grid-template-columns: 1fr 1fr; gap: 5rem; } }
+  .lm-lead { margin-top: 1.5rem; font-size: 1.125rem; line-height: 1.75; color: rgb(34 26 25 / .85); }
+  .lm-pillars { padding: 2rem; border-radius: 1.5rem; background: #f6f6f6; }
+  .lm-pillars-title { font-family: 'Aboreto', serif; letter-spacing: .2em; text-transform: uppercase; font-size: .8125rem; color: #265734; }
+  .lm-pillars ul { margin-top: 1.25rem; list-style: none; padding: 0; display: grid; gap: 1.25rem; }
+  .lm-pillars li { display: grid; grid-template-columns: 2.5rem 1fr; gap: 1rem; align-items: start; }
+  .lm-pillars li > span { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 9999px; background: #265734; color: #fff; font-family: 'Aboreto', serif; font-size: .8125rem; }
+  .lm-pillars strong { display: block; font-size: 1.0625rem; }
+  .lm-pillars p { margin-top: .125rem; font-size: .9375rem; line-height: 1.55; color: rgb(34 26 25 / .75); }
+
+  .lm-head { max-width: 40rem; margin: 0 auto; text-align: center; }
+  .lm-head p { margin-top: 1.25rem; font-size: 1.0625rem; color: rgb(34 26 25 / .8); }
+  .lm-cards { margin-top: 3.5rem; display: grid; gap: 1.5rem; list-style: none; padding: 0; }
+  @media (min-width: 768px) { .lm-cards { grid-template-columns: 1fr 1fr; gap: 2rem; } }
+  .lm-cards li { height: 100%; }
+  .lm-card { display: flex; flex-direction: column; height: 100%; overflow: hidden; border-radius: 1.5rem; background: #fff; box-shadow: 0 1px 2px rgb(34 26 25 / .06), 0 20px 40px -28px rgb(34 26 25 / .35); transition: transform .35s, box-shadow .35s; }
+  .lm-card:hover { transform: translateY(-6px); box-shadow: 0 1px 2px rgb(34 26 25 / .06), 0 36px 50px -28px rgb(38 87 52 / .55); }
+  .lm-card-img { position: relative; display: block; aspect-ratio: 16 / 10; overflow: hidden; background: #cfdcd2; }
+  .lm-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .9s ease; }
+  .lm-card:hover .lm-card-img img { transform: scale(1.06); }
+  .lm-card-num { position: absolute; left: 1rem; top: 1rem; display: grid; place-items: center; min-width: 2.5rem; height: 2.5rem; padding: 0 .5rem; border-radius: 9999px; background: rgb(255 255 255 / .92); color: #265734; font-family: 'Aboreto', serif; font-size: .875rem; backdrop-filter: blur(6px); }
+  .lm-card-body { display: flex; flex-direction: column; flex: 1; padding: 1.75rem 1.75rem 2rem; }
+  .lm-card h3 { font-family: 'Aboreto', serif; font-size: 1.375rem; line-height: 1.2; letter-spacing: .04em; text-transform: uppercase; }
+  .lm-card p { margin-top: .875rem; flex: 1; line-height: 1.65; color: rgb(34 26 25 / .8); }
+  .lm-card-link { margin-top: 1.5rem; display: inline-flex; align-items: center; gap: .5rem; font-weight: 600; color: #265734; }
+  .lm-card-link span { transition: transform .3s; }
+  .lm-card:hover .lm-card-link span { transform: translateX(4px); }
+
+  .lm-steps { margin-top: 3.5rem; display: grid; gap: 2rem; list-style: none; padding: 0; position: relative; }
+  @media (min-width: 768px) { .lm-steps { grid-template-columns: repeat(4, 1fr); gap: 1.5rem; } .lm-steps::before { content: ''; position: absolute; left: 12.5%; right: 12.5%; top: 1.5rem; height: 1px; background: rgb(38 87 52 / .3); } }
+  .lm-steps li { position: relative; text-align: center; padding: 0 .5rem; }
+  .lm-step-n { position: relative; display: grid; place-items: center; width: 3rem; height: 3rem; margin: 0 auto; border-radius: 9999px; background: #265734; color: #fff; font-family: 'Aboreto', serif; font-size: 1.125rem; box-shadow: 0 0 0 6px #fff; }
+  .lm-steps h3 { margin-top: 1.25rem; font-family: 'Aboreto', serif; font-size: 1.25rem; letter-spacing: .05em; text-transform: uppercase; }
+  .lm-steps p { margin: .75rem auto 0; max-width: 17rem; line-height: 1.6; color: rgb(34 26 25 / .8); }
+  .lm-center { margin-top: 3rem; text-align: center; }
+
+  .lm-local { position: relative; isolation: isolate; overflow: hidden; background: #221a19; color: #fff; padding-block: clamp(4rem, 8vw, 6.5rem); }
+  .lm-local-in { display: grid; gap: 3rem; align-items: center; }
+  @media (min-width: 1024px) { .lm-local-in { grid-template-columns: 1.1fr 1fr; gap: 5rem; } }
+  .lm-local-eyebrow { color: #9fcdac; }
+  .lm-local-h2 { margin-top: 1rem; font-size: clamp(1.9rem, 3.4vw, 2.75rem); line-height: 1.1; }
+  .lm-local-lead { margin-top: 1.25rem; max-width: 34rem; font-size: 1.0625rem; line-height: 1.7; color: rgb(255 255 255 / .8); }
+  .lm-local-actions { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: .75rem; }
+  .lm-towns { display: flex; flex-wrap: wrap; gap: .75rem; list-style: none; padding: 0; }
+  .lm-towns li { display: inline-flex; align-items: center; gap: .5rem; padding: .75rem 1.25rem; border-radius: 9999px; background: rgb(255 255 255 / .07); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .12); font-weight: 600; font-size: .9375rem; transition: background-color .25s, transform .25s; }
+  .lm-towns li svg { color: #9fcdac; }
+  .lm-towns li:hover { background: rgb(159 205 172 / .18); transform: translateY(-2px); }
+
+  .lm-faq { margin-top: 3rem; }
+
+  .lm-close { position: relative; isolation: isolate; overflow: hidden; background: #16321f; color: #fff; padding-block: clamp(4rem, 8vw, 6.5rem); text-align: center; }
+  .lm-close-in { max-width: 44rem; margin: 0 auto; }
+  .lm-close h2 { font-size: clamp(1.9rem, 4vw, 3rem); line-height: 1.1; }
+  .lm-close p { margin-top: 1.25rem; font-size: 1.125rem; color: rgb(255 255 255 / .85); }
+  .lm-close-actions { margin-top: 2.25rem; display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem; }
+  .lm-close small { display: block; margin: 2.5rem auto 0; max-width: 34rem; font-size: .8125rem; color: rgb(255 255 255 / .55); }
+  @media (prefers-reduced-motion: reduce) { .lm-card, .lm-card-img img, .lm-card-link span, .lm-towns li { transition: none; } .lm-card:hover, .lm-towns li:hover { transform: none; } .lm-card:hover .lm-card-img img { transform: none; } }
+</style>

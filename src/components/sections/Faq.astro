@@ -1,0 +1,18 @@
+---
+import Section from '../ui/Section.astro';
+import Container from '../ui/Container.astro';
+import Heading from '../ui/Heading.astro';
+import FaqAccordion from '../../islands/interactive/FaqAccordion';
+import { faqs } from '../../data/faqs';
+---
+<Section tone="mist" id="faq" labelledby="faq-title">
+  <Container narrow>
+    <Heading id="faq-title" eyebrow="Frequently asked questions" center>Good questions to ask</Heading>
+    <div class="mt-12"><FaqAccordion client:visible items={faqs} /></div>
+    <p class="mt-8 text-center text-[15px]">
+      More answers: <a class="font-semibold text-brand underline underline-offset-4" href="/resources/virtual-visits">Virtual visits</a> ·
+      <a class="font-semibold text-brand underline underline-offset-4" href="/resources/financing">Financing</a> ·
+      <a class="font-semibold text-brand underline underline-offset-4" href="/resources/faqs">All FAQs</a>
+    </p>
+  </Container>
+</Section>

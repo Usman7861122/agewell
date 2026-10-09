@@ -1,0 +1,37 @@
+---
+import ServicePage from '../../components/sections/ServicePage.astro';
+import type { ServiceImage } from '../../components/sections/ServicePage.astro';
+
+// Fresh Unsplash photos (free licence), used only on this page. Saved in /public/images/aesthetics.
+const heroImage: ServiceImage = { src: '/images/aesthetics/dysport-hero.jpg', srcset: '/images/aesthetics/dysport-hero-640.jpg 640w, /images/aesthetics/dysport-hero.jpg 1400w', alt: "A woman with freckles resting her face in her hands in golden light", w: 1400, h: 2100 };
+const images: [ServiceImage, ServiceImage, ServiceImage] = [
+  { src: '/images/aesthetics/dysport-a.jpg', alt: "A close-up of a woman's face showing natural skin texture and fine lines", w: 1400, h: 2489 },
+  { src: '/images/aesthetics/dysport-b.jpg', alt: "A woman in a white top smiling and touching her face", w: 1400, h: 933 },
+  { src: '/images/aesthetics/dysport-c.jpg', alt: "A close-up portrait of a woman with freckles and clear green eyes", w: 1400, h: 1400 },
+];
+// TODO: provider to review all clinical wording on this page before publication.
+---
+<ServicePage
+  slug="aesthetics/dysport"
+  name="Dysport"
+  group="Aesthetics"
+  groupHref="/aesthetics"
+  eyebrow="Aesthetics · Bedminster, NJ"
+  interest="aesthetics"
+  seoTitle="Dysport in Bedminster, NJ | AgeWell Medicine & Aesthetics"
+  seoDescription="Dysport in Bedminster, NJ. Physician-led care for expression lines, with a personalized plan and natural-looking approach. Request a consultation at AgeWell."
+  intro="Dysport is a neuromodulator used to soften expression lines. Your AgeWell provider helps you understand your options and choose a plan that fits you."
+  quickFacts={[]}
+  heroChip="Expression lines"
+  whatIs={{ heading: "A neuromodulator option for expression lines", paragraphs: ["Dysport is an injectable treatment that temporarily relaxes the muscles behind certain expression lines, especially frown lines.", "Botox and Dysport are both neuromodulators, but they are not identical. At your consultation, your provider explains the differences and helps you decide what may suit you."] }}
+  looks={{ heading: "What we can talk about", intro: "We start with your face and your goals, not a fixed menu.", items: [{ title: "Frown lines", body: "Lines between the brows that deepen when you concentrate." }, { title: "Fine lines", body: "Other expression lines you would like to discuss." }, { title: "Natural movement", body: "How to soften lines while keeping your expression." }, { title: "Botox or Dysport", body: "How the two compare, and which may fit you." }, { title: "Timing", body: "How often you may want treatment, based on your plan." }, { title: "Aftercare", body: "Simple guidance to follow after your visit." }] }}
+  who={{ heading: "Who may be a good fit", intro: "Your provider helps you decide if Dysport is right for you.", bullets: ["You see lines between your brows", "You want a natural look", "You are comparing Botox and Dysport", "You want a plan from a medical team", "You prefer clear explanations", "You want ongoing check-ins"] }}
+  steps={[{ title: "Talk", body: "Tell us what you see and what you want." }, { title: "Review", body: "Your provider reviews your history and your face." }, { title: "Plan", body: "We explain Dysport, other options, benefits and risks." }, { title: "Follow up", body: "We check in and refine your plan as needed." }]}
+  why={[{ title: "Medical team", body: "Aesthetic care in a physician-led practice." }, { title: "Honest advice", body: "We explain options, including when not to treat." }, { title: "Personal", body: "A plan built around you." }, { title: "Local", body: "Close to home in Bedminster." }]}
+  faqs={[{ q: "What is Dysport?", a: "Dysport is a prescription injectable used to temporarily soften expression lines. Your provider explains how it works." }, { q: "How is it different from Botox?", a: "Both are neuromodulators with some differences. Your provider explains which may suit you." }, { q: "Will I look natural?", a: "We aim for a balanced, natural look and talk through your goals first." }, { q: "How long does it last?", a: "This differs for each person. We discuss what to expect at your consultation." }, { q: "Are there side effects?", a: "All treatments carry some risk. We review potential side effects and who should avoid treatment." }, { q: "What does it cost?", a: "Please contact our team about pricing. Financing options may be available, including Cherry and CareCredit." }]}
+  related={[{ title: "Botox", body: "Another neuromodulator option for expression lines.", href: "/aesthetics/botox" }, { title: "Sculptra", body: "Gradual support for facial volume.", href: "/aesthetics/sculptra" }, { title: "Microneedling", body: "Treatment to support skin texture and tone.", href: "/aesthetics/microneedling" }]}
+  relatedHeading="Explore more care"
+  closing={{ heading: "Find out which option fits you.", text: "Request a consultation and we will help you plan your next step." }}
+  images={images}
+  heroImage={heroImage}
+/>

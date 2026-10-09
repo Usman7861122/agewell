@@ -1,0 +1,25 @@
+---
+import Container from '../ui/Container.astro';
+import Heading from '../ui/Heading.astro';
+import Img from '../ui/Img.astro';
+import FadeIn from '../../islands/animations/FadeIn';
+import SonarGrid from '../../islands/animations/SonarGrid';
+---
+<section id="longevity" aria-labelledby="meaning-title" class="bg-white text-ink">
+  <SonarGrid client:visible className="py-16 md:py-24" spacing={28} baseOpacity={0.22} ringWidth={110} pingEvery={3} pingArea={[0.1, 0.15, 0.9, 0.85]}>
+  <Container>
+    <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+      <FadeIn client:visible>
+        <Img name="longevity" class="aspect-[4/3] w-full rounded-3xl object-cover" sizes="(min-width:1024px) 600px, 100vw" w={1200} h={900} />
+      </FadeIn>
+      <FadeIn client:visible delay={0.1}>
+        <div class="rounded-3xl bg-white/90 p-2 backdrop-blur-[2px] sm:p-6">
+        <Heading id="meaning-title" eyebrow="What longevity medicine means">More healthy years doing what matters to you</Heading>
+        <p class="mt-6 text-lg">Healthspan is the time you spend living in good health. Longevity medicine focuses on the factors that influence how well you age, including metabolic health, physical function, sleep, nutrition and appropriate preventive care. We look at your history, goals and relevant health markers to create a personalized plan that works alongside your regular medical care.</p>
+        <a href="/longevity" class="link-arrow mt-4" aria-label="Learn about longevity medicine">Learn More <span aria-hidden="true">→</span></a>
+        </div>
+      </FadeIn>
+    </div>
+  </Container>
+  </SonarGrid>
+</section>

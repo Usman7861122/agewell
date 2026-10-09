@@ -1,0 +1,50 @@
+---
+import { footerGroups } from '../../data/navigation';
+import { site } from '../../lib/site';
+const year = new Date().getFullYear();
+---
+<footer class="depth-dark bg-ink text-white on-dark">
+  <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+    <div class="grid gap-12 lg:grid-cols-[1.3fr_2fr_1.2fr]">
+      <div>
+        <a href="/" class="inline-block rounded-lg bg-white p-2" aria-label="AgeWell Medicine & Aesthetics, home">
+          <img src="/images/logo.png" alt="AgeWell Medicine & Aesthetics" width="189" height="100" class="h-14 w-auto" loading="lazy" />
+        </a>
+        <p class="mt-5 max-w-sm text-[15px] text-white/80">Physician-led longevity and healthspan medicine in Bedminster, New Jersey, with non-surgical hair restoration and advanced aesthetics.</p>
+        <ul class="mt-6 flex flex-wrap gap-x-5 text-sm">
+          {site.social.map((s) => <li><a class="inline-block py-2 underline-offset-4 hover:underline" href={s.href} rel="noopener" target="_blank">{s.label}</a></li>)}
+        </ul>
+      </div>
+
+      <div class="grid gap-8 sm:grid-cols-3">
+        {footerGroups.map((g) => (
+          <nav aria-label={g.title}>
+            <h2 class="eyebrow mb-4 text-sm">{g.title}</h2>
+            <ul class="space-y-1 text-[15px] text-white/85">
+              {g.links.map((l) => <li><a class="inline-block py-1.5 underline-offset-4 hover:text-white hover:underline" href={l.href}>{l.label}</a></li>)}
+            </ul>
+          </nav>
+        ))}
+      </div>
+
+      <div>
+        <h2 class="eyebrow mb-4 text-sm">Get In Touch</h2>
+        <address class="space-y-3 text-[15px] not-italic text-white/85">
+          <p><a class="inline-block py-1 font-semibold text-white hover:underline underline-offset-4" href={site.phoneHref}>{site.phone}</a></p>
+          <p><a class="inline-block py-1 hover:underline underline-offset-4" href={`mailto:${site.email}`}>{site.email}</a></p>
+          <p>{site.address.street}<br />{site.address.city}, {site.address.region} {site.address.zip}</p>
+          <p><a class="inline-block py-1 underline underline-offset-4" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${site.address.street}, ${site.address.city}, ${site.address.region} ${site.address.zip}`)}`} target="_blank" rel="noopener">Get directions</a></p>
+          <p class="text-white/60">{site.hours}</p>
+        </address>
+      </div>
+    </div>
+
+    <div class="mt-14 flex flex-col gap-3 border-t border-white/15 pt-6 text-sm text-white/70 sm:flex-row sm:items-center sm:justify-between">
+      <p>© {year} {site.name}. All rights reserved.</p>
+      <ul class="flex gap-6">
+        <li><a class="inline-block py-1 hover:text-white hover:underline underline-offset-4" href="/privacy-policy">Privacy Policy</a></li>
+        <li><a class="inline-block py-1 hover:text-white hover:underline underline-offset-4" href="/terms">Terms &amp; Conditions</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>

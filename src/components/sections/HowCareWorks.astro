@@ -1,0 +1,15 @@
+---
+import Section from '../ui/Section.astro';
+import Container from '../ui/Container.astro';
+import Heading from '../ui/Heading.astro';
+import Button from '../ui/Button.astro';
+import CareTimeline from '../../islands/interactive/CareTimeline';
+import { book } from '../../lib/site';
+---
+<Section tone="dark" class="depth-dark" labelledby="steps-title">
+  <Container>
+    <Heading id="steps-title" eyebrow="How care works" center>Your first steps toward aging well</Heading>
+    <CareTimeline client:visible />
+    <div class="mt-16 text-center"><Button href={book()} variant="light">Request Consultation</Button></div>
+  </Container>
+</Section>

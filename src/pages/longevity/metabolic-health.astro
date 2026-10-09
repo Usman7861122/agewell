@@ -1,0 +1,85 @@
+---
+import ServicePage from '../../components/sections/ServicePage.astro';
+import { src, srcset } from '../../lib/images';
+import type { ServiceImage } from '../../components/sections/ServicePage.astro';
+
+// Local photos from /public/images/photos. TODO: swap for licensed Shutterstock photos if wanted.
+const img = (key: Parameters<typeof src>[0], alt: string, w: number, h: number): ServiceImage => ({ src: src(key, 1080), srcset: srcset(key, [480, 768, 1080]), alt, w, h });
+const images: [ServiceImage, ServiceImage, ServiceImage] = [
+  img('d50', 'A woman lifting a barbell while a trainer watches', 1080, 1350),
+  img('svcFunctional', 'A lemon, garlic and fresh herbs on a dark surface', 1080, 1350),
+  img('d40', 'A man running on a paved park path', 1080, 810),
+];
+const heroImage = img('svcMetabolic', 'A woman walking along a path in a park', 1080, 1350);
+// TODO: provider to review all clinical wording on this page before publication.
+---
+<ServicePage
+  slug="metabolic-health"
+  name="Metabolic Health and Medical Weight Management"
+  group="Longevity Medicine"
+  groupHref="/longevity"
+  interest="metabolic"
+  seoTitle="Metabolic Health & Medical Weight Management in Bedminster, NJ | AgeWell"
+  seoDescription="Physician-led metabolic health and medical weight management in Bedminster, NJ. Nutrition, lifestyle support and medication when appropriate, with ongoing monitoring and a plan built around you."
+  intro="Dr. Frank Dos Santos, DO, and our team help you address weight and metabolic health with nutrition, lifestyle support and medication when appropriate, with a focus on steady, lasting progress."
+  quickFacts={[]}
+  whatIs={{
+    heading: 'What is medical weight management?',
+    paragraphs: [
+      'Weight is only one part of metabolic health. Blood sugar, blood pressure, body composition and cardiovascular risk all matter, and they affect how you feel and how well you age.',
+      'Medical weight management looks at the whole picture with a clinician who knows your history. Together we build a plan around nutrition, movement, sleep and, when appropriate, medication, and we keep checking in so the plan keeps working for you.',
+    ],
+  }}
+  looks={{
+    heading: 'What your plan may include',
+    intro: 'There is no one-size-fits-all plan. Your clinician chooses what fits your history, your results and your goals.',
+    items: [
+      { title: 'Weight and body composition', body: 'Where you are today and what a healthy, realistic target looks like for you.' },
+      { title: 'Blood sugar', body: 'How your body handles glucose, with testing when it is appropriate.' },
+      { title: 'Blood pressure and heart health', body: 'Cardiovascular risk factors that shape your long-term health.' },
+      { title: 'Nutrition and activity', body: 'Practical eating and movement habits you can keep, not a short-term diet.' },
+      { title: 'Sleep, stress and habits', body: 'The daily routines that make progress easier or harder.' },
+      { title: 'Medication, when appropriate', body: 'Your clinician explains the benefits, risks and alternatives before any prescription.' },
+    ],
+  }}
+  who={{
+    heading: 'Who this care can help',
+    intro: 'You do not need a specific diagnosis to ask for help. If weight or metabolic health is on your mind, we can talk it through.',
+    bullets: [
+      'You want to lose weight in a safe, supported way',
+      'Past diets have not given you lasting results',
+      'You are concerned about blood sugar or blood pressure',
+      'You feel tired, even when you try to eat well',
+      'You want a clinician to monitor your progress',
+      'You prefer a plan that fits your life',
+    ],
+  }}
+  steps={[
+    { title: 'Consult', body: 'Tell us your goals and what has and has not worked. We review your health history.' },
+    { title: 'Evaluate', body: 'Your clinician recommends an examination and testing where appropriate, then explains the findings.' },
+    { title: 'Personalize', body: 'We build a plan around nutrition, activity, sleep and, when appropriate, medication.' },
+    { title: 'Follow up', body: 'We monitor your progress, talk about how you feel and adjust the plan as your needs change.' },
+  ]}
+  why={[
+    { title: 'Physician-led', body: 'Your plan is guided by a fellowship-trained longevity physician.' },
+    { title: 'Sustainable', body: 'We aim for steady progress you can keep, not quick fixes.' },
+    { title: 'Monitored', body: 'Regular follow-up lets us adjust your plan as things change.' },
+    { title: 'Local', body: 'A friendly office in Bedminster, close to home for patients across Somerset County.' },
+  ]}
+  faqs={[
+    { q: 'Is this a diet program?', a: 'No. We build a plan around your history, results and goals. It may include nutrition guidance, movement, sleep support and medication when appropriate.' },
+    { q: 'Will I need medication?', a: 'Not everyone does. Your clinician recommends medication only when it is appropriate, and explains the benefits, risks and alternatives first.' },
+    { q: 'How long does it take to see progress?', a: 'It differs from person to person. We aim for steady, sustainable progress and set expectations with you at your visit.' },
+    { q: 'Do I need a diagnosis to start?', a: 'No. You can request a consultation to talk about your goals or concerns. We will help you decide whether our services fit your needs.' },
+    { q: 'Will you work with my primary care doctor?', a: 'Our care is designed to work alongside your regular medical care.' },
+    { q: 'What about cost and payment options?', a: 'Please contact our team about pricing. Financing options are available, including Cherry and CareCredit. Approval and terms depend on the financing provider.' },
+  ]}
+  related={[
+    { title: 'Longevity Evaluation', body: 'A careful look at your history, concerns and goals, with testing where appropriate.', href: '/longevity/evaluation' },
+    { title: 'Hormone Care', body: 'Individualized evaluation for men and women with symptoms that may relate to hormonal changes.', href: '/longevity/hormone-care' },
+    { title: 'Functional Medicine', body: 'How nutrition, sleep, stress and digestion may contribute to your symptoms.', href: '/longevity/functional-medicine' },
+  ]}
+  closing={{ heading: 'Steady progress starts with one visit.', text: 'Request a consultation and we will help you plan your next step.' }}
+  images={images}
+  heroImage={heroImage}
+/>

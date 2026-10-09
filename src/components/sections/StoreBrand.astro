@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../ui/Section.astro';
+import Container from '../ui/Container.astro';
+import Heading from '../ui/Heading.astro';
+import Button from '../ui/Button.astro';
+import { book } from '../../lib/site';
+interface Props {
+  title: string; description: string; eyebrow: string; h1: string; h2: string; paragraphs: string[];
+  cta?: { label: string; href: string; external?: boolean };
+}
+const { title, description, eyebrow, h1, h2, paragraphs, cta } = Astro.props;
+---
+<BaseLayout title={title} description={description}>
+    <section class="relative overflow-hidden bg-deep py-20 text-white on-dark md:py-28" aria-labelledby="brand-title">
+      <div aria-hidden="true" class="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-leaf/10 blur-3xl"></div>
+      <Container>
+        <nav aria-label="Breadcrumb" class="text-sm text-white/70"><a href="/store" class="hover:text-white">Store</a> <span aria-hidden="true">/</span> <span>{h1}</span></nav>
+        <p class="eyebrow mt-8 text-leaf">{eyebrow}</p>
+        <h1 id="brand-title" class="h-display mt-3 max-w-3xl text-4xl sm:text-5xl lg:text-6xl">{h1}</h1>
+      </Container>
+    </section>
+    <Section>
+      <Container>
+        <div class="mx-auto max-w-3xl">
+          <Heading as="h2" id="brand-intro">{h2}</Heading>
+          <div class="mt-6 space-y-5 text-lg">{paragraphs.map((t) => <p>{t}</p>)}</div>
+          <div class="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+            {cta && (cta.external
+              ? <a href={cta.href} class="btn btn-primary" target="_blank" rel="noopener noreferrer">{cta.label}<span class="sr-only"> (opens in a new tab)</span></a>
+              : <Button href={cta.href}>{cta.label}</Button>)}
+            <a href="/contact" class="link-arrow">Contact Us <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </Container>
+    </Section>
+    <Section tone="mist">
+      <Container>
+        <div class="mx-auto max-w-2xl text-center">
+          <Heading as="h2" id="best-self" center>Your best self starts today</Heading>
+          <p class="mt-6 text-lg">Personalized aesthetic and wellness care to help you look refreshed, feel confident and age well, with treatment tailored to your goals.</p>
+          <div class="mt-8"><Button href={book()}>Request Consultation</Button></div>
+        </div>
+      </Container>
+    </Section>
+</BaseLayout>

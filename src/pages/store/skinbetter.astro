@@ -1,0 +1,16 @@
+---
+import StoreBrand from '../../components/sections/StoreBrand.astro';
+import { book } from '../../lib/site';
+---
+<StoreBrand
+  title="Skinbetter Skincare | AgeWell Medicine & Aesthetics, Bedminster NJ"
+  description="Shop Skinbetter science-backed skincare at AgeWell Medicine & Aesthetics in Bedminster, NJ."
+  eyebrow="Store"
+  h1="Skinbetter"
+  h2="Shop Skinbetter: luxury skin care at AgeWell"
+  paragraphs={[
+    'Skinbetter offers science-backed skincare solutions designed to rejuvenate and protect your skin. Ask our team which products may fit your skin and your goals.',
+    'AgeWell Medicine & Aesthetics offers personalized medical, aesthetic and wellness care to patients from Bedminster, Bridgewater, Bernardsville, Basking Ridge, Warren, Somerville and nearby areas.',
+  ]}
+  cta={{ label: 'Request Consultation', href: book('aesthetics') }}
+/>

@@ -1,0 +1,37 @@
+---
+import ServicePage from '../../components/sections/ServicePage.astro';
+import type { ServiceImage } from '../../components/sections/ServicePage.astro';
+
+// Fresh Unsplash photos (free licence), used only on this page. Saved in /public/images/aesthetics.
+const heroImage: ServiceImage = { src: '/images/aesthetics/skincare-hero.jpg', srcset: '/images/aesthetics/skincare-hero-640.jpg 640w, /images/aesthetics/skincare-hero.jpg 1400w', alt: "A woman in a towel with cream on her face, relaxing at home", w: 1400, h: 653 };
+const images: [ServiceImage, ServiceImage, ServiceImage] = [
+  { src: '/images/aesthetics/skincare-a.jpg', alt: "A woman applying a drop of facial serum from a glass dropper", w: 1400, h: 2100 },
+  { src: '/images/aesthetics/skincare-b.jpg', alt: "A woman with long pink nails applying serum to her cheek", w: 1400, h: 2100 },
+  { src: '/images/aesthetics/skincare-c.jpg', alt: "A jar of white cream with fresh mint leaves", w: 1400, h: 933 },
+];
+// TODO: provider to review all clinical wording on this page before publication.
+---
+<ServicePage
+  slug="aesthetics/skincare"
+  name="Medical-Grade Skincare"
+  group="Aesthetics"
+  groupHref="/aesthetics"
+  eyebrow="Aesthetics · Bedminster, NJ"
+  interest="aesthetics"
+  seoTitle="Medical-Grade Skincare in Bedminster, NJ | AgeWell Medicine & Aesthetics"
+  seoDescription="Medical-grade skincare in Bedminster, NJ. Products chosen with your provider to support your skin at home. Request a consultation at AgeWell."
+  intro="Good skin care works best with a plan. Your provider helps you choose medical-grade products that fit your skin, your goals and your routine."
+  quickFacts={[]}
+  heroChip="Skin health"
+  whatIs={{ heading: "Skincare chosen with your provider", paragraphs: ["Medical-grade skincare products are made for specific skin concerns and are usually sold through clinics. Your provider helps you pick products that suit your skin.", "Our Store carries Skinbetter Science, which you can explore online or ask about at your visit. We keep your routine simple and clear."] }}
+  looks={{ heading: "What we can talk about", intro: "A simple routine you can keep up.", items: [{ title: "Daily routine", body: "Cleanser, protection and care that fit your skin." }, { title: "Texture and tone", body: "Products that support smoother-looking skin." }, { title: "Fine lines", body: "Care for early signs of aging." }, { title: "Sun protection", body: "A daily habit that matters for every skin." }, { title: "Sensitive skin", body: "How to choose gently." }, { title: "Pairing with treatments", body: "Products that support your in-office care." }] }}
+  who={{ heading: "Who may be a good fit", intro: "Everyone can benefit from a clear plan.", bullets: ["You are unsure what to buy", "You want advice from a medical team", "You want a simple routine", "You are starting treatments", "You have sensitive skin", "You want to support results at home"] }}
+  steps={[{ title: "Talk", body: "Tell us about your skin and routine." }, { title: "Review", body: "Your provider reviews your skin and your goals." }, { title: "Plan", body: "We suggest a simple routine and explain each product." }, { title: "Follow up", body: "We check how your skin responds and adjust." }]}
+  why={[{ title: "Medical team", body: "Skincare advice from a physician-led practice." }, { title: "Simple routines", body: "Fewer, better steps." }, { title: "Personal", body: "Chosen for your skin." }, { title: "Local", body: "Pick up in Bedminster, or shop our Store." }]}
+  faqs={[{ q: "What is medical-grade skincare?", a: "It refers to products developed for specific skin concerns and often sold through clinics. Your provider explains what may suit you." }, { q: "Do I need a visit first?", a: "A consultation helps your provider recommend the right products for you." }, { q: "Can I buy online?", a: "You can explore our Store online. Ask our team if you need help choosing." }, { q: "Will it work with my treatments?", a: "Your provider explains how products can support your care." }, { q: "Can I use it with sensitive skin?", a: "Tell us about sensitivity at your visit so we can choose carefully." }, { q: "What does it cost?", a: "Please contact our team about pricing." }]}
+  related={[{ title: "Our Store", body: "Browse Skinbetter and Biote products.", href: "/store" }, { title: "Microneedling", body: "Support skin texture and tone.", href: "/aesthetics/microneedling" }, { title: "Botox", body: "Soften expression lines.", href: "/aesthetics/botox" }]}
+  relatedHeading="Explore more care"
+  closing={{ heading: "Build a skincare routine that fits you.", text: "Request a consultation and we will help you plan your next step." }}
+  images={images}
+  heroImage={heroImage}
+/>

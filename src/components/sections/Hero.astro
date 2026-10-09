@@ -1,0 +1,36 @@
+---
+import HeroVideo from '../../islands/interactive/HeroVideo';
+import Button from '../ui/Button.astro';
+import HeroMotion from '../../islands/animations/HeroMotion';
+import { book } from '../../lib/site';
+---
+<section class="relative isolate flex min-h-[600px] items-center overflow-hidden bg-ink text-white on-dark min-[1025px]:min-h-[720px]" aria-labelledby="hero-title">
+  <!-- Background video: public/Age+Well+Desktop.mp4 (plain "+" in the URL works; %2B does not). Renaming it to age-well-desktop.mp4 later would be cleaner. -->
+  <HeroVideo client:load src="/Age+Well+Desktop.mp4" poster="/images/hero-poster.jpg" />
+  <div class="absolute inset-0 -z-10 bg-gradient-to-r from-ink/80 via-ink/50 to-ink/10 max-[700px]:bg-ink/60" aria-hidden="true"></div>
+
+  <div class="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+    <HeroMotion client:load className="max-w-2xl">
+      <p class="eyebrow text-[13px] sm:text-[15px]">Physician-Led Longevity Medicine in Bedminster NJ</p>
+      <h1 id="hero-title" class="h-display mt-5 text-[2.5rem] sm:text-6xl lg:text-[4rem]">
+        <span class="block">Live healthier.</span><span class="block">Feel stronger.</span><span class="block">Age better.</span>
+      </h1>
+      <p class="mt-6 max-w-xl text-lg text-white/95">Personalized longevity and healthspan medicine focused on your health, strength and quality of life.</p>
+      <div class="mt-9 flex flex-col gap-4 sm:flex-row [&_.btn]:whitespace-nowrap">
+        <Button href={book('longevity')} variant="primary">Request Consultation</Button>
+        <Button href="#services" variant="dark">View Services</Button>
+      </div>
+    </HeroMotion>
+  </div>
+</section>
+
+<!-- Service line from the brief: one quiet line -->
+<div class="bg-ink text-white on-dark">
+  <ul class="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-3 gap-y-1 px-4 py-5 text-center font-display text-[12px] uppercase tracking-[.12em] sm:text-sm lg:flex-nowrap lg:gap-x-4 lg:text-[14px]">
+    <li>Longevity Medicine</li><li aria-hidden="true" class="opacity-60">•</li>
+    <li>Hormone Care</li><li aria-hidden="true" class="opacity-60">•</li>
+    <li>Metabolic Health</li><li aria-hidden="true" class="opacity-60">•</li>
+    <li>Non-Surgical Hair Restoration</li><li aria-hidden="true" class="opacity-60">•</li>
+    <li>Advanced Aesthetics</li>
+  </ul>
+</div>

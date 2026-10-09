@@ -1,0 +1,21 @@
+---
+import Section from '../ui/Section.astro';
+import Container from '../ui/Container.astro';
+import Heading from '../ui/Heading.astro';
+import Img from '../ui/Img.astro';
+import FadeIn from '../../islands/animations/FadeIn';
+---
+<Section tone="brand" class="depth-dark !py-14 md:!py-20" labelledby="virtual-title">
+  <Container>
+    <div class="grid items-center gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
+      <FadeIn client:visible>
+        <Img name="virtual" class="aspect-[3/2] w-full rounded-3xl object-cover" sizes="(min-width:1024px) 520px, 100vw" w={1200} h={800} />
+      </FadeIn>
+      <FadeIn client:visible delay={0.1}>
+        <Heading id="virtual-title" as="h2" size="md" eyebrow="Virtual visits">Care that fits your schedule</Heading>
+        <p class="mt-5 text-lg text-white/95">Connect with AgeWell through virtual visits for eligible consultations and follow-up care. Contact us to find out whether a virtual appointment fits your needs.</p>
+        <a href="/resources/virtual-visits" class="btn btn-light mt-7">Virtual Visits</a>
+      </FadeIn>
+    </div>
+  </Container>
+</Section>

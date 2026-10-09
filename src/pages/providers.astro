@@ -1,0 +1,28 @@
+---
+import InfoPage from '../components/sections/InfoPage.astro';
+import type { Img, Block } from '../lib/info-types';
+import { site } from '../lib/site';
+
+// Fresh Unsplash photos (free licence), used only on this page. Saved in /public/images/pages.
+const hero = (n: string, alt: string, w: number, h: number): Img => ({ src: `/images/pages/${n}.jpg`, srcset: `/images/pages/${n}-640.jpg 640w, /images/pages/${n}.jpg 1400w`, alt, w, h });
+const body = (n: string, alt: string, w: number, h: number): Img => ({ src: `/images/pages/${n}.jpg`, alt, w, h });
+const blocks: Block[] = [
+  { type: 'people', eyebrow: 'Meet our providers', heading: 'Medical leadership you can talk to', intro: 'AgeWell Medicine & Aesthetics was co-founded by Dr. Frank Dos Santos and Tara Hibbett. Together they bring longevity medicine and aesthetic care into one personal approach to healthy aging.', items: [
+    { name: 'Dr. Frank Dos Santos', credential: 'DO', role: 'Medical Director and Co-Founder', photo: '/images/frank-dos-santos.jpg', w: 667, h: 833, tags: ['Longevity Medicine', 'Medical Director'], paragraphs: ['Dr. Dos Santos is fellowship trained in longevity medicine. He guides care that focuses on healthspan and long-term health.', 'He takes time to understand your history and goals, explains your options and builds a plan with you.'] },
+    { name: 'Tara Hibbett', credential: 'PA-C', role: 'Co-Founder', photo: '/images/tara-hibbett.jpg', w: 600, h: 750, tags: ['Aesthetics', 'Co-Founder'], paragraphs: ['Tara helps bring longevity medicine and aesthetic care together in a personal healthy-aging plan.', 'Patients often mention how carefully she listens and how natural their results look.'] },
+  ] },
+  { type: 'cards', eyebrow: 'Our approach', heading: 'How our providers care for you', tone: 'white', items: [
+    { title: 'They listen first', body: 'Your story, your concerns and your goals come before any plan.' },
+    { title: 'They explain clearly', body: 'You hear your options, the benefits, the risks and the alternatives.' },
+    { title: 'They plan with you', body: 'Care is built around you, and it works alongside your regular doctor.' },
+  ] },
+  { type: 'band', heading: 'Ready to meet your provider?', text: 'Request a consultation and we will help you choose the right first step.', primary: { label: 'Request Consultation', href: '/#consultation' }, secondary: { label: 'Call ' + site.phone, href: site.phoneHref } },
+];
+// TODO: provider to confirm titles, credentials and bio wording before launch.
+---
+<InfoPage slug="providers" name="Our Providers" title="Our Providers" eyebrow="Meet the team · Bedminster, NJ" interest="not-sure"
+  seoTitle="Our Providers | AgeWell Medicine & Aesthetics, Bedminster NJ"
+  seoDescription="Meet Dr. Frank Dos Santos, DO, and Tara Hibbett, PA-C, the co-founders of AgeWell Medicine & Aesthetics in Bedminster, NJ."
+  intro="Meet the physician-led team behind AgeWell. Longevity medicine and aesthetic care, together in one personal plan."
+  heroImage={hero('providers-body', 'The glass front of a calm, plant-filled clinic lit from inside', 1400, 933)} heroChip="Physician-led"
+  blocks={blocks} closing={{ heading: 'Start with a conversation.', text: 'Request a consultation and meet the team.' }} />

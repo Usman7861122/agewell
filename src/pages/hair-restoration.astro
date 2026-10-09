@@ -1,0 +1,88 @@
+---
+import ServicePage from '../components/sections/ServicePage.astro';
+import type { ServiceImage } from '../components/sections/ServicePage.astro';
+
+// Local photos. Hero is the licensed Shutterstock photo already in /public/images/hair.jpg.
+// TODO: confirm GetHairMD brand/imagery usage with the practice before launch.
+const heroImage: ServiceImage = { src: '/images/hair.jpg', srcset: '/images/hair-640.jpg 640w, /images/hair.jpg 1200w', alt: "A clinician examining a patient's scalp with a scalp-imaging device during a hair restoration consultation", w: 1200, h: 1799 };
+const own = (name: string, alt: string, w: number, h: number): ServiceImage => ({ src: `/images/services/${name}.jpg`, srcset: `/images/services/${name}-640.jpg 640w, /images/services/${name}.jpg ${w}w`, alt, w, h });
+// Fresh Unsplash photos (free licence), used only on this page.
+const images: [ServiceImage, ServiceImage, ServiceImage] = [
+  own('hair-overview', "A man checking his hairline and scalp with his fingers", 1080, 721),
+  own('hair-steps', 'A woman laughing with her curly hair blowing in the wind', 1080, 1620),
+  own('hair-local', 'A smiling woman running her hands through long, healthy hair', 1080, 720),
+];
+// TODO: provider to review all clinical wording on this page before publication.
+---
+<ServicePage
+  slug="hair-restoration"
+  name="Non-Surgical Hair Restoration"
+  eyebrow="Hair restoration · Bedminster, NJ"
+  interest="hair"
+  seoTitle="Non-Surgical Hair Restoration in Bedminster, NJ | AgeWell & GetHairMD"
+  seoDescription="Non-surgical hair restoration for men and women in Bedminster, NJ, in partnership with GetHairMD. Start with a consultation to review your hair-loss concerns and the options that may be right for you."
+  intro="AgeWell Medicine & Aesthetics partners with GetHairMD to offer non-surgical hair restoration for men and women at our Bedminster office."
+  quickFacts={[]}
+  heroChip="Non-surgical"
+  heroNote={{ title: 'In partnership with GetHairMD', text: 'Hair restoration for men and women' }}
+  whatIs={{
+    heading: 'A personalized approach to fuller-looking hair',
+    paragraphs: [
+      'Hair loss has many possible causes, and it feels different for everyone. We begin by listening to your concerns and reviewing the factors that may be contributing.',
+      'Your consultation helps us decide which of the available treatment options may be appropriate for you. Our partnership with GetHairMD focuses on non-surgical hair restoration, so we do not perform hair transplants.',
+    ],
+  }}
+  looks={{
+    heading: 'What your consultation may cover',
+    intro: 'We take time to understand your hair and your history before suggesting anything.',
+    items: [
+      { title: 'Your concerns', body: 'What you have noticed, when it began and what you hope to change.' },
+      { title: 'Pattern of hair loss', body: 'Where and how your hair is thinning, so we know what we are looking at.' },
+      { title: 'Medical history', body: 'Health conditions, medicines and family history that may play a part.' },
+      { title: 'Possible contributors', body: 'Factors such as hormones, stress, nutrition and other health issues, when relevant.' },
+      { title: 'Available options', body: 'Non-surgical treatments that may be appropriate for you, with what to expect.' },
+      { title: 'A plan and follow-up', body: 'A clear next step and visits to check how you are doing.' },
+    ],
+  }}
+  who={{
+    heading: 'Who hair restoration can help',
+    intro: 'Men and women of many ages notice changes in their hair. A consultation is the best way to find out what may help.',
+    bullets: [
+      'You notice thinning or a wider part',
+      'Your hairline is changing',
+      'You are shedding more than usual',
+      'You want a non-surgical approach',
+      'You are unsure what is causing it',
+      'You want a plan from a medical team',
+    ],
+  }}
+  steps={[
+    { title: 'Talk', body: 'Share your concerns and goals. We listen first.' },
+    { title: 'Review', body: 'Your clinician reviews your history and looks at potential contributing factors.' },
+    { title: 'Plan', body: 'We explain the non-surgical options that may be appropriate and agree on a plan with you.' },
+    { title: 'Follow up', body: 'We check in on your progress and adjust your plan as needed.' },
+  ]}
+  why={[
+    { title: 'Medical team', body: 'Your care comes from a physician-led medical practice.' },
+    { title: 'GetHairMD partner', body: 'We offer non-surgical hair restoration in partnership with GetHairMD.' },
+    { title: 'Personal', body: 'We start with your concerns, not a one-size-fits-all package.' },
+    { title: 'Local', body: 'A friendly office in Bedminster, close to home for patients across Somerset County.' },
+  ]}
+  faqs={[
+    { q: 'Do you offer hair transplants?', a: 'Our GetHairMD partnership focuses on non-surgical hair restoration. A consultation helps us review the available options for your concerns.' },
+    { q: 'Is hair restoration for men and women?', a: 'Yes. We offer non-surgical hair restoration for men and women.' },
+    { q: 'What happens at the first visit?', a: 'We talk about your concerns, review your history and discuss potential contributing factors. Then we explain which options may be appropriate for you.' },
+    { q: 'Will I need tests?', a: 'Sometimes. Your clinician recommends testing only when it is appropriate and explains why.' },
+    { q: 'How soon will I see results?', a: 'This differs for each person and treatment. We will talk about what to expect for you at your consultation.' },
+    { q: 'What about cost and payment options?', a: 'Please contact our team about pricing. Financing options are available, including Cherry and CareCredit. Approval and terms depend on the financing provider.' },
+  ]}
+  related={[
+    { title: 'Hormone Care', body: 'Individualized evaluation for men and women with symptoms that may relate to hormonal changes.', href: '/longevity/hormone-care' },
+    { title: 'Aesthetics', body: 'Personalized aesthetic care for expression lines, facial volume and skin quality.', href: '/aesthetics' },
+    { title: 'Longevity Evaluation', body: 'A careful look at your history, concerns and goals, with testing where appropriate.', href: '/longevity/evaluation' },
+  ]}
+  relatedHeading="Explore more care"
+  closing={{ heading: 'Start with a conversation about your hair.', text: 'Request a consultation and we will help you plan your next step.' }}
+  images={images}
+  heroImage={heroImage}
+/>

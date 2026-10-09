@@ -1,0 +1,85 @@
+---
+import ServicePage from '../../components/sections/ServicePage.astro';
+import { src, srcset } from '../../lib/images';
+import type { ServiceImage } from '../../components/sections/ServicePage.astro';
+
+// Local photos from /public/images/photos. TODO: swap for licensed Shutterstock photos if wanted.
+const img = (key: Parameters<typeof src>[0], alt: string, w: number, h: number): ServiceImage => ({ src: src(key, 1080), srcset: srcset(key, [480, 768, 1080]), alt, w, h });
+const images: [ServiceImage, ServiceImage, ServiceImage] = [
+  img('d30', 'A woman doing yoga on a mat in a bright living room', 1080, 1350),
+  img('svcEval', 'Two people sitting at a table writing on a clipboard', 1080, 1350),
+  img('d70', 'An older woman and man looking closely at leaves in a green garden', 1080, 810),
+];
+const heroImage = img('svcFunctional', 'A lemon, garlic and fresh herbs on a dark surface', 1080, 1350);
+// TODO: provider to review all clinical wording on this page before publication.
+---
+<ServicePage
+  slug="functional-medicine"
+  name="Functional Medicine"
+  group="Longevity Medicine"
+  groupHref="/longevity"
+  interest="longevity"
+  seoTitle="Functional Medicine in Bedminster, NJ | AgeWell Medicine & Aesthetics"
+  seoDescription="Physician-led functional medicine in Bedminster, NJ. We explore how nutrition, sleep, stress, digestive health and medical conditions may contribute to your symptoms and build an individualized plan."
+  intro="Dr. Frank Dos Santos, DO, and our team look at how nutrition, sleep, stress, digestive health and medical conditions may be connected to the way you feel."
+  quickFacts={[]}
+  whatIs={{
+    heading: 'What is functional medicine?',
+    paragraphs: [
+      'Symptoms rarely have just one cause. Functional medicine takes time to look at how different parts of your health connect, including daily habits, digestion, sleep, stress and any medical conditions you have.',
+      'At AgeWell, this approach is led by a physician and grounded in your clinical needs. We use your history and appropriate testing to understand what may be contributing, then build an individualized care plan with you.',
+    ],
+  }}
+  looks={{
+    heading: 'What we explore together',
+    intro: 'Your clinician chooses what to look at based on your story, your symptoms and your goals.',
+    items: [
+      { title: 'Nutrition', body: 'What and how you eat, and whether changes may support how you feel.' },
+      { title: 'Sleep', body: 'How well you rest and what may be getting in the way.' },
+      { title: 'Stress and mindset', body: 'How stress shows up and the practical support that helps you manage it.' },
+      { title: 'Gut health', body: 'Digestive symptoms and targeted evaluation when it is clinically appropriate.' },
+      { title: 'Inflammation', body: 'History, lifestyle and relevant testing to look at possible contributors.' },
+      { title: 'Medical conditions', body: 'How existing conditions and medicines fit into the bigger picture.' },
+    ],
+  }}
+  who={{
+    heading: 'Who functional medicine can help',
+    intro: 'It can be a good fit when you want more than a quick answer and are ready to look at the whole picture.',
+    bullets: [
+      'You have symptoms that have no clear cause',
+      'You deal with ongoing digestive discomfort',
+      'You feel run down despite a healthy routine',
+      'Your sleep or stress is hard to manage',
+      'You want to understand how your habits affect you',
+      'You want one team to connect the dots',
+    ],
+  }}
+  steps={[
+    { title: 'Consult', body: 'Tell us your story. We review your symptoms, habits and health history.' },
+    { title: 'Evaluate', body: 'Your clinician recommends an examination and testing where appropriate, then explains the findings.' },
+    { title: 'Personalize', body: 'We build a plan around nutrition, sleep, stress and medical care when indicated.' },
+    { title: 'Follow up', body: 'We check your progress and adjust the plan as your needs change.' },
+  ]}
+  why={[
+    { title: 'Physician-led', body: 'Your plan is guided by a fellowship-trained longevity physician.' },
+    { title: 'Whole picture', body: 'We look at how nutrition, sleep, stress and gut health connect.' },
+    { title: 'Clinical', body: 'Your plan is grounded in your history and appropriate testing.' },
+    { title: 'Local', body: 'A friendly office in Bedminster, close to home for patients across Somerset County.' },
+  ]}
+  faqs={[
+    { q: 'What makes functional medicine different?', a: 'We take more time to look at how nutrition, sleep, stress, digestion and medical conditions connect, then build a plan around your clinical needs.' },
+    { q: 'Is it a replacement for my regular doctor?', a: 'No. Our care is designed to work alongside your regular medical care.' },
+    { q: 'Will I need testing?', a: 'Sometimes. Your clinician recommends testing only when it is appropriate and explains why.' },
+    { q: 'Do I need a diagnosis to start?', a: 'No. You can request a consultation to talk about your symptoms or goals. We will help you decide whether our services fit your needs.' },
+    { q: 'Can I have a virtual visit?', a: 'Virtual visits may be available for eligible consultations and follow-up care. Contact us to find out whether a virtual appointment fits your needs.' },
+    { q: 'What about cost and payment options?', a: 'Please contact our team about pricing. Financing options are available, including Cherry and CareCredit. Approval and terms depend on the financing provider.' },
+  ]}
+  related={[
+    { title: 'Longevity Evaluation', body: 'A careful look at your history, concerns and goals, with testing where appropriate.', href: '/longevity/evaluation' },
+    { title: 'Metabolic Health and Medical Weight Management', body: 'Nutrition, lifestyle support and medication when appropriate, with ongoing monitoring.', href: '/longevity/metabolic-health' },
+    { title: 'Hormone Care', body: 'Individualized evaluation for men and women with symptoms that may relate to hormonal changes.', href: '/longevity/hormone-care' },
+  ]}
+  closing={{ heading: 'Connect the dots, one visit at a time.', text: 'Request a consultation and we will help you plan your next step.' }}
+  images={images}
+  heroImage={heroImage}
+/>

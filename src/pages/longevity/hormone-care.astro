@@ -1,0 +1,85 @@
+---
+import ServicePage from '../../components/sections/ServicePage.astro';
+import { src, srcset } from '../../lib/images';
+import type { ServiceImage } from '../../components/sections/ServicePage.astro';
+
+// Local photos from /public/images/photos. TODO: swap for licensed Shutterstock photos if wanted.
+const img = (key: Parameters<typeof src>[0], alt: string, w: number, h: number): ServiceImage => ({ src: src(key, 1080), srcset: srcset(key, [480, 768, 1080]), alt, w, h });
+const images: [ServiceImage, ServiceImage, ServiceImage] = [
+  img('d60', 'An older couple with grey hair walking arm in arm', 1080, 1350),
+  img('consult', 'A doctor with a stethoscope in a clinic', 1080, 1350),
+  img('cta', 'A couple walking by a river at sunset', 1080, 810),
+];
+const heroImage = img('svcHormone', 'A smiling couple embracing outdoors on a sandy path', 1080, 1350);
+// TODO: provider to review all clinical wording on this page before publication.
+---
+<ServicePage
+  slug="hormone-care"
+  name="Hormone Care"
+  group="Longevity Medicine"
+  groupHref="/longevity"
+  interest="hormone"
+  seoTitle="Hormone Care in Bedminster, NJ | AgeWell Medicine & Aesthetics"
+  seoDescription="Individualized hormone care for men and women in Bedminster, NJ. A physician-led evaluation of symptoms that may relate to hormonal changes, with treatment options discussed when appropriate."
+  intro="Dr. Frank Dos Santos, DO, and our team offer an individualized evaluation for men and women with symptoms that may be related to hormonal changes."
+  quickFacts={[]}
+  whatIs={{
+    heading: 'What is hormone care?',
+    paragraphs: [
+      'Hormones help control energy, mood, sleep, weight and more. As we age, they can change, and the signs are not always easy to spot or easy to separate from other causes.',
+      'Hormone care begins with listening. We review your symptoms and medical history, recommend testing where appropriate, and explain what we find. If treatment makes sense, we talk through your options, including testosterone or menopausal hormone therapy when appropriate, along with the benefits, risks and alternatives.',
+    ],
+  }}
+  looks={{
+    heading: 'What your evaluation may cover',
+    intro: 'We do not assume that every symptom is hormonal. Your clinician looks at the whole picture first.',
+    items: [
+      { title: 'Your symptoms', body: 'What you notice, when it started and how it affects your day.' },
+      { title: 'Medical history', body: 'Past conditions, medicines and family history that help us understand your results.' },
+      { title: 'Appropriate testing', body: 'Lab work chosen for you, only when it is likely to help answer your questions.' },
+      { title: 'Sleep, stress and weight', body: 'Daily factors that can look like, or add to, hormonal changes.' },
+      { title: 'Treatment options', body: 'If treatment is indicated, we explain what is available and what to expect.' },
+      { title: 'Ongoing monitoring', body: 'Follow-up visits to check how you feel and adjust your plan.' },
+    ],
+  }}
+  who={{
+    heading: 'Who hormone care can help',
+    intro: 'Hormone changes can affect men and women at different stages of life. If something feels different, it is worth a conversation.',
+    bullets: [
+      'You feel tired or low on energy',
+      'Your sleep or mood has changed',
+      'You notice changes in weight or body shape',
+      'You are in perimenopause or menopause',
+      'You have symptoms that may relate to low testosterone',
+      'You want a clear answer, not guesswork',
+    ],
+  }}
+  steps={[
+    { title: 'Consult', body: 'Tell us what you are noticing. We review your symptoms and health history.' },
+    { title: 'Evaluate', body: 'Your clinician recommends an examination and testing where appropriate, then reviews the results with you.' },
+    { title: 'Personalize', body: 'If treatment is indicated, we talk through the options, benefits and risks, and choose a plan with you.' },
+    { title: 'Follow up', body: 'We monitor how you feel and adjust your plan as your needs change.' },
+  ]}
+  why={[
+    { title: 'Physician-led', body: 'Your care is guided by a fellowship-trained longevity physician.' },
+    { title: 'Individual', body: 'We look at you, not a chart. Every plan starts with your symptoms and history.' },
+    { title: 'Informed', body: 'You hear the benefits, risks and alternatives before you decide.' },
+    { title: 'Local', body: 'A friendly office in Bedminster, close to home for patients across Somerset County.' },
+  ]}
+  faqs={[
+    { q: 'Does everyone need hormone therapy?', a: 'No. Recommendations depend on your history, symptoms, test results and preferences. We discuss potential benefits, risks and alternatives before treatment.' },
+    { q: 'Is hormone care only for women?', a: 'No. We evaluate men and women who have symptoms that may relate to hormonal changes.' },
+    { q: 'Will I need blood tests?', a: 'Often, but not always. Your clinician orders testing only when it is appropriate and explains why.' },
+    { q: 'How do I know if my symptoms are hormonal?', a: 'Many symptoms have more than one cause. An evaluation helps sort out what may be contributing.' },
+    { q: 'Will you work with my primary care doctor?', a: 'Our care is designed to work alongside your regular medical care.' },
+    { q: 'What about cost and payment options?', a: 'Please contact our team about pricing. Financing options are available, including Cherry and CareCredit. Approval and terms depend on the financing provider.' },
+  ]}
+  related={[
+    { title: 'Longevity Evaluation', body: 'A careful look at your history, concerns and goals, with testing where appropriate.', href: '/longevity/evaluation' },
+    { title: 'Metabolic Health and Medical Weight Management', body: 'Nutrition, lifestyle support and medication when appropriate, with ongoing monitoring.', href: '/longevity/metabolic-health' },
+    { title: 'Functional Medicine', body: 'How nutrition, sleep, stress and digestion may contribute to your symptoms.', href: '/longevity/functional-medicine' },
+  ]}
+  closing={{ heading: 'Feel like yourself again, one step at a time.', text: 'Request a consultation and we will help you plan your next step.' }}
+  images={images}
+  heroImage={heroImage}
+/>

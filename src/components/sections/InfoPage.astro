@@ -1,0 +1,316 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServiceHero from './ServiceHero.astro';
+import Section from '../ui/Section.astro';
+import Container from '../ui/Container.astro';
+import Heading from '../ui/Heading.astro';
+import Button from '../ui/Button.astro';
+import FadeIn from '../../islands/animations/FadeIn';
+import FaqAccordion from '../../islands/interactive/FaqAccordion';
+import ContactForm from '../../islands/interactive/ContactForm';
+import { site, book, type Interest } from '../../lib/site';
+
+import type { Img, Block } from '../../lib/info-types';
+
+interface Props {
+  slug: string; name: string; title?: string; group?: string; groupHref?: string; eyebrow: string; intro: string; interest: Interest;
+  seoTitle: string; seoDescription: string; heroImage?: Img; heroChip?: string; heroNote?: { title: string; text: string };
+  blocks: Block[]; closing?: { heading: string; text: string }; medical?: boolean;
+}
+const p = Astro.props;
+// A call-to-action band right before the closing section would repeat it, so the last band is folded into the closing section.
+const last = p.blocks[p.blocks.length - 1];
+const trailingBand = last && last.type === 'band' ? last : undefined;
+const blocks = trailingBand ? p.blocks.slice(0, -1) : p.blocks;
+const faqBlock = blocks.find((b) => b.type === 'faq') as Extract<Block, { type: 'faq' }> | undefined;
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'WebPage', name: p.seoTitle, description: p.seoDescription },
+    { '@type': 'MedicalBusiness', name: site.name, telephone: site.phone, email: site.email,
+      address: { '@type': 'PostalAddress', streetAddress: site.address.street, addressLocality: site.address.city, addressRegion: site.address.region, postalCode: site.address.zip, addressCountry: 'US' } },
+    ...(faqBlock ? [{ '@type': 'FAQPage', mainEntity: faqBlock.items.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) }] : []),
+  ],
+};
+const city = `${site.address.city}, ${site.address.region}`;
+const mapsHref = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(`${site.name} ${site.address.street} ${city} ${site.address.zip}`);
+const closing = p.closing ?? (trailingBand ? { heading: trailingBand.heading, text: trailingBand.text } : null) ?? { heading: 'Ready when you are.', text: 'Request a consultation and we will help you plan your next step.' };
+---
+<BaseLayout title={p.seoTitle} description={p.seoDescription} schema={schema}>
+  <ServiceHero simple title={p.title} name={p.name} group={p.group} groupHref={p.groupHref} eyebrow={p.eyebrow} intro={p.intro} interest={p.interest} heroImage={p.heroImage} heroChip={p.heroChip} heroNote={p.heroNote} />
+
+  {blocks.map((b, bi) => {
+    if (b.type === 'split') return (
+      <Section>
+        <Container>
+          <div class={`ip-split ${b.flip ? 'ip-flip' : ''}`}>
+            <FadeIn client:visible>
+              <figure class="ip-photo">
+                <img src={b.image.src} srcset={b.image.srcset} sizes="(min-width:1024px) 520px, 100vw" width={b.image.w} height={b.image.h} alt={b.image.alt} loading="lazy" decoding="async" />
+                <span class="ip-photo-ring" aria-hidden="true"></span>
+              </figure>
+            </FadeIn>
+            <FadeIn client:visible delay={0.1}>
+              <Heading eyebrow={b.eyebrow}>{b.heading}</Heading>
+              {b.paragraphs.map((t) => <p class="ip-lead">{t}</p>)}
+              {b.bullets && <ul class="ip-bullets">{b.bullets.map((x) => <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>{x}</li>)}</ul>}
+              {b.cta && <div class="ip-cta"><Button href={b.cta.href}>{b.cta.label}</Button></div>}
+            </FadeIn>
+          </div>
+        </Container>
+      </Section>
+    );
+    if (b.type === 'cards') return (
+      <Section tone={b.tone ?? 'mist'}>
+        <Container>
+          <div class="ip-head"><Heading eyebrow={b.eyebrow} center>{b.heading}</Heading>{b.intro && <p>{b.intro}</p>}</div>
+          <ul class="ip-cards">
+            {b.items.map((it, i) => (
+              <li>
+                <FadeIn client:visible delay={(i % 3) * 0.07} className="h-full">
+                  {(it.href ? 'a' : 'div') === 'a' ? (
+                    <a href={it.href} class="ip-card ip-card-link"><span class="ip-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>{it.tag && <span class="ip-tag">{it.tag}</span>}<h3>{it.title}</h3><p>{it.body}</p><span class="ip-more">Learn More <span aria-hidden="true">→</span></span></a>
+                  ) : (
+                    <div class="ip-card"><span class="ip-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>{it.tag && <span class="ip-tag">{it.tag}</span>}<h3>{it.title}</h3><p>{it.body}</p></div>
+                  )}
+                </FadeIn>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </Section>
+    );
+    if (b.type === 'steps') return (
+      <Section>
+        <Container>
+          <Heading eyebrow={b.eyebrow} center>{b.heading}</Heading>
+          <ol class="ip-steps" style={`--n:${b.items.length}`}>
+            {b.items.map((s, i) => (
+              <li><span class="ip-step-n" aria-hidden="true">{i + 1}</span><h3><span class="sr-only">Step {i + 1}: </span>{s.title}</h3><p>{s.body}</p></li>
+            ))}
+          </ol>
+        </Container>
+      </Section>
+    );
+    if (b.type === 'people') return (
+      <Section tone="mist">
+        <Container>
+          <div class="ip-head"><Heading eyebrow={b.eyebrow} center>{b.heading}</Heading>{b.intro && <p>{b.intro}</p>}</div>
+          <div class="ip-people">
+            {b.items.map((m, i) => (
+              <FadeIn client:visible delay={i * 0.08}>
+                <article class="ip-person spot card-line">
+                  <img src={m.photo} width={m.w} height={m.h} alt={`Portrait of ${m.name}${m.credential ? ', ' + m.credential : ''}`} loading="lazy" decoding="async" />
+                  <div class="ip-person-body">
+                    <ul class="ip-tags" aria-label="Focus areas">{m.tags.map((t) => <li>{t}</li>)}</ul>
+                    <p class="ip-role">{m.role}</p>
+                    <h3>{m.name}{m.credential && <span>, {m.credential}</span>}</h3>
+                    {m.paragraphs.map((t) => <p>{t}</p>)}
+                    <a class="ip-more" href={book('not-sure')}>Request a visit <span aria-hidden="true">→</span></a>
+                  </div>
+                </article>
+              </FadeIn>
+            ))}
+          </div>
+        </Container>
+      </Section>
+    );
+    if (b.type === 'reviews') return (
+      <Section>
+        <Container>
+          <Heading eyebrow={b.eyebrow} center>{b.heading}</Heading>
+          <div class="ip-score">
+            <span class="ip-score-n">{b.score}</span>
+            <span class="ip-stars" role="img" aria-label="5 out of 5 stars">{[0,1,2,3,4].map(() => <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.5 2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.2 6.1 20.6l1.3-6.6L2.5 9.4l6.6-.8z"/></svg>)}</span>
+            <p>Based on {b.count} Google reviews</p>
+          </div>
+          <ul class="ip-reviews">
+            {b.items.map((r, i) => (
+              <li>
+                <FadeIn client:visible delay={(i % 3) * 0.07} className="h-full">
+                  <figure class="ip-review">
+                    <span class="ip-stars sm" role="img" aria-label="5 out of 5 stars">{[0,1,2,3,4].map(() => <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2.5 2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.2 6.1 20.6l1.3-6.6L2.5 9.4l6.6-.8z"/></svg>)}</span>
+                    <blockquote>“{r.quote}”</blockquote>
+                    <figcaption><span class="ip-avatar" aria-hidden="true">{r.name.split(' ').map((x) => x[0]).slice(0, 2).join('')}</span><span><strong>{r.name}</strong><small>{r.when} · Google</small></span></figcaption>
+                  </figure>
+                </FadeIn>
+              </li>
+            ))}
+          </ul>
+          <div class="ip-center"><a class="btn btn-outline" href={b.googleUrl} target="_blank" rel="noopener noreferrer">Read on Google<span class="sr-only"> (opens in a new tab)</span></a></div>
+        </Container>
+      </Section>
+    );
+    if (b.type === 'contact') return (
+      <Section tone="mist" id="contact-form">
+        <Container>
+          <div class="ip-contact">
+            <div>
+              <Heading eyebrow={b.eyebrow}>{b.heading}</Heading>
+              <p class="ip-lead">{b.text}</p>
+              <ul class="ip-info">
+                <li><span class="ip-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.1 7-11.5A7 7 0 0 0 5 9.5C5 14.9 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span><span><small>Visit us</small><a href={mapsHref} target="_blank" rel="noopener noreferrer">{site.address.street}, {city} {site.address.zip}</a></span></li>
+                <li><span class="ip-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg></span><span><small>Call us</small><a href={site.phoneHref}>{site.phone}</a></span></li>
+                <li><span class="ip-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span><small>Email us</small><a href={`mailto:${site.email}`}>{site.email}</a></span></li>
+              </ul>
+              <figure class="ip-photo ip-photo-sm">
+                <img src={b.image.src} srcset={b.image.srcset} sizes="(min-width:1024px) 480px, 100vw" width={b.image.w} height={b.image.h} alt={b.image.alt} loading="lazy" decoding="async" />
+              </figure>
+            </div>
+            <div class="ip-form"><ContactForm client:visible /></div>
+          </div>
+        </Container>
+      </Section>
+    );
+    if (b.type === 'gallery') return (
+      <Section tone="mist">
+        <Container>
+          <div class="ip-head"><Heading eyebrow={b.eyebrow} center>{b.heading}</Heading>{b.intro && <p>{b.intro}</p>}</div>
+          <ul class={`ip-gallery ${b.ratio === 'wide' ? 'ip-gallery-wide' : ''}`}>
+            {b.items.map((g, i) => (
+              <li>
+                <FadeIn client:visible delay={(i % 4) * 0.05}>
+                  <a href={g.src} class="ip-gal" target="_blank" rel="noopener noreferrer"><img src={g.src} alt={g.alt} loading="lazy" decoding="async" /><span class="sr-only"> (opens full size in a new tab)</span></a>
+                </FadeIn>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </Section>
+    );
+    if (b.type === 'band') return (
+      <section class="ip-band depth-dark on-dark">
+        <Container>
+          <div class="ip-band-in">
+            <div><h2 class="h-display">{b.heading}</h2><p>{b.text}</p></div>
+            <div class="ip-band-actions">
+              {b.primary && <Button href={b.primary.href}>{b.primary.label}</Button>}
+              {b.secondary && <a href={b.secondary.href} class="btn btn-outline">{b.secondary.label}</a>}
+            </div>
+          </div>
+        </Container>
+      </section>
+    );
+    if (b.type === 'faq') return (
+      <Section>
+        <Container narrow>
+          <Heading eyebrow={b.eyebrow} center>{b.heading}</Heading>
+          <div class="ip-faq"><FaqAccordion client:visible items={b.items} /></div>
+        </Container>
+      </Section>
+    );
+    return null;
+  })}
+
+  <section class="ip-close depth-dark on-dark" aria-labelledby="ip-close-title">
+    <Container>
+      <div class="ip-close-in">
+        <h2 id="ip-close-title" class="h-display">{closing.heading}</h2>
+        <p>{closing.text}</p>
+        <div class="ip-close-actions">
+          <Button href={book(p.interest)}>Request Consultation</Button>
+          <a href={site.phoneHref} class="btn btn-outline">Call {site.phone}</a>
+        </div>
+        {p.medical !== false && <small>This page offers general information and is not medical advice. If you think you are having a medical emergency, call 911.</small>}
+      </div>
+    </Container>
+  </section>
+</BaseLayout>
+
+<style>
+  .ip-split { display: grid; gap: 3rem; align-items: center; }
+  @media (min-width: 1024px) { .ip-split { grid-template-columns: 1fr 1fr; gap: 5rem; } .ip-flip > :first-child { order: 2; } }
+  .ip-photo { position: relative; margin: 0; }
+  .ip-photo img { display: block; width: 100%; height: auto; max-height: 34rem; object-fit: cover; border-radius: 1.5rem; box-shadow: 0 30px 60px -36px rgb(22 50 31 / .55); }
+  .ip-photo-ring { position: absolute; inset: -.75rem; z-index: -1; border-radius: 2rem; border: 1px solid rgb(38 87 52 / .25); transform: translate(.75rem, .75rem); }
+  .ip-photo-sm { margin-top: 2rem; }
+  .ip-photo-sm img { max-height: 15rem; }
+  .ip-lead { margin-top: 1.25rem; font-size: 1.0625rem; line-height: 1.75; color: rgb(34 26 25 / .85); }
+  .ip-bullets { margin-top: 1.5rem; display: grid; gap: .75rem; list-style: none; padding: 0; }
+  .ip-bullets li { display: flex; gap: .75rem; align-items: flex-start; line-height: 1.5; }
+  .ip-bullets svg { flex: none; width: 1.5rem; height: 1.5rem; padding: .25rem; border-radius: 9999px; background: #265734; color: #fff; margin-top: .05rem; }
+  .ip-cta { margin-top: 2rem; }
+  .ip-head { max-width: 42rem; margin: 0 auto; text-align: center; }
+  .ip-head p { margin-top: 1.25rem; font-size: 1.0625rem; color: rgb(34 26 25 / .8); }
+  .ip-cards { margin-top: 3rem; display: grid; gap: 1.5rem; list-style: none; padding: 0; }
+  @media (min-width: 700px) { .ip-cards { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .ip-cards { grid-template-columns: repeat(3, 1fr); } }
+  .ip-cards li { height: 100%; }
+  .ip-card { position: relative; display: flex; flex-direction: column; height: 100%; padding: 2rem 1.75rem 1.75rem; border-radius: 1.25rem; background: #fff; box-shadow: 0 1px 2px rgb(34 26 25 / .06), 0 18px 36px -28px rgb(34 26 25 / .35); overflow: hidden; transition: transform .35s, box-shadow .35s; }
+  .ip-card::before { content: ''; position: absolute; left: 0; top: 0; height: 3px; width: 3rem; background: #265734; transition: width .45s; }
+  .ip-card:hover { transform: translateY(-5px); box-shadow: 0 1px 2px rgb(34 26 25 / .06), 0 30px 46px -28px rgb(38 87 52 / .5); }
+  .ip-card:hover::before { width: 100%; }
+  .ip-num { font-family: 'Aboreto', serif; font-size: .875rem; letter-spacing: .15em; color: #265734; }
+  .ip-tag { position: absolute; right: 1.25rem; top: 1.25rem; padding: .2rem .65rem; border-radius: 9999px; background: #e8f1ea; color: #265734; font-size: .75rem; font-weight: 600; }
+  .ip-card h3 { margin-top: 1rem; font-family: 'Aboreto', serif; font-size: 1.25rem; line-height: 1.25; letter-spacing: .04em; text-transform: uppercase; }
+  .ip-card p { margin-top: .75rem; flex: 1; line-height: 1.65; color: rgb(34 26 25 / .8); }
+  .ip-more { margin-top: 1.25rem; display: inline-flex; align-items: center; gap: .5rem; font-weight: 600; color: #265734; }
+  .ip-more span { transition: transform .3s; }
+  .ip-card-link:hover .ip-more span, .ip-person a:hover span { transform: translateX(4px); }
+  .ip-steps { margin-top: 3.5rem; display: grid; gap: 2rem; list-style: none; padding: 0; position: relative; }
+  @media (min-width: 768px) { .ip-steps { grid-template-columns: repeat(var(--n), 1fr); gap: 1.5rem; } .ip-steps::before { content: ''; position: absolute; left: calc(50% / var(--n)); right: calc(50% / var(--n)); top: 1.5rem; height: 1px; background: rgb(38 87 52 / .3); } }
+  .ip-steps li { position: relative; text-align: center; padding: 0 .5rem; }
+  .ip-step-n { position: relative; display: grid; place-items: center; width: 3rem; height: 3rem; margin: 0 auto; border-radius: 9999px; background: #265734; color: #fff; font-family: 'Aboreto', serif; font-size: 1.125rem; box-shadow: 0 0 0 6px #fff; }
+  .ip-steps h3 { margin-top: 1.25rem; font-family: 'Aboreto', serif; font-size: 1.2rem; letter-spacing: .05em; text-transform: uppercase; }
+  .ip-steps p { margin: .75rem auto 0; max-width: 17rem; line-height: 1.6; color: rgb(34 26 25 / .8); }
+  .ip-people { margin-top: 3.5rem; display: grid; gap: 2rem; }
+  .ip-person { position: relative; display: grid; overflow: hidden; border-radius: 1.5rem; background: #16321f; color: #fff; box-shadow: 0 30px 60px -36px rgb(22 50 31 / .7); }
+  @media (min-width: 768px) { .ip-person { grid-template-columns: 340px 1fr; } }
+  .ip-person img { width: 100%; height: 100%; max-height: 28rem; object-fit: cover; object-position: top; display: block; }
+  @media (min-width: 768px) { .ip-person img { max-height: none; } }
+  .ip-person-body { padding: 2rem; display: flex; flex-direction: column; justify-content: center; }
+  .ip-tags { display: flex; flex-wrap: wrap; gap: .5rem; list-style: none; padding: 0; }
+  .ip-tags li { padding: .25rem .75rem; border-radius: 9999px; background: rgb(255 255 255 / .1); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .18); font-size: .75rem; font-weight: 600; color: #9fcdac; }
+  .ip-role { margin-top: 1.25rem; font-size: .75rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: #9fcdac; }
+  .ip-person h3 { margin-top: .35rem; font-family: 'Aboreto', serif; font-size: 1.75rem; letter-spacing: .04em; text-transform: uppercase; }
+  .ip-person h3 span { color: #9fcdac; }
+  .ip-person-body p:not(.ip-role) { margin-top: 1rem; line-height: 1.7; color: rgb(255 255 255 / .85); }
+  .ip-person .ip-more { color: #9fcdac; }
+  .ip-score { margin-top: 1.5rem; display: flex; flex-direction: column; align-items: center; gap: .25rem; }
+  .ip-score-n { font-family: 'Aboreto', serif; font-size: 3rem; line-height: 1; color: #265734; }
+  .ip-score p { font-size: .875rem; color: rgb(34 26 25 / .7); }
+  .ip-stars { display: inline-flex; gap: .125rem; color: #d4a73a; }
+  .ip-reviews { margin-top: 3rem; display: grid; gap: 1.5rem; list-style: none; padding: 0; }
+  @media (min-width: 768px) { .ip-reviews { grid-template-columns: repeat(3, 1fr); } }
+  .ip-reviews li { height: 100%; }
+  .ip-review { position: relative; margin: 0; display: flex; flex-direction: column; height: 100%; padding: 2rem; border-radius: 1.25rem; background: #f6f6f6; transition: transform .3s, background-color .3s, box-shadow .3s; }
+  .ip-review:hover { transform: translateY(-4px); background: #fff; box-shadow: 0 24px 40px -24px rgb(38 87 52 / .45); }
+  .ip-review blockquote { flex: 1; margin: 1.25rem 0 0; font-size: 1.0625rem; line-height: 1.7; color: rgb(34 26 25 / .9); }
+  .ip-review figcaption { margin-top: 1.5rem; display: flex; align-items: center; gap: .75rem; }
+  .ip-avatar { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 9999px; background: #265734; color: #fff; font-weight: 600; font-size: .875rem; }
+  .ip-review strong { display: block; }
+  .ip-review small { display: block; font-size: .8125rem; color: rgb(34 26 25 / .65); }
+  .ip-center { margin-top: 2.5rem; text-align: center; }
+  .ip-contact { display: grid; gap: 3rem; align-items: start; }
+  @media (min-width: 1024px) { .ip-contact { grid-template-columns: 1fr 1fr; gap: 5rem; } }
+  .ip-info { margin-top: 1.75rem; display: grid; gap: .75rem; list-style: none; padding: 0; }
+  .ip-info li { display: flex; gap: 1rem; align-items: center; padding: 1rem 1.25rem; border-radius: 1rem; background: #fff; }
+  .ip-ico { display: grid; place-items: center; flex: none; width: 2.75rem; height: 2.75rem; border-radius: 9999px; background: #265734; color: #fff; }
+  .ip-info small { display: block; font-size: .75rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: #265734; }
+  .ip-info a { font-weight: 500; }
+  .ip-form { padding: 1.75rem; border-radius: 1.5rem; background: #16321f; color: #fff; box-shadow: 0 30px 60px -36px rgb(22 50 31 / .7); }
+  .ip-gallery { margin-top: 3rem; display: grid; gap: 1rem; grid-template-columns: repeat(2, 1fr); list-style: none; padding: 0; }
+  @media (min-width: 768px) { .ip-gallery { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 1024px) { .ip-gallery { grid-template-columns: repeat(4, 1fr); } }
+  .ip-gallery-wide { grid-template-columns: 1fr; }
+  @media (min-width: 640px) { .ip-gallery-wide { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .ip-gallery-wide { grid-template-columns: repeat(2, 1fr); } }
+  .ip-gallery-wide .ip-gal { aspect-ratio: 500 / 227; }
+  .ip-gal { display: block; overflow: hidden; border-radius: 1rem; aspect-ratio: 1 / 1; background: #cfdcd2; box-shadow: 0 18px 36px -28px rgb(34 26 25 / .5); }
+  .ip-gal img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .7s ease; }
+  .ip-gal:hover img { transform: scale(1.06); }
+  .ip-band { position: relative; isolation: isolate; overflow: hidden; background: #265734; color: #fff; padding-block: clamp(3rem, 6vw, 4.5rem); }
+  .ip-band-in { display: grid; gap: 1.75rem; align-items: center; }
+  @media (min-width: 900px) { .ip-band-in { grid-template-columns: 1fr auto; gap: 3rem; } }
+  .ip-band h2 { font-size: clamp(1.6rem, 3vw, 2.25rem); line-height: 1.15; }
+  .ip-band p { margin-top: .75rem; max-width: 40rem; color: rgb(255 255 255 / .88); }
+  .ip-band-actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+  .ip-faq { margin-top: 3rem; }
+  .ip-close { position: relative; isolation: isolate; overflow: hidden; background: #16321f; color: #fff; padding-block: clamp(4rem, 8vw, 6.5rem); text-align: center; }
+  .ip-close-in { max-width: 44rem; margin: 0 auto; }
+  .ip-close h2 { font-size: clamp(1.9rem, 4vw, 3rem); line-height: 1.1; }
+  .ip-close p { margin-top: 1.25rem; font-size: 1.125rem; color: rgb(255 255 255 / .85); }
+  .ip-close-actions { margin-top: 2.25rem; display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem; }
+  .ip-close small { display: block; margin: 2.5rem auto 0; max-width: 34rem; font-size: .8125rem; color: rgb(255 255 255 / .55); }
+  @media (prefers-reduced-motion: reduce) { .ip-card, .ip-review, .ip-more span { transition: none; } .ip-card:hover, .ip-review:hover { transform: none; } }
+</style>

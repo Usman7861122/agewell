@@ -1,0 +1,37 @@
+---
+import ServicePage from '../../components/sections/ServicePage.astro';
+import type { ServiceImage } from '../../components/sections/ServicePage.astro';
+
+// Fresh Unsplash photos (free licence), used only on this page. Saved in /public/images/aesthetics.
+const heroImage: ServiceImage = { src: '/images/aesthetics/sculptra-hero.jpg', srcset: '/images/aesthetics/sculptra-hero-640.jpg 640w, /images/aesthetics/sculptra-hero.jpg 1400w', alt: "A woman with curly hair looking away, with her shoulder softly lit", w: 1400, h: 2100 };
+const images: [ServiceImage, ServiceImage, ServiceImage] = [
+  { src: '/images/aesthetics/sculptra-a.jpg', alt: "A smiling woman among yellow flowers, looking relaxed and natural", w: 1400, h: 1863 },
+  { src: '/images/aesthetics/sculptra-b.jpg', alt: "A clinician applying a facial treatment to a patient", w: 1400, h: 2100 },
+  { src: '/images/aesthetics/sculptra-c.jpg', alt: "A woman sitting on a bench holding a flower, relaxed and smiling", w: 1400, h: 2100 },
+];
+// TODO: provider to review all clinical wording on this page before publication.
+---
+<ServicePage
+  slug="aesthetics/sculptra"
+  name="Sculptra"
+  group="Aesthetics"
+  groupHref="/aesthetics"
+  eyebrow="Aesthetics · Bedminster, NJ"
+  interest="aesthetics"
+  seoTitle="Sculptra in Bedminster, NJ | AgeWell Medicine & Aesthetics"
+  seoDescription="Sculptra in Bedminster, NJ. A gradual approach to facial volume, planned by your provider. Request a consultation at AgeWell."
+  intro="Sculptra is a gradual approach to facial volume. Your provider explains how it works, who it may suit and what a plan could look like."
+  quickFacts={[]}
+  heroChip="Gradual approach"
+  whatIs={{ heading: "A gradual approach to facial volume", paragraphs: ["Sculptra is an injectable treatment used to restore facial volume over time. Results appear gradually rather than all at once.", "Because treatment unfolds over several weeks, planning matters. Your provider talks with you about your goals, timing and what to expect."] }}
+  looks={{ heading: "What we can talk about", intro: "Your plan starts with your face and your timeline.", items: [{ title: "Facial volume", body: "Areas where you have noticed a loss of fullness." }, { title: "Gradual change", body: "What a slower, step-by-step approach means." }, { title: "Number of visits", body: "How many sessions may be planned, and why." }, { title: "Timing", body: "When you may want to start, for events or seasons." }, { title: "Other options", body: "How Sculptra compares to fillers." }, { title: "Aftercare", body: "Simple steps to follow between visits." }] }}
+  who={{ heading: "Who may be a good fit", intro: "Your provider helps you decide if Sculptra suits you.", bullets: ["You notice a loss of facial fullness", "You prefer gradual change", "You can plan for several visits", "You want a natural look", "You want a medical team’s guidance", "You want to compare options"] }}
+  steps={[{ title: "Talk", body: "Share your goals and your timeline." }, { title: "Review", body: "Your provider reviews your history and your face." }, { title: "Plan", body: "We explain Sculptra, benefits, risks and visit schedule." }, { title: "Follow up", body: "We check in between visits and adjust the plan." }]}
+  why={[{ title: "Medical team", body: "Aesthetic care in a physician-led practice." }, { title: "Clear plans", body: "Honest talk about timing and visits." }, { title: "Personal", body: "A plan made for you." }, { title: "Local", body: "Close to home in Bedminster." }]}
+  faqs={[{ q: "What is Sculptra?", a: "Sculptra is an injectable used to restore facial volume gradually. Your provider explains how it works." }, { q: "How soon will I see a change?", a: "Change is gradual and varies from person to person. We talk about what to expect." }, { q: "How many visits will I need?", a: "This depends on your goals and your provider’s plan. We explain this at your consultation." }, { q: "Is there downtime?", a: "Some swelling or bruising may happen. We give clear aftercare guidance." }, { q: "What are the risks?", a: "All treatments carry some risk. We review potential side effects at your consultation." }, { q: "What does it cost?", a: "Please contact our team about pricing. Financing may be available, including Cherry and CareCredit." }]}
+  related={[{ title: "Dermal Fillers", body: "Support for volume, contours and lips.", href: "/aesthetics/dermal-fillers" }, { title: "Microneedling", body: "Support skin texture and tone.", href: "/aesthetics/microneedling" }, { title: "Medical-Grade Skincare", body: "Skincare to support your results at home.", href: "/aesthetics/skincare" }]}
+  relatedHeading="Explore more care"
+  closing={{ heading: "Plan gradual, natural-looking change.", text: "Request a consultation and we will help you plan your next step." }}
+  images={images}
+  heroImage={heroImage}
+/>
