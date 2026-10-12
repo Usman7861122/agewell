@@ -3,7 +3,6 @@ import Section from '../ui/Section.astro';
 import Container from '../ui/Container.astro';
 import Heading from '../ui/Heading.astro';
 import Button from '../ui/Button.astro';
-import Img from '../ui/Img.astro';
 import FadeIn from '../../islands/animations/FadeIn';
 import { navItems } from '../../data/navigation';
 const treatments = navItems.find((n) => n.label === 'Aesthetics')?.children ?? [];
@@ -13,7 +12,7 @@ import { book } from '../../lib/site';
   <Container>
     <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
       <FadeIn client:visible>
-        <Img name="aesthetics" class="aspect-[4/3] w-full rounded-3xl object-cover" sizes="(min-width:1024px) 600px, 100vw" w={1200} h={900} />
+        <img src="/images/botox-aesthetics-bedminster-nj.jpg" srcset="/images/botox-aesthetics-bedminster-nj-800.jpg 800w, /images/botox-aesthetics-bedminster-nj.jpg 1341w" sizes="(min-width:1024px) 600px, 100vw" width="1341" height="1173" alt="A woman resting with closed eyes while a clinician in gloves prepares a precise injection at her forehead" loading="lazy" decoding="async" class="aspect-[5/4] w-full rounded-3xl object-cover" />
       </FadeIn>
       <FadeIn client:visible delay={0.1}>
         <Heading id="aesthetics-title" eyebrow="Advanced aesthetics">Look as good as you feel</Heading>

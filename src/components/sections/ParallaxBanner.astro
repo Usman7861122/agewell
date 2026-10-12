@@ -1,0 +1,33 @@
+---
+import Container from '../ui/Container.astro';
+import Button from '../ui/Button.astro';
+import FadeIn from '../../islands/animations/FadeIn';
+import { book } from '../../lib/site';
+---
+<!-- Full-screen parallax: the photo stays fixed in the window while the page scrolls over it. -->
+<section class="px" aria-labelledby="parallax-title" style="--px-img: url('/images/healthy-aging-man-longevity-medicine-bedminster-nj.jpg')">
+  <div class="px-photo" role="img" aria-label="Black and white portrait of a confident man with short grey hair and a light beard"></div>
+  <Container>
+    <div class="px-in">
+      <FadeIn client:visible>
+        <p class="eyebrow px-eyebrow">Healthy aging</p>
+        <h2 id="parallax-title" class="h-display px-h2">Strength and clarity, for the years ahead</h2>
+        <p class="px-p">Your history, goals and health markers shape a plan made for you, so you can keep doing what matters.</p>
+        <div class="px-cta"><Button href={book('longevity')}>Request Consultation</Button></div>
+      </FadeIn>
+    </div>
+  </Container>
+</section>
+<style>
+  .px { position: relative; isolation: isolate; display: flex; align-items: center; min-height: 100vh; min-height: 100svh; overflow: hidden; background: #f1f1f1; }
+  .px-photo { position: absolute; inset: 0; z-index: -1; background-image: var(--px-img); background-size: cover; background-position: 25% 20%; background-repeat: no-repeat; }
+  @media (min-width: 1024px) and (hover: hover) and (prefers-reduced-motion: no-preference) { .px-photo { background-attachment: fixed; } }
+  .px::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(to right, rgb(255 255 255 / 0) 35%, rgb(255 255 255 / .55) 70%, rgb(255 255 255 / .8)); pointer-events: none; }
+  @media (max-width: 1023px) { .px::after { background: linear-gradient(to top, rgb(255 255 255 / .92) 25%, rgb(255 255 255 / .35) 65%, rgb(255 255 255 / 0)); } .px { align-items: flex-end; } }
+  .px-in { padding-block: 4rem; }
+  @media (min-width: 1024px) { .px-in { max-width: 30rem; margin-left: auto; } }
+  .px-eyebrow { color: #265734; }
+  .px-h2 { margin-top: 1rem; font-size: clamp(2rem, 4.2vw, 3.5rem); line-height: 1.08; color: #221a19; }
+  .px-p { margin-top: 1.25rem; font-size: 1.125rem; line-height: 1.75; color: rgb(34 26 25 / .85); }
+  .px-cta { margin-top: 2rem; }
+</style>
