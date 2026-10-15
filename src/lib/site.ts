@@ -19,6 +19,6 @@ export const site = {
 export type Interest = 'longevity' | 'metabolic' | 'hormone' | 'hair' | 'aesthetics' | 'not-sure';
 
 // Every "Request a Consultation" button goes through this, so the right visit type is pre-selected.
-// Swap for the real booking-system URLs once the practice confirms its visit types.
-export const book = (interest?: Interest) => (interest ? `/?interest=${interest}#consultation` : '/#consultation');
+// The appointment page has the two booking buttons (existing / new clients), like agewellmedicine.com.
+export const book = (_interest?: Interest) => '/appointment';
 export const siteConfig = site;

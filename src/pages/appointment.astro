@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ServiceHero from '../components/sections/ServiceHero.astro';
+import Section from '../components/ui/Section.astro';
+import Container from '../components/ui/Container.astro';
+import FadeIn from '../islands/animations/FadeIn';
+import { site } from '../lib/site';
+
+// Same online booking system the practice uses on agewellmedicine.com (both buttons open it, like the old site).
+const bookingUrl = 'https://agewellmedicine.myaestheticrecord.com/online-booking';
+const options = [
+  { title: 'Existing Clients', text: 'Already a patient? Pick a time that works for you.', label: 'Book Now' },
+  { title: 'New Clients', text: 'First visit with us? Choose a time and we will take care of the rest.', label: 'Book Now' },
+];
+const title = 'Appointments | AgeWell Medicine & Aesthetics, Bedminster NJ';
+const description = 'Book an appointment with AgeWell Medicine & Aesthetics in Bedminster, NJ. Existing and new clients can schedule online, or call (908) 458-6874.';
+---
+<BaseLayout title={title} description={description}>
+  <ServiceHero simple title="Appointments" name="Appointments" eyebrow="Appointments · Bedminster, NJ" interest="not-sure"
+    intro="Take the first step toward healthier aging and renewed confidence. Schedule your personalized consultation with our experienced providers today." />
+
+  <Section>
+    <Container>
+      <ul class="ap-grid">
+        {options.map((o, i) => (
+          <li>
+            <FadeIn client:visible delay={i * 0.1}>
+              <div class="ap-card">
+                <span class="ap-icon" aria-hidden="true">
+                  {i === 0
+                    ? <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6"/></svg>
+                    : <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="8" r="3.5"/><path d="M3 20c0-3.6 3-6 7-6s7 2.4 7 6"/><path d="M19 5v6M16 8h6"/></svg>}
+                </span>
+                <h2>{o.title}</h2>
+                <p>{o.text}</p>
+                <a href={bookingUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary" aria-label={`${o.label} for ${o.title} (opens in a new tab)`}>{o.label}</a>
+              </div>
+            </FadeIn>
+          </li>
+        ))}
+      </ul>
+
+      <p class="ap-note">
+        Prefer to talk? Call <a href={site.phoneHref}>{site.phone}</a> or email <a href={`mailto:${site.email}`}>{site.email}</a>.
+      </p>
+    </Container>
+  </Section>
+</BaseLayout>
+
+<style>
+  .ap-grid { list-style: none; margin: 0 auto; padding: 0; display: grid; gap: 1.5rem; max-width: 52rem; }
+  @media (min-width: 700px) { .ap-grid { grid-template-columns: repeat(2, 1fr); } }
+  .ap-grid li { height: 100%; }
+  .ap-card { position: relative; display: flex; flex-direction: column; align-items: flex-start; height: 100%; padding: 2.25rem 2rem 2rem; border-radius: 1.25rem; background: #fff; overflow: hidden; box-shadow: 0 1px 2px rgb(34 26 25 / .06), 0 18px 36px -28px rgb(34 26 25 / .35); transition: transform .35s, box-shadow .35s; }
+  .ap-card::before { content: ''; position: absolute; left: 0; top: 0; height: 3px; width: 3rem; background: #265734; transition: width .45s; }
+  .ap-card:hover { transform: translateY(-5px); box-shadow: 0 1px 2px rgb(34 26 25 / .06), 0 30px 46px -28px rgb(38 87 52 / .5); }
+  .ap-card:hover::before { width: 100%; }
+  .ap-icon { display: grid; place-items: center; width: 3.25rem; height: 3.25rem; border-radius: 999px; background: rgb(38 87 52 / .1); color: #265734; }
+  .ap-card h2 { margin-top: 1.25rem; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.75rem; line-height: 1.15; }
+  .ap-card p { margin: .75rem 0 1.75rem; flex: 1; line-height: 1.65; color: rgb(34 26 25 / .8); }
+  .ap-note { margin-top: 2.5rem; text-align: center; color: rgb(34 26 25 / .8); }
+  .ap-note a { color: #265734; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+</style>
