@@ -1,6 +1,6 @@
 ---
 import Img from '../ui/Img.astro';
-import ContactForm from '../../islands/interactive/ContactForm';
+import ContactEmbed from './ContactEmbed.astro';
 import { site } from '../../lib/site';
 ---
 <!-- Final invitation + short inquiry form (brief sections 12 and "Booking and inquiry paths") -->
@@ -14,6 +14,6 @@ import { site } from '../../lib/site';
       <p class="mt-6 max-w-xl text-lg text-white/95">Whether your priorities are long-term health, hair restoration or aesthetic care, we can help you explore your next step.</p>
       <p class="mt-8">Prefer to talk? <a class="font-semibold underline underline-offset-4" href={site.phoneHref}>Call {site.phone}</a></p>
     </div>
-    <ContactForm client:visible />
+    <ContactEmbed />
   </div>
 </section>

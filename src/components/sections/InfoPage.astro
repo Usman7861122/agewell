@@ -7,7 +7,7 @@ import Heading from '../ui/Heading.astro';
 import Button from '../ui/Button.astro';
 import FadeIn from '../../islands/animations/FadeIn';
 import FaqAccordion from '../../islands/interactive/FaqAccordion';
-import ContactForm from '../../islands/interactive/ContactForm';
+import ContactEmbed from './ContactEmbed.astro';
 import { site, book, type Interest } from '../../lib/site';
 
 import type { Img, Block } from '../../lib/info-types';
@@ -157,7 +157,7 @@ const closing = p.closing ?? (trailingBand ? { heading: trailingBand.heading, te
                 <img src={b.image.src} srcset={b.image.srcset} sizes="(min-width:1024px) 480px, 100vw" width={b.image.w} height={b.image.h} alt={b.image.alt} loading="lazy" decoding="async" />
               </figure>
             </div>
-            <div class="ip-form"><ContactForm client:visible /></div>
+            <div class="ip-form"><ContactEmbed /></div>
           </div>
         </Container>
       </Section>
@@ -288,7 +288,7 @@ const closing = p.closing ?? (trailingBand ? { heading: trailingBand.heading, te
   .ip-ico { display: grid; place-items: center; flex: none; width: 2.75rem; height: 2.75rem; border-radius: 9999px; background: #265734; color: #fff; }
   .ip-info small { display: block; font-size: .75rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: #265734; }
   .ip-info a { font-weight: 500; }
-  .ip-form { padding: 1.75rem; border-radius: 1.5rem; background: #16321f; color: #fff; box-shadow: 0 30px 60px -36px rgb(22 50 31 / .7); }
+  .ip-form { min-width: 0; }
   .ip-gallery { margin-top: 3rem; display: grid; gap: 1rem; grid-template-columns: repeat(2, 1fr); list-style: none; padding: 0; }
   @media (min-width: 768px) { .ip-gallery { grid-template-columns: repeat(3, 1fr); } }
   @media (min-width: 1024px) { .ip-gallery { grid-template-columns: repeat(4, 1fr); } }
