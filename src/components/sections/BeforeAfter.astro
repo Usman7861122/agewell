@@ -1,0 +1,61 @@
+---
+import Section from '../ui/Section.astro';
+import Container from '../ui/Container.astro';
+import Heading from '../ui/Heading.astro';
+import Button from '../ui/Button.astro';
+import FadeIn from '../../islands/animations/FadeIn';
+import BeforeAfterSlider from '../../islands/interactive/BeforeAfterSlider';
+
+// Real patient photos supplied by the practice. TODO: practice to confirm patient consent for web use.
+const cases = [
+  { slug: 'hair-restoration', label: 'Hair restoration', w: 1000, h: 922, alt: 'Top view of a man’s scalp with thinning hair at the crown and front.' },
+  { slug: 'hair-density', label: 'Hair density', w: 1000, h: 925, alt: 'Top view of a woman’s scalp with thinning hair at the part.' },
+];
+---
+<Section id="results" tone="mist" labelledby="results-title">
+  <Container>
+    <FadeIn client:visible className="ba-head">
+      <Heading id="results-title" eyebrow="Real results" center>See the difference</Heading>
+      <p class="ba-sub">Drag the handle to compare before and after hair restoration care.</p>
+    </FadeIn>
+
+    <div class="ba-grid">
+      {cases.map((c, i) => (
+        <FadeIn client:visible delay={i * 0.1}>
+          <figure class="ba-card">
+            <BeforeAfterSlider client:visible
+              before={`/images/results/${c.slug}-before-treatment-bedminster-nj.jpg`}
+              after={`/images/results/${c.slug}-after-treatment-bedminster-nj.jpg`}
+              alt={c.alt} label={c.label} w={c.w} h={c.h} />
+            <figcaption>{c.label}</figcaption>
+          </figure>
+        </FadeIn>
+      ))}
+    </div>
+
+    <p class="ba-note">Individual results may vary.</p>
+    <div class="ba-cta"><Button href="/hair-restoration">Hair Restoration</Button></div>
+  </Container>
+</Section>
+
+<style is:global>
+  .ba-head { text-align: center; max-width: 40rem; margin: 0 auto; }
+  .ba-sub { margin-top: 1rem; font-size: 1.125rem; color: rgb(34 26 25 / .8); }
+  .ba-grid { margin: 3rem auto 0; display: grid; gap: 1.75rem; max-width: 64rem; }
+  @media (min-width: 760px) { .ba-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; } }
+  .ba-card { margin: 0; }
+  .ba-card figcaption { margin-top: .9rem; text-align: center; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.2rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #265734; }
+  .ba-note { margin-top: 1.75rem; text-align: center; font-size: .95rem; color: rgb(34 26 25 / .65); }
+  .ba-cta { margin-top: 1.5rem; display: flex; justify-content: center; }
+
+  .ba { position: relative; width: 100%; overflow: hidden; border-radius: 1.5rem; background: #eee; user-select: none; box-shadow: 0 1px 2px rgb(34 26 25 / .06), 0 30px 50px -32px rgb(22 50 31 / .55); }
+  .ba-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+  .ba-line { position: absolute; top: 0; bottom: 0; width: 3px; margin-left: -1.5px; background: #fff; box-shadow: 0 0 0 1px rgb(0 0 0 / .08), 0 0 18px rgb(0 0 0 / .25); pointer-events: none; }
+  .ba-knob { position: absolute; top: 50%; left: 50%; width: 3rem; height: 3rem; margin: -1.5rem 0 0 -1.5rem; display: grid; place-items: center; border-radius: 999px; background: #fff; color: #265734; box-shadow: 0 6px 18px rgb(0 0 0 / .3); transition: transform .25s; }
+  .ba:hover .ba-knob { transform: scale(1.08); }
+  .ba-focus .ba-knob { outline: 3px solid #265734; outline-offset: 3px; }
+  .ba-range { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; touch-action: pan-y; -webkit-appearance: none; appearance: none; }
+  .ba-tag { position: absolute; top: 1rem; padding: .35rem .9rem; border-radius: 999px; background: rgb(22 50 31 / .85); color: #fff; font-family: 'Manrope', system-ui, sans-serif; font-size: .8rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; transition: opacity .25s; pointer-events: none; }
+  .ba-tag-l { left: 1rem; }
+  .ba-tag-r { right: 1rem; }
+</style>
