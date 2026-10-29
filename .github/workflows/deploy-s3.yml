@@ -1,0 +1,56 @@
+name: Deploy to S3
+
+# Every push to main builds the Astro site and uploads it to the S3 bucket.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Needed for GitHub to sign in to AWS without stored passwords (OIDC).
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:
+  group: deploy-s3
+  cancel-in-progress: true
+
+env:
+  S3_BUCKET: agewell-website
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      # Set these two in GitHub: Settings > Secrets and variables > Actions > Variables
+      #   AWS_ROLE_ARN = the IAM role ARN that GitHub may assume
+      #   AWS_REGION   = the bucket's region, for example us-east-1
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      # Files with a hash in the name never change, so browsers can keep them for a year.
+      - name: Upload assets (long cache)
+        run: |
+          aws s3 sync dist "s3://${S3_BUCKET}" \
+            --exclude "*.html" --exclude "sitemap*" --exclude "robots.txt" \
+            --cache-control "public,max-age=31536000,immutable"
+
+      # Pages are always re-checked so edits show up quickly.
+      - name: Upload pages (short cache) and remove deleted files
+        run: |
+          aws s3 sync dist "s3://${S3_BUCKET}" \
+            --exclude "*" --include "*.html" --include "sitemap*" --include "robots.txt" \
+            --cache-control "public,max-age=0,must-revalidate"
+          aws s3 sync dist "s3://${S3_BUCKET}" --delete --size-only
