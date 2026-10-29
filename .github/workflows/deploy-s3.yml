@@ -32,13 +32,11 @@ jobs:
       - run: npm ci
       - run: npm run build
 
-      # Set these two in GitHub: Settings > Secrets and variables > Actions > Variables
-      #   AWS_ROLE_ARN = the IAM role ARN that GitHub may assume
-      #   AWS_REGION   = the bucket's region, for example us-east-1
+      # Signs in to AWS with the IAM role named github-agewell-deploy (no stored keys).
       - uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
-          aws-region: ${{ vars.AWS_REGION }}
+          role-to-assume: arn:aws:iam::408421298613:role/github-agewell-deploy
+          aws-region: us-east-1
 
       # Files with a hash in the name never change, so browsers can keep them for a year.
       - name: Upload assets (long cache)
