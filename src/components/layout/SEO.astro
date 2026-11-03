@@ -1,15 +1,62 @@
 ---
 import { site } from '../../lib/site';
-interface Props { title: string; description?: string; schema?: object }
-const { title, description = '', schema } = Astro.props;
-const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
+interface Props { title: string; description?: string; schema?: object; noindex?: boolean; image?: string }
+const { title, description = '', schema, noindex = false, image = '/images/agewell-medicine-aesthetics-bedminster-nj-share.jpg' } = Astro.props;
+const origin = (Astro.site ?? new URL(site.url)).origin;
+const canonical = new URL(Astro.url.pathname, origin).href;
+const imageUrl = new URL(image, origin).href;
+
+// One complete business record for every page (this is what Google uses for the local "knowledge panel" and Maps results).
+const business = {
+  '@type': ['MedicalBusiness', 'LocalBusiness'],
+  '@id': `${origin}/#business`,
+  name: site.name,
+  url: origin + '/',
+  logo: new URL('/images/logo.png', origin).href,
+  image: imageUrl,
+  telephone: site.phone,
+  email: site.email,
+  address: { '@type': 'PostalAddress', streetAddress: site.address.street, addressLocality: site.address.city, addressRegion: site.address.region, postalCode: site.address.zip, addressCountry: 'US' },
+  areaServed: ['Bedminster NJ', 'Somerset County NJ', 'Morris County NJ', 'Hunterdon County NJ'],
+  openingHoursSpecification: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Friday'], opens: '10:00', closes: '16:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Tuesday', 'Wednesday'], opens: '10:00', closes: '19:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Thursday', opens: '10:00', closes: '18:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Saturday', opens: '11:00', closes: '16:00' },
+  ],
+  sameAs: site.social.map((s) => s.href),
+};
+const website = { '@type': 'WebSite', '@id': `${origin}/#website`, url: origin + '/', name: site.name, publisher: { '@id': `${origin}/#business` } };
+
+// Breadcrumbs from the address, for example Home > Aesthetics > Botox.
+const parts = Astro.url.pathname.split('/').filter(Boolean);
+const pretty = (s: string) => s.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+const crumbs = parts.length ? {
+  '@type': 'BreadcrumbList',
+  itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: origin + '/' },
+    ...parts.map((p, i) => ({ '@type': 'ListItem', position: i + 2, name: pretty(p), item: new URL('/' + parts.slice(0, i + 1).join('/'), origin).href }))],
+} : null;
+
+// Page-specific data from each page, without its own copy of the business record.
+const pageItems = schema ? (((schema as any)['@graph'] ?? [schema]) as any[]).filter((x) => x && x['@type'] !== 'MedicalBusiness') : [];
+const graph = { '@context': 'https://schema.org', '@graph': [business, website, ...(crumbs ? [crumbs] : []), ...pageItems.map(({ '@context': _c, ...rest }) => rest)] };
 ---
 <title>{title}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
+<meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1'} />
 <meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:url" content={canonical} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:site_name" content={site.name} />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AgeWell Medicine & Aesthetics, physician-led longevity medicine in Bedminster, NJ" />
 <meta name="twitter:card" content="summary_large_image" />
-{schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+<script type="application/ld+json" set:html={JSON.stringify(graph)} />

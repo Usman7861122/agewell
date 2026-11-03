@@ -2,7 +2,7 @@
 export const site = {
   name: 'AgeWell Medicine & Aesthetics',
   short: 'AgeWell',
-  url: 'https://agewellmedicine.com',
+  url: 'https://www.agewellmedicine.com',
   phone: '(908) 458-6874',
   phoneHref: 'tel:+19084586874',
   email: 'info@agewellmedicine.com',
