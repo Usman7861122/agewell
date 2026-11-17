@@ -7,6 +7,8 @@ export const site = {
   phoneHref: 'tel:+19084586874',
   email: 'info@agewellmedicine.com',
   address: { street: '2436 Lamington Rd Suite 1', city: 'Bedminster', region: 'NJ', zip: '07921' },
+  // Map pin of the Google Maps listing for this address (plus code M9H2+RX), the same listing the site's Google link opens.
+  geo: { latitude: 40.67956, longitude: -74.64756 },
   hours: 'Mon 10-4 · Tue-Wed 10-7 · Thu 10-6 · Fri 10-4 · Sat 11-4 · Sun closed',
   social: [
     { label: 'Google', href: 'https://www.google.com/maps/search/AgeWell+Medicine+%26+Aesthetics+Bedminster+NJ' },

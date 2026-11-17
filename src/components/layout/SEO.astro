@@ -16,6 +16,7 @@ const business = {
   image: imageUrl,
   telephone: site.phone,
   email: site.email,
+  geo: { '@type': 'GeoCoordinates', latitude: site.geo.latitude, longitude: site.geo.longitude },
   address: { '@type': 'PostalAddress', streetAddress: site.address.street, addressLocality: site.address.city, addressRegion: site.address.region, postalCode: site.address.zip, addressCountry: 'US' },
   areaServed: ['Bedminster NJ', 'Somerset County NJ', 'Morris County NJ', 'Hunterdon County NJ'],
   openingHoursSpecification: [
@@ -39,7 +40,9 @@ const crumbs = parts.length ? {
 
 // Page-specific data from each page, without its own copy of the business record.
 const pageItems = schema ? (((schema as any)['@graph'] ?? [schema]) as any[]).filter((x) => x && x['@type'] !== 'MedicalBusiness') : [];
-const graph = { '@context': 'https://schema.org', '@graph': [business, website, ...(crumbs ? [crumbs] : []), ...pageItems.map(({ '@context': _c, ...rest }) => rest)] };
+// Pages that bring their own BreadcrumbList (the service pages) keep that one; the automatic one is added only when the page has none.
+const ownCrumbs = pageItems.some((x) => x['@type'] === 'BreadcrumbList');
+const graph = { '@context': 'https://schema.org', '@graph': [business, website, ...(crumbs && !ownCrumbs ? [crumbs] : []), ...pageItems.map(({ '@context': _c, ...rest }) => rest)] };
 ---
 <title>{title}</title>
 <meta name="description" content={description} />
