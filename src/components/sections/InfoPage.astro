@@ -170,7 +170,7 @@ const closing = p.closing ?? (trailingBand ? { heading: trailingBand.heading, te
             {b.items.map((g, i) => (
               <li>
                 <FadeIn client:visible delay={(i % 4) * 0.05}>
-                  <a href={g.src} class="ip-gal" target="_blank" rel="noopener noreferrer"><img src={g.src} alt={g.alt} loading="lazy" decoding="async" /><span class="sr-only"> (opens full size in a new tab)</span></a>
+                  <a href={g.src} class="ip-gal" target="_blank" rel="noopener noreferrer"><img src={g.src} alt={g.alt} width={g.w} height={g.h} loading="lazy" decoding="async" /><span class="sr-only"> (opens full size in a new tab)</span></a>
                 </FadeIn>
               </li>
             ))}

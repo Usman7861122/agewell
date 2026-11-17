@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export interface ElasticItem { id: string; title: string; category: string; src: string; alt: string }
+export interface ElasticItem { id: string; title: string; category: string; src: string; alt: string; w?: number; h?: number }
 
 // Accordion-style gallery: the hovered (or focused / tapped) photo grows and the others fold into slim strips.
 export default function ElasticGallery({ items, defaultId }: { items: ElasticItem[]; defaultId?: string }) {
@@ -12,7 +12,7 @@ export default function ElasticGallery({ items, defaultId }: { items: ElasticIte
         return (
           <li key={it.id} className={`eg-item${on ? ' is-active' : ''}`} onMouseEnter={() => setActive(it.id)}>
             <button type="button" className="eg-btn" onClick={() => setActive(it.id)} onFocus={() => setActive(it.id)} aria-pressed={on} aria-label={`${it.title}, ${it.category}`}>
-              <img src={it.src} alt={it.alt} loading="lazy" decoding="async" className="eg-img" />
+              <img src={it.src} alt={it.alt} width={it.w} height={it.h} loading="lazy" decoding="async" className="eg-img" />
               <span className="eg-shade" aria-hidden="true" />
               <span className="eg-content">
                 <span className="eg-tag">{it.category}</span>

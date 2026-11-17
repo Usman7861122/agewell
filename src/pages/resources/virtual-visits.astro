@@ -10,7 +10,7 @@ import { existsSync } from 'node:fs';
 // The practice's own office photos, saved in public/images/virtual-tour (from the live site, used with the owner's permission).
 const tour = Array.from({ length: 12 }, (_, i) => i + 1)
   .filter((n) => existsSync(new URL(`../../../public/images/virtual-tour/tour-${n}.jpg`, import.meta.url)))
-  .map((n) => ({ src: `/images/virtual-tour/tour-${n}.jpg`, alt: `Inside the AgeWell Medicine & Aesthetics office in Bedminster, photo ${n}` }));
+  .map((n) => ({ src: `/images/virtual-tour/tour-${n}.jpg`, alt: `Inside the AgeWell Medicine & Aesthetics office in Bedminster, photo ${n}`, w: 900, h: 900 }));
 const blocks: Block[] = [
   { type: 'split', eyebrow: 'Care that fits your schedule', heading: 'Virtual visits for eligible care', paragraphs: ['Connect with AgeWell through virtual visits for eligible consultations and follow-up care.', 'Contact us to find out whether a virtual appointment fits your needs. Some care, such as treatments, needs an in-person visit.'], image: body('virtual-body', 'A doctor on a video call with a patient on a laptop screen', 1400, 788), bullets: ['No travel for eligible visits', 'Talk with your provider face to face', 'Easy follow-up between office visits'] },
   ...(tour.length ? [{ type: 'gallery' as const, eyebrow: 'Take a look inside', heading: 'Our Bedminster office', intro: 'Prefer to meet in person? Here is a look at where we welcome you.', items: tour }] : []),

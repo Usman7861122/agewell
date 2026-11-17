@@ -6,7 +6,7 @@ export type Block =
   | { type: 'people'; eyebrow: string; heading: string; intro?: string; items: { name: string; credential?: string; role: string; photo: string; w: number; h: number; paragraphs: string[]; tags: string[] }[] }
   | { type: 'reviews'; eyebrow: string; heading: string; score: string; count: number; googleUrl: string; items: { quote: string; name: string; when: string }[] }
   | { type: 'contact'; eyebrow: string; heading: string; text: string; image: Img }
-  | { type: 'gallery'; eyebrow: string; heading: string; intro?: string; ratio?: 'square' | 'wide'; items: { src: string; alt: string }[] }
+  | { type: 'gallery'; eyebrow: string; heading: string; intro?: string; ratio?: 'square' | 'wide'; items: { src: string; alt: string; w?: number; h?: number }[] }
   | { type: 'band'; heading: string; text: string; primary?: { label: string; href: string }; secondary?: { label: string; href: string } }
   | { type: 'faq'; eyebrow: string; heading: string; items: { q: string; a: string }[] };
 
