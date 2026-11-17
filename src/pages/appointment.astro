@@ -43,6 +43,15 @@ const description = 'Book an appointment with AgeWell Medicine & Aesthetics in B
       <p class="ap-note">
         Prefer to talk? Call <a href={site.phoneHref}>{site.phone}</a> or email <a href={`mailto:${site.email}`}>{site.email}</a>.
       </p>
+
+      <div class="ap-visit">
+        <h2>Plan your visit</h2>
+        <p>
+          First time with us? Read <a href="/resources/new-patients/">what to expect at your first visit</a>.
+          Some visits may be offered virtually: see <a href="/resources/virtual-visits/">virtual visits</a> for eligible visits.
+          Questions about payment? See <a href="/resources/financing/">financing options</a>.
+        </p>
+      </div>
     </Container>
   </Section>
 </BaseLayout>
@@ -60,4 +69,8 @@ const description = 'Book an appointment with AgeWell Medicine & Aesthetics in B
   .ap-card p { margin: .75rem 0 1.75rem; flex: 1; line-height: 1.65; color: rgb(34 26 25 / .8); }
   .ap-note { margin-top: 2.5rem; text-align: center; color: rgb(34 26 25 / .8); }
   .ap-note a { color: #265734; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+  .ap-visit { max-width: 40rem; margin: 3.5rem auto 0; text-align: center; }
+  .ap-visit h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.75rem; line-height: 1.15; }
+  .ap-visit p { margin-top: .85rem; line-height: 1.65; color: rgb(34 26 25 / .8); }
+  .ap-visit a { color: #265734; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 </style>
