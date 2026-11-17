@@ -1,0 +1,56 @@
+---
+import InfoPage from '../components/sections/InfoPage.astro';
+import type { Block } from '../lib/info-types';
+import { site } from '../lib/site';
+
+const address = `${site.address.street}, ${site.address.city}, ${site.address.region} ${site.address.zip}`;
+const blocks: Block[] = [
+  { type: 'legal', updated: 'November 17, 2026', sections: [
+    { heading: 'Using this website', paragraphs: [
+      `These terms apply when you use www.agewellmedicine.com, the website of ${site.name} ("AgeWell," "we," "us"). By using the site, you agree to these terms. If you do not agree, please do not use the site.`,
+    ] },
+    { heading: 'General information, not medical advice', paragraphs: [
+      'The pages on this website offer general information and are not medical advice. Recommendations depend on your history, symptoms, examination and test results.',
+      'Using this website, or sending us a message, does not create a patient and provider relationship. That begins only when you are seen by one of our providers. If you think you are having a medical emergency, call 911.',
+    ] },
+    { heading: 'Results and patient stories', paragraphs: [
+      'Results are personal and vary from person to person. Photos and patient reviews on this site show individual experiences and are not a promise of your results.',
+    ] },
+    { heading: 'Services, pricing and availability', paragraphs: [
+      'Our services, hours and details may change. Whether a treatment is right for you is decided with your provider after a consultation. For pricing, please contact our team.',
+    ] },
+    { heading: 'Booking, shop and financing', paragraphs: [
+      'Online booking, the contact form, the Biote shop and financing options (including Cherry and CareCredit) are provided by other companies. Their own terms apply, and we do not control their sites. Financing approval and terms depend on the financing provider.',
+    ] },
+    { heading: 'Links to other websites', paragraphs: [
+      'This site links to other websites, such as maps, social media and review sites. We are not responsible for their content or policies.',
+    ] },
+    { heading: 'Our content', paragraphs: [
+      `The text, photos, logo and design on this website belong to ${site.name} or the people who license them to us. You may view the site and print pages for your own personal use. Please do not copy, republish or sell our content without our written permission.`,
+    ] },
+    { heading: 'Acceptable use', paragraphs: [
+      'Please use the site lawfully. Do not try to disrupt the site, break its security, or send us harmful or misleading content.',
+    ] },
+    { heading: 'No warranties and limits on liability', paragraphs: [
+      'We work to keep the information on this site accurate, but we cannot promise it is always complete or up to date. The site is provided as is. To the fullest extent the law allows, AgeWell is not liable for losses that come from using this website.',
+    ] },
+    { heading: 'Privacy', paragraphs: [
+      'Please read our Privacy Policy at www.agewellmedicine.com/privacy-policy/ to learn how we handle information shared through this website.',
+    ] },
+    { heading: 'Governing law', paragraphs: [
+      'These terms are governed by the laws of the State of New Jersey.',
+    ] },
+    { heading: 'Changes to these terms', paragraphs: [
+      'We may update these terms from time to time. The new version will be posted on this page with a new date.',
+    ] },
+    { heading: 'Contact us', paragraphs: [
+      `${site.name}, ${address}. Phone: ${site.phone}. Email: ${site.email}.`,
+    ] },
+  ] },
+];
+---
+<InfoPage slug="terms" name="Terms" title="Terms of Use" eyebrow="Legal · Bedminster, NJ" interest="not-sure"
+  seoTitle="Terms of Use | AgeWell, Bedminster NJ"
+  seoDescription="Terms for using the AgeWell Medicine & Aesthetics website in Bedminster, NJ, including the medical information notice, third-party links and booking."
+  intro="The terms for using our website."
+  blocks={blocks} medical={false} />

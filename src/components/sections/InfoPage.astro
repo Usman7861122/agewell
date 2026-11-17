@@ -199,6 +199,22 @@ const closing = p.closing ?? (trailingBand ? { heading: trailingBand.heading, te
         </Container>
       </Section>
     );
+    if (b.type === 'legal') return (
+      <Section>
+        <Container narrow>
+          <p class="ip-legal-date">Last updated: {b.updated}</p>
+          <div class="ip-legal">
+            {b.sections.map((s) => (
+              <section>
+                <h2>{s.heading}</h2>
+                {s.paragraphs.map((t) => <p>{t}</p>)}
+                {s.bullets && <ul>{s.bullets.map((x) => <li>{x}</li>)}</ul>}
+              </section>
+            ))}
+          </div>
+        </Container>
+      </Section>
+    );
     return null;
   })}
 
@@ -225,6 +241,13 @@ const closing = p.closing ?? (trailingBand ? { heading: trailingBand.heading, te
   .ip-photo-ring { position: absolute; inset: -.75rem; z-index: -1; border-radius: 2rem; border: 1px solid rgb(38 87 52 / .25); transform: translate(.75rem, .75rem); }
   .ip-photo-sm { margin-top: 2rem; }
   .ip-photo-sm img { max-height: 15rem; }
+  .ip-legal-date { font-size: .9375rem; color: rgb(34 26 25 / .7); }
+  .ip-legal { margin-top: 1.5rem; }
+  .ip-legal section { margin-top: 2.25rem; }
+  .ip-legal h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.5rem; line-height: 1.2; color: #16321f; }
+  .ip-legal p, .ip-legal li { margin-top: .85rem; font-size: 1.0625rem; line-height: 1.75; color: rgb(34 26 25 / .85); }
+  .ip-legal ul { margin: .85rem 0 0 1.25rem; padding: 0; list-style: disc; }
+  .ip-legal li { margin-top: .4rem; }
   .ip-lead { margin-top: 1.25rem; font-size: 1.0625rem; line-height: 1.75; color: rgb(34 26 25 / .85); }
   .ip-bullets { margin-top: 1.5rem; display: grid; gap: .75rem; list-style: none; padding: 0; }
   .ip-bullets li { display: flex; gap: .75rem; align-items: flex-start; line-height: 1.5; }

@@ -1,0 +1,62 @@
+---
+import InfoPage from '../components/sections/InfoPage.astro';
+import type { Block } from '../lib/info-types';
+import { site } from '../lib/site';
+
+const address = `${site.address.street}, ${site.address.city}, ${site.address.region} ${site.address.zip}`;
+const blocks: Block[] = [
+  { type: 'legal', updated: 'November 17, 2026', sections: [
+    { heading: 'About this policy', paragraphs: [
+      `This policy explains how ${site.name} ("AgeWell," "we," "us") handles information when you use this website, www.agewellmedicine.com. Our office is at ${address}.`,
+      'It covers this website only. Information you share with us as a patient during your care is part of that care. If you have questions about how it is handled, please ask our team.',
+    ] },
+    { heading: 'Information you give us', paragraphs: [
+      'We receive the information you choose to send us. This can include:',
+    ], bullets: [
+      'Details you enter in the contact form on our Contact page, such as your name, how to reach you and your message.',
+      `Details you share when you call us at ${site.phone} or email ${site.email}.`,
+      'Details you enter when you book online through our booking system.',
+    ] },
+    { heading: 'Please keep medical details out of web messages', paragraphs: [
+      'Please do not put detailed medical information in the contact form or in email. If you need to talk about your health, call our office. If you think you are having a medical emergency, call 911.',
+    ] },
+    { heading: 'Information collected when you visit', paragraphs: [
+      'This website does not use advertising or analytics trackers of our own. Like most websites, the servers that deliver the site may record basic technical information, such as your IP address, browser type and the pages requested.',
+      'The site loads fonts from Google Fonts. When a page loads, your browser contacts Google to get those fonts, and Google receives your IP address and browser details.',
+    ] },
+    { heading: 'Services run by other companies', paragraphs: [
+      'Some parts of this website are provided by other companies. They have their own terms and privacy policies, and we do not control how they handle information:',
+    ], bullets: [
+      'Our contact form and online booking system, provided by our booking software company. Online booking opens in a new tab.',
+      'Maps, social media and review sites we link to, such as Google, Facebook, Instagram and Yelp.',
+      'The Biote online shop and financing providers such as Cherry and CareCredit, if you follow links to them.',
+    ] },
+    { heading: 'How we use information', paragraphs: [
+      'We use the information you send us to answer your questions, schedule visits, provide care and run our practice and website.',
+    ] },
+    { heading: 'When we share information', paragraphs: [
+      'We share information with companies that help us run our website, booking, messaging and payments, and when the law requires it. We share your health information only as allowed by law.',
+    ] },
+    { heading: 'Security', paragraphs: [
+      'We take reasonable steps to protect the information we receive. No website or online service can be completely secure, so please share only what you are comfortable sending.',
+    ] },
+    { heading: 'Your choices', paragraphs: [
+      `To ask a question about information you sent us, to correct it, or to ask us to remove it where the law allows, contact us at ${site.email} or ${site.phone}.`,
+    ] },
+    { heading: 'Children', paragraphs: [
+      'This website is meant for adults. We do not knowingly collect information from children under 13 through this website.',
+    ] },
+    { heading: 'Changes to this policy', paragraphs: [
+      'If we change this policy, we will post the new version on this page with a new date.',
+    ] },
+    { heading: 'Contact us', paragraphs: [
+      `${site.name}, ${address}. Phone: ${site.phone}. Email: ${site.email}.`,
+    ] },
+  ] },
+];
+---
+<InfoPage slug="privacy-policy" name="Privacy Policy" title="Privacy Policy" eyebrow="Legal · Bedminster, NJ" interest="not-sure"
+  seoTitle="Privacy Policy | AgeWell, Bedminster NJ"
+  seoDescription="How AgeWell Medicine & Aesthetics in Bedminster, NJ handles information you share through this website, including forms, booking and links."
+  intro="How we handle the information you share with us through this website."
+  blocks={blocks} medical={false} />

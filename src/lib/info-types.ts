@@ -8,5 +8,6 @@ export type Block =
   | { type: 'contact'; eyebrow: string; heading: string; text: string; image: Img }
   | { type: 'gallery'; eyebrow: string; heading: string; intro?: string; ratio?: 'square' | 'wide'; items: { src: string; alt: string; w?: number; h?: number }[] }
   | { type: 'band'; heading: string; text: string; primary?: { label: string; href: string }; secondary?: { label: string; href: string } }
+  | { type: 'legal'; updated: string; sections: { heading: string; paragraphs: string[]; bullets?: string[] }[] }
   | { type: 'faq'; eyebrow: string; heading: string; items: { q: string; a: string }[] };
 
