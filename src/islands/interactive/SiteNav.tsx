@@ -22,7 +22,8 @@ export default function SiteNav({ items, cta, current }: Props) {
     return () => { document.removeEventListener('keydown', onKey); document.removeEventListener('mousedown', onDown); };
   }, []);
 
-  const isCurrent = (href: string) => current === href || current.startsWith(href + '/');
+  const trim = (u: string) => (u.length > 1 ? u.replace(/\/+$/, '') : u);
+  const isCurrent = (href: string) => trim(current) === trim(href) || trim(current).startsWith(trim(href) + '/');
 
   return (
     <nav ref={root} aria-label="Primary" className="hidden items-center gap-6 min-[1400px]:flex">

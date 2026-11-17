@@ -3,25 +3,25 @@ import { site } from '../../lib/site';
 const year = new Date().getFullYear();
 const groups = [
   { title: 'Longevity', links: [
-    { label: 'Evaluation', href: '/longevity/evaluation' },
-    { label: 'Metabolic Health', href: '/longevity/metabolic-health' },
-    { label: 'Hormone Care', href: '/longevity/hormone-care' },
-    { label: 'Functional Medicine', href: '/longevity/functional-medicine' },
+    { label: 'Evaluation', href: '/longevity/evaluation/' },
+    { label: 'Metabolic Health', href: '/longevity/metabolic-health/' },
+    { label: 'Hormone Care', href: '/longevity/hormone-care/' },
+    { label: 'Functional Medicine', href: '/longevity/functional-medicine/' },
   ]},
   { title: 'Care', links: [
-    { label: 'Hair Restoration', href: '/hair-restoration' },
-    { label: 'Aesthetics', href: '/aesthetics' },
-    { label: 'Our Providers', href: '/providers' },
-    { label: 'Store', href: '/store' },
-    { label: 'About', href: '/about' },
+    { label: 'Hair Restoration', href: '/hair-restoration/' },
+    { label: 'Aesthetics', href: '/aesthetics/' },
+    { label: 'Our Providers', href: '/providers/' },
+    { label: 'Store', href: '/store/' },
+    { label: 'About', href: '/about/' },
   ]},
   { title: 'Resources', links: [
-    { label: 'New Patients', href: '/resources/new-patients' },
-    { label: 'Virtual Visits', href: '/resources/virtual-visits' },
-    { label: 'FAQs', href: '/resources/faqs' },
-    { label: 'Financing', href: '/resources/financing' },
-    { label: 'Reviews', href: '/reviews' },
-    { label: 'All resources →', href: '/resources' },
+    { label: 'New Patients', href: '/resources/new-patients/' },
+    { label: 'Virtual Visits', href: '/resources/virtual-visits/' },
+    { label: 'FAQs', href: '/resources/faqs/' },
+    { label: 'Financing', href: '/resources/financing/' },
+    { label: 'Reviews', href: '/reviews/' },
+    { label: 'All resources →', href: '/resources/' },
   ]},
 ];
 const directions = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${site.address.street}, ${site.address.city}, ${site.address.region} ${site.address.zip}`)}`;
@@ -54,8 +54,8 @@ const directions = `https://www.google.com/maps/search/?api=1&query=${encodeURIC
       <p>© {year} {site.name}</p>
       <p class="ft-hours">{site.hours}</p>
       <ul>
-        <li><a href="/privacy-policy">Privacy</a></li>
-        <li><a href="/terms">Terms</a></li>
+        <li><a href="/privacy-policy/">Privacy</a></li>
+        <li><a href="/terms/">Terms</a></li>
       </ul>
     </div>
   </div>

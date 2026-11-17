@@ -34,7 +34,7 @@ const pretty = (s: string) => s.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toU
 const crumbs = parts.length ? {
   '@type': 'BreadcrumbList',
   itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: origin + '/' },
-    ...parts.map((p, i) => ({ '@type': 'ListItem', position: i + 2, name: pretty(p), item: new URL('/' + parts.slice(0, i + 1).join('/'), origin).href }))],
+    ...parts.map((p, i) => ({ '@type': 'ListItem', position: i + 2, name: pretty(p), item: new URL('/' + parts.slice(0, i + 1).join('/') + '/', origin).href }))],
 } : null;
 
 // Page-specific data from each page, without its own copy of the business record.

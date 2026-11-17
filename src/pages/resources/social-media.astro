@@ -9,10 +9,10 @@ const body = (n: string, alt: string, w: number, h: number): Img => ({ src: `/im
 const blocks: Block[] = [
   { type: 'split', eyebrow: 'Stay connected', heading: 'Find us online', paragraphs: ['Follow AgeWell on social media for updates from our Bedminster office, and read what patients say about us.'], image: body('social-body', 'A person scrolling on a smartphone', 1400, 933) },
   { type: 'cards', eyebrow: 'Our profiles', heading: 'Where to find us', tone: 'white', items: site.social.map((s) => ({ title: s.label, body: 'Visit our ' + s.label + ' page.', href: s.href })) },
-  { type: 'band', heading: 'Rather talk to a person?', text: 'Call or message our team any time during office hours.', primary: { label: 'Contact Us', href: '/contact' } },
+  { type: 'band', heading: 'Rather talk to a person?', text: 'Call or message our team any time during office hours.', primary: { label: 'Contact Us', href: '/contact/' } },
 ];
 ---
-<InfoPage slug="resources/social-media" name="Social Media" group="Resources" groupHref="/resources" title="Social Media" eyebrow="Resources · Bedminster, NJ" interest="not-sure"
+<InfoPage slug="resources/social-media" name="Social Media" group="Resources" groupHref="/resources/" title="Social Media" eyebrow="Resources · Bedminster, NJ" interest="not-sure"
   seoTitle="Social Media | AgeWell, Bedminster NJ"
   seoDescription="Follow AgeWell Medicine & Aesthetics on Facebook, Instagram, Yelp and Google."
   intro="Follow along for news, tips and a look behind the scenes."

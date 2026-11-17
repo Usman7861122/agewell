@@ -15,7 +15,7 @@ const { title, description, eyebrow, h1, h2, paragraphs, cta } = Astro.props;
     <section class="relative overflow-hidden bg-deep py-20 text-white on-dark md:py-28" aria-labelledby="brand-title">
       <div aria-hidden="true" class="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-leaf/10 blur-3xl"></div>
       <Container>
-        <nav aria-label="Breadcrumb" class="text-sm text-white/70"><a href="/store" class="hover:text-white">Store</a> <span aria-hidden="true">/</span> <span>{h1}</span></nav>
+        <nav aria-label="Breadcrumb" class="text-sm text-white/70"><a href="/store/" class="hover:text-white">Store</a> <span aria-hidden="true">/</span> <span>{h1}</span></nav>
         <p class="eyebrow mt-8 text-leaf">{eyebrow}</p>
         <h1 id="brand-title" class="h-display mt-3 max-w-3xl text-4xl sm:text-5xl lg:text-6xl">{h1}</h1>
       </Container>
@@ -29,7 +29,7 @@ const { title, description, eyebrow, h1, h2, paragraphs, cta } = Astro.props;
             {cta && (cta.external
               ? <a href={cta.href} class="btn btn-primary" target="_blank" rel="noopener noreferrer">{cta.label}<span class="sr-only"> (opens in a new tab)</span></a>
               : <Button href={cta.href}>{cta.label}</Button>)}
-            <a href="/contact" class="link-arrow">Contact Us <span aria-hidden="true">→</span></a>
+            <a href="/contact/" class="link-arrow">Contact Us <span aria-hidden="true">→</span></a>
           </div>
         </div>
       </Container>

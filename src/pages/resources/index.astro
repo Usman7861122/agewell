@@ -8,21 +8,21 @@ const hero = (n: string, alt: string, w: number, h: number): Img => ({ src: `/im
 const body = (n: string, alt: string, w: number, h: number): Img => ({ src: `/images/pages/${n}.jpg`, alt, w, h });
 const blocks: Block[] = [
   { type: 'cards', eyebrow: 'Patient resources', heading: 'Everything you need before and after your visit', items: [
-    { title: 'New Patients', body: 'What to expect at your first visit and how to get ready.', href: '/resources/new-patients' },
-    { title: 'Virtual Visits', body: 'Care that fits your schedule, for eligible visits.', href: '/resources/virtual-visits' },
-    { title: 'FAQs', body: 'Quick answers to common questions about our care.', href: '/resources/faqs' },
-    { title: 'Financing', body: 'Payment options, including Cherry and CareCredit.', href: '/resources/financing' },
-    { title: 'Reviews', body: 'What patients say about us on Google.', href: '/reviews' },
-    { title: 'Feedback', body: 'Tell us how we did.', href: '/resources/feedback' },
-    { title: 'Library', body: 'Plain-language reading to understand your care.', href: '/resources/library' },
-    { title: 'Executive Reset', body: 'A physician-supervised concierge wellness program.', href: '/resources/executive-reset' },
-    { title: 'Before and After', body: 'A look at non-surgical hair restoration results.', href: '/resources/before-and-after' },
-    { title: 'Local Resources', body: 'Helpful links around Bedminster.', href: '/resources/local-resources' },
-    { title: 'Social Media', body: 'Follow AgeWell online.', href: '/resources/social-media' },
-    { title: 'Educational Articles', body: 'Plain-language reading on healthy aging and aesthetics.', href: '/blog' },
-    { title: 'Store', body: 'Skinbetter and Biote products chosen with our providers.', href: '/store' },
+    { title: 'New Patients', body: 'What to expect at your first visit and how to get ready.', href: '/resources/new-patients/' },
+    { title: 'Virtual Visits', body: 'Care that fits your schedule, for eligible visits.', href: '/resources/virtual-visits/' },
+    { title: 'FAQs', body: 'Quick answers to common questions about our care.', href: '/resources/faqs/' },
+    { title: 'Financing', body: 'Payment options, including Cherry and CareCredit.', href: '/resources/financing/' },
+    { title: 'Reviews', body: 'What patients say about us on Google.', href: '/reviews/' },
+    { title: 'Feedback', body: 'Tell us how we did.', href: '/resources/feedback/' },
+    { title: 'Library', body: 'Plain-language reading to understand your care.', href: '/resources/library/' },
+    { title: 'Executive Reset', body: 'A physician-supervised concierge wellness program.', href: '/resources/executive-reset/' },
+    { title: 'Before and After', body: 'A look at non-surgical hair restoration results.', href: '/resources/before-and-after/' },
+    { title: 'Local Resources', body: 'Helpful links around Bedminster.', href: '/resources/local-resources/' },
+    { title: 'Social Media', body: 'Follow AgeWell online.', href: '/resources/social-media/' },
+    { title: 'Educational Articles', body: 'Plain-language reading on healthy aging and aesthetics.', href: '/blog/' },
+    { title: 'Store', body: 'Skinbetter and Biote products chosen with our providers.', href: '/store/' },
   ] },
-  { type: 'band', heading: 'Not sure where to start?', text: 'Call us or request a consultation. We are happy to guide you.', primary: { label: 'Request Consultation', href: '/appointment' }, secondary: { label: 'Call ' + site.phone, href: site.phoneHref } },
+  { type: 'band', heading: 'Not sure where to start?', text: 'Call us or request a consultation. We are happy to guide you.', primary: { label: 'Request Consultation', href: '/appointment/' }, secondary: { label: 'Call ' + site.phone, href: site.phoneHref } },
 ];
 ---
 <InfoPage slug="resources" name="Resources" title="Patient Resources" eyebrow="Resources · Bedminster, NJ" interest="not-sure"
