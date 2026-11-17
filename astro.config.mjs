@@ -27,6 +27,8 @@ export default defineConfig({
   integrations: [
     react(),
     sitemap({
+      // Every address gets a last-modified date. It is the date of the build that published the page.
+      lastmod: new Date(),
       // Keep error pages and redirect-only pages out of the sitemap.
       filter: (page) => !/\/(404|services)\/?$/.test(page) && !Object.keys(redirects).some((r) => page.endsWith(r)),
     }),
